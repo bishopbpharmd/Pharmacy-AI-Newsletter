@@ -1,27 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Posts on My New Hugo Site</title>
-    <link>https://example.org/posts/</link>
-    <description>Recent content in Posts on My New Hugo Site</description>
-    <generator>Hugo -- 0.151.0</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 04 Oct 2025 09:41:46 -0400</lastBuildDate>
-    <atom:link href="https://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>LLM-Based Clinical Decision Support for Medication Safety</title>
-      <link>https://example.org/posts/cds_journal_club/</link>
-      <pubDate>Sat, 04 Oct 2025 09:41:46 -0400</pubDate>
-      <guid>https://example.org/posts/cds_journal_club/</guid>
-      <description>&lt;h1 id=&#34;llm-based-clinical-decision-support-for-medication-safety&#34;&gt;LLM-Based Clinical Decision Support for Medication Safety&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on My New Hugo Site</title><link>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/</link><description>Recent content in Posts on My New Hugo Site</description><generator>Hugo -- 0.151.0</generator><language>en-us</language><lastBuildDate>Sat, 04 Oct 2025 09:41:46 -0400</lastBuildDate><atom:link href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>LLM-Based Clinical Decision Support for Medication Safety</title><link>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/</link><pubDate>Sat, 04 Oct 2025 09:41:46 -0400</pubDate><guid>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/</guid><description>&lt;h1 id="llm-based-clinical-decision-support-for-medication-safety"&gt;LLM-Based Clinical Decision Support for Medication Safety&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Author(s):&lt;/strong&gt; Ong JCL, Jin L, Elangovan K, et al.&lt;br&gt;
 &lt;strong&gt;Journal:&lt;/strong&gt; Cell Reports Medicine, 2025;6:102323. doi:10.1016/j.xcrm.2025.102323&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;citation&#34;&gt;Citation&lt;/h2&gt;
+&lt;h2 id="citation"&gt;Citation&lt;/h2&gt;
 &lt;p&gt;Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. &lt;em&gt;Cell Rep Med.&lt;/em&gt; 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;clinicaloperational-question&#34;&gt;Clinical/Operational Question&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Key Question:&lt;/strong&gt; Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+&lt;h2 id="clinicaloperational-question"&gt;Clinical/Operational Question&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Key Question:&lt;/strong&gt; Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?&lt;/p&gt;</description></item></channel></rss>
