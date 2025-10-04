@@ -89,11 +89,19 @@
 }
 
 .tile-content h2 {
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 0.5rem 0;
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.3;
   color: var(--primary);
+}
+
+.tile-journal {
+  font-size: 0.8rem;
+  color: var(--tertiary);
+  font-style: italic;
+  margin: 0 0 0.75rem 0;
+  opacity: 0.85;
 }
 
 .tile-content p {

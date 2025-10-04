@@ -5,6 +5,9 @@
     <a href="{{ .RelPermalink }}">
       <div class="tile-content">
         <h2>{{ .Title }}</h2>
+        {{ if .Params.journal }}
+        <div class="tile-journal">Journal: {{ .Params.journal }}</div>
+        {{ end }}
         <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
         <div class="tile-meta">
           <time>{{ .Date.Format "January 2, 2006" }}</time>
