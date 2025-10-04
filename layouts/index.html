@@ -1,20 +1,57 @@
 {{ define "main" }}
-<div class="post-tiles">
-  {{ range .Site.RegularPages }}
-  <div class="post-tile">
-    <a href="{{ .RelPermalink }}">
-      <div class="tile-content">
-        <h2>{{ .Title }}</h2>
-        {{ if .Params.journal }}
-        <div class="tile-journal">Journal: {{ .Params.journal }}</div>
-        {{ end }}
-        <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
-        <div class="tile-meta">
-          <time>{{ .Date.Format "January 2, 2006" }}</time>
-        </div>
+<div class="index-content">
+  <!-- Newsletter Header -->
+  <div class="newsletter-header">
+    <div class="newsletter-card">
+      <div class="newsletter-eyebrow">AI + Pharmacy</div>
+      <h1 class="newsletter-title">Weekly Briefing — {{ now.Format "January 2, 2006" }}</h1>
+      <p class="newsletter-subtitle">Highlights, analyses, and scan-friendly insights from the latest research and practice updates.</p>
+      
+      <!-- Action Buttons -->
+      <div class="header-buttons">
+        <a href="https://open.spotify.com/episode/3KPeO9Km2NyEwxJU4DUUr9?si=EKdhn6YIS9ChAFK8DaAxwA" class="header-button podcast-button" target="_blank" rel="noopener">
+          <div class="button-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+          </div>
+          <div class="button-content">
+            <div class="button-label">Latest Podcast</div>
+            <div class="button-title">Listen Now</div>
+          </div>
+        </a>
+        
+        <a href="https://notebooklm.google.com/notebook/b0dd3ab6-82d3-47df-b9e6-f52e6c6eaccf" class="header-button notebooklm-button" target="_blank" rel="noopener">
+          <div class="button-icon">
+            <img src="{{ .Site.BaseURL }}notebooklm.png" alt="NotebookLM" width="20" height="20">
+          </div>
+          <div class="button-content">
+            <div class="button-label">AI Research</div>
+            <div class="button-title">NotebookLM</div>
+          </div>
+        </a>
       </div>
-    </a>
+    </div>
   </div>
-  {{ end }}
+
+  <!-- Posts Section -->
+  <div class="post-tiles">
+    {{ range .Site.RegularPages }}
+    <div class="post-tile">
+      <a href="{{ .RelPermalink }}">
+        <div class="tile-content">
+          <h2>{{ .Title }}</h2>
+          {{ if .Params.journal }}
+          <div class="tile-journal">Journal: {{ .Params.journal }}</div>
+          {{ end }}
+          <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
+          <div class="tile-meta">
+            <time>{{ .Date.Format "January 2, 2006" }}</time>
+          </div>
+        </div>
+      </a>
+    </div>
+    {{ end }}
+  </div>
 </div>
 {{ end }}
