@@ -1,4 +1,54 @@
 /* ============================================
+   POST NAVIGATION - BACK TO POSTS BUTTON
+   ============================================ */
+
+.post-navigation {
+  margin-bottom: 1.5rem;
+}
+
+.back-to-posts {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  background: var(--primary);
+  color: var(--theme);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-posts:hover {
+  transform: translateX(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0.9;
+}
+
+.back-to-posts svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.back-to-posts:hover svg {
+  transform: translateX(-2px);
+}
+
+/* Responsive navigation */
+@media (max-width: 768px) {
+  .post-navigation {
+    margin-bottom: 1rem;
+  }
+  
+  .back-to-posts {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================
    INDEX PAGE - POST TILES
    ============================================ */
 

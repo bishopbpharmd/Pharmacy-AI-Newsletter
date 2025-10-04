@@ -1,5 +1,8 @@
 baseURL = "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/"
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Pharmacy AI Newsletter'
 theme = "PaperMod"
+
+[params]
+ShowBreadCrumbs = true
 

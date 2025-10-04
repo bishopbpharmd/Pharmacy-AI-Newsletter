@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>LLM-Based Clinical Decision Support for Medication Safety | Pharmacy AI Newsletter</title>
+<title>Evaluation of Explainable AI Frameworks in Healthcare | Pharmacy AI Newsletter</title>
 <meta name="keywords" content="">
-<meta name="description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
+<meta name="description" content="Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<link rel="canonical" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
 <link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.fbc02d6a9055a8a8cf4aecf3d628d465d32148fed3f9e0a4e731319a5a45e55a.css" integrity="sha256-&#43;8AtapBVqKjPSuzz1ijUZdMhSP7T&#43;eCk5zExmlpF5Vo=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon-16x16.png">
@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
 <noscript>
     <style>
         #theme-toggle,
@@ -116,121 +116,115 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title entry-hint-parent">
-      LLM-Based Clinical Decision Support for Medication Safety
+      Evaluation of Explainable AI Frameworks in Healthcare
     </h1>
     <div class="post-metadata-card">
       <div class="metadata-row">
         <span class="metadata-label">Authors:</span>
-        <span class="metadata-value">Ong JCL, Jin L, Elangovan K, et al.</span>
+        <span class="metadata-value">Agrawal K, El Shawi R, Ahmed N.</span>
       </div>
       <div class="metadata-row">
         <span class="metadata-label">Journal:</span>
-        <span class="metadata-value">Cell Reports Medicine</span>
+        <span class="metadata-value">Digital Health</span>
       </div>
       <div class="metadata-row">
         <span class="metadata-label">DOI:</span>
         <span class="metadata-value">
-          <a href="https://doi.org/10.1016/j.xcrm.2025.102323" target="_blank" rel="noopener">10.1016/j.xcrm.2025.102323</a>
+          <a href="https://doi.org/10.1177/20552076251368045" target="_blank" rel="noopener">10.1177/20552076251368045</a>
         </span>
       </div>
     </div>
     <div class="post-description">
-      A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.
+      Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.
     </div>
-    <div class="post-meta"><span title='2025-10-04 09:41:46 -0400 EDT'>October 4, 2025</span>
+    <div class="post-meta"><span title='2025-10-04 11:34:58 -0400 EDT'>October 4, 2025</span>
 
 </div>
   </header> 
   <div class="post-content journal-club-content"><h2 id="clinicaloperational-question">Clinical/Operational Question<a hidden class="anchor" aria-hidden="true" href="#clinicaloperational-question">#</a></h2>
-<p><strong>Key Question:</strong> Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?</p>
+<p><strong>Question:</strong> In healthcare machine learning, how do widely used explanation techniques (local and global) compare in their ability to provide trustworthy, useful explanations for clinical predictions, and how can we systematically evaluate these methods in real-world settings?</p>
 <hr>
 <h2 id="background--rationale">Background &amp; Rationale<a hidden class="anchor" aria-hidden="true" href="#background--rationale">#</a></h2>
-<p>Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.</p>
-<p>LLMs (e.g., GPT-4) can interpret free-text clinical scenarios and guidelines, raising interest in using them to catch errors that rigid rule systems might miss. An LLM-based “co-pilot” could review medication orders with contextual understanding, potentially reducing serious errors.</p>
-<p>Investigators hypothesized that an LLM CDSS, especially when paired with a pharmacist, would augment error detection beyond what either could achieve alone. This stems from the idea that AI can rapidly cross-check vast medical knowledge, while humans provide judgment and oversight.</p>
+<p>Why it matters: AI-driven decision support in medication management and clinical care must be explainable to earn clinician trust and meet safety/regulatory requirements. Pharmacy informatics teams integrating AI (e.g., into Epic EHR alerts or dosing tools) face a critical need for transparent algorithms so pharmacists understand and validate AI recommendations before acting. Multiple eXplainable AI (XAI) methods (LIME, SHAP, Anchors, rule-based models, etc.) exist, but it’s unclear which is optimal for a given clinical task. High-stakes environments like EHR medication ordering and CDS demand rigorous evaluation of explainability – poor explanations can erode user confidence or hide biases, whereas robust explanations can improve acceptance and oversight of AI-driven alerts. This study addresses the gap by proposing a framework to quantitatively compare XAI methods on healthcare data, guiding informatics teams in choosing the right approach for safe, transparent AI deployment.</p>
 <hr>
 <h2 id="methods-snapshot">Methods Snapshot<a hidden class="anchor" aria-hidden="true" href="#methods-snapshot">#</a></h2>
-<p><strong>Design:</strong> Prospective, cross-over simulation study using 91 prescribing error scenarios derived from 40 clinical vignettes across 16 medical/surgical specialties. A multidisciplinary expert panel established “ground truth” by classifying drug-related problems (DRPs) and rating error severity (using PCNE criteria and NCC-MERP harm index).</p>
-<p><strong>Intervention:</strong> Five LLM-based models were developed with a retrieval-augmented generation (RAG) approach. The best-performing LLM model (e.g., GPT-4 with domain fine-tuning) was tested in three modes:</p>
-<ol>
-<li>LLM-CDSS alone</li>
-<li>Pharmacist + LLM-CDSS (co-pilot)</li>
-<li>Pharmacist alone</li>
-</ol>
-<p>Junior hospital pharmacists (≤2 years experience) participated in the co-pilot and solo arms.</p>
-<p><strong>Outcome Measures:</strong> Primary outcome was accuracy in identifying DRPs. Secondary metrics included precision, recall, and F1-score. Researchers also recorded performance on serious harm errors and differences between various underlying LLMs.</p>
+<ul>
+<li><strong>Design:</strong> Comparative in silico evaluation of XAI techniques using retrospective clinical datasets (multiple healthcare prediction tasks).</li>
+<li><strong>XAI Methods:</strong> Five local explainers (LIME, CIU, RuleFit, RuleMatrix, Anchors) and four global explainers (LIME, Anchors, RuleFit, RuleMatrix).</li>
+<li><strong>Data:</strong> Diverse healthcare datasets across diagnostic and prognostic tasks.</li>
+<li><strong>Evaluation Metrics:</strong> Fidelity, stability/robustness, complexity/simplicity, monotonicity, non-sensitivity.</li>
+<li><strong>Analysis:</strong> Quantitative comparisons of local and global methods across datasets.</li>
+</ul>
 <hr>
 <h2 id="key-results">Key Results<a hidden class="anchor" aria-hidden="true" href="#key-results">#</a></h2>
 <ul>
-<li><strong>Co-Pilot Best Performance:</strong> Pharmacist+LLM co-pilot achieved highest accuracy (~61%) for error detection, outperforming both LLM alone and pharmacist alone.</li>
-<li><strong>Serious Harm Errors:</strong> Co-pilot caught ~1.5× more high-severity errors than pharmacist-alone.</li>
-<li><strong>LLM Alone:</strong> Reasonable but inferior to co-pilot. Recall improved from 0.47 to 0.61 with pharmacist oversight.</li>
-<li><strong>Precision Trade-off:</strong> Co-pilot had lower precision (more false positives) than pharmacist-alone.</li>
-<li><strong>Comparative LLMs:</strong> GPT-4 with RAG performed best among tested models.</li>
+<li>No single XAI method dominated every metric.</li>
+<li><strong>Global explanations:</strong> RuleFit and RuleMatrix were most interpretable and faithful.</li>
+<li><strong>Local explanations:</strong> Rule-based methods excelled in stability and fidelity; CIU best at monotonicity; LIME weakest on monotonicity but avoided irrelevant features.</li>
+<li><strong>Trade-offs:</strong> Simpler methods (LIME) offered interpretability but reduced fidelity; higher fidelity approaches tended to be more complex.</li>
+<li><strong>Implication:</strong> Context-dependent selection is necessary based on clinical priorities.</li>
 </ul>
 <hr>
-<h2 id="strengths--limitations">Strengths / Limitations<a hidden class="anchor" aria-hidden="true" href="#strengths--limitations">#</a></h2>
-<p><strong>Strengths</strong></p>
+<h2 id="strengths-and-limitations">Strengths and Limitations<a hidden class="anchor" aria-hidden="true" href="#strengths-and-limitations">#</a></h2>
+<h3 id="strengths">Strengths<a hidden class="anchor" aria-hidden="true" href="#strengths">#</a></h3>
 <ul>
-<li>Prospective, cross-specialty design (16 specialties).</li>
-<li>Realistic co-pilot workflow tested.</li>
-<li>Comprehensive metrics with expert-validated gold standard.</li>
+<li>Comprehensive head-to-head comparison of multiple methods.</li>
+<li>Structured framework with standardized metrics.</li>
+<li>Real-world healthcare datasets (not synthetic).</li>
+<li>Pragmatic, actionable guidance with no conflicts of interest.</li>
 </ul>
-<p><strong>Limitations</strong></p>
+<h3 id="limitations">Limitations<a hidden class="anchor" aria-hidden="true" href="#limitations">#</a></h3>
 <ul>
-<li>Simulated cases only, not live patients.</li>
-<li>Only junior pharmacists tested; unclear generalizability to experienced clinicians.</li>
-<li>Moderate accuracy (~61% overall).</li>
-<li>False positives may cause alert fatigue.</li>
-<li>Single-center (Singapore); limited generalizability.</li>
+<li>Did not include some popular methods (e.g., SHAP, counterfactuals).</li>
+<li>Lacked user/clinician validation.</li>
+<li>Retrospective only; no live EHR deployment tested.</li>
+<li>Domain-specific nuances may require re-testing.</li>
 </ul>
 <hr>
 <h2 id="ai-specific-considerations">AI-Specific Considerations<a hidden class="anchor" aria-hidden="true" href="#ai-specific-considerations">#</a></h2>
 <ul>
-<li><strong>Hallucinations:</strong> Risk of incorrect AI recommendations.</li>
-<li><strong>Prompt Sensitivity:</strong> Dependent on how queries are structured.</li>
-<li><strong>Knowledge Updates:</strong> Models risk being outdated; RAG helps but needs constant validation.</li>
-<li><strong>Black-Box Reasoning:</strong> Lack of transparency raises trust and regulatory concerns.</li>
-<li><strong>Bias:</strong> Training data may underrepresent populations; calibration needed.</li>
-<li><strong>Data Privacy:</strong> HIPAA concerns if using cloud APIs.</li>
+<li><strong>Transparency &amp; Trust:</strong> Balancing clarity and completeness is key. High-fidelity and stability crucial for clinician trust.</li>
+<li><strong>Generalizability:</strong> Rule-based global methods showed robustness, but site-specific testing required.</li>
+<li><strong>Bias &amp; Fairness:</strong> Explanations may reveal or obscure bias; fairness must be evaluated alongside explainability.</li>
 </ul>
 <hr>
 <h2 id="applicability-to-pharmacy-informatics">Applicability to Pharmacy Informatics<a hidden class="anchor" aria-hidden="true" href="#applicability-to-pharmacy-informatics">#</a></h2>
 <ul>
-<li><strong>Epic Willow Integration:</strong> Could function at order entry/verification steps via CDS Hooks.</li>
-<li><strong>Pyxis ES:</strong> Potential for AI alerts to propagate to dispensing checks.</li>
-<li><strong>Validation Burden:</strong> Continuous validation required for every update or version change.</li>
-<li><strong>Data Feeds:</strong> Needs comprehensive HL7/FHIR feeds for real-time integration.</li>
-<li><strong>GPU/Cloud Requirements:</strong> Deployment decisions between on-premises vs. cloud APIs.</li>
-<li><strong>Regulatory Fit:</strong> FDA guidance uncertain; transparency lacking may push toward regulation.</li>
+<li><strong>Epic Willow &amp; Pyxis ES:</strong> Rule-based global explanations (RuleFit/RuleMatrix) can integrate as interpretable rules for pharmacists.</li>
+<li><strong>FHIR CDS Hooks:</strong> Explanations can be embedded in alerts to improve trust.</li>
+<li><strong>Clinical Alerting Systems:</strong> XAI-Eval framework can optimize alerts, reduce fatigue, and ensure new predictive alerts come with understandable justifications.</li>
 </ul>
 <hr>
 <h2 id="related-literature-synthesis">Related Literature Synthesis<a hidden class="anchor" aria-hidden="true" href="#related-literature-synthesis">#</a></h2>
 <ul>
-<li><strong>Pais et al., 2024 (Nat Med):</strong> LLM MEDIC reduced dispensing instruction errors by ~33%. Domain-specific fine-tuning + guardrails lowered false positives.</li>
-<li><strong>Roosan et al., 2024 (J Am Pharm Assoc):</strong> GPT-4 solved 39/39 MTM cases but lacked precise dosing recommendations.</li>
-<li><strong>Grossman et al., 2023 (ASHP Abstract):</strong> Free ChatGPT gave inaccurate/incomplete answers to 74% of drug queries and fabricated references.</li>
+<li><strong>Qureshi et al., 2025:</strong> SHAP achieved perfect fidelity for tree models; LIME simpler but less faithful. Reinforces that context matters.</li>
+<li><strong>Liu et al., 2024:</strong> Applied XAI to Epic alerts, generating actionable changes that reduced ~9% of irrelevant alerts.</li>
+<li><strong>Noor et al., 2025:</strong> Review of XAI in healthcare highlighted the need for standardized evaluation and clinical integration, echoing XAI-Eval’s importance.</li>
 </ul>
 <hr>
-<h2 id="evidence-quality--recommendation-grade-style">Evidence Quality &amp; Recommendation (GRADE-style)<a hidden class="anchor" aria-hidden="true" href="#evidence-quality--recommendation-grade-style">#</a></h2>
+<h2 id="evidence-quality--recommendation">Evidence Quality &amp; Recommendation<a hidden class="anchor" aria-hidden="true" href="#evidence-quality--recommendation">#</a></h2>
 <ul>
-<li><strong>Quality of Evidence:</strong> Low to Moderate (simulation only, modest sample, evolving technology).</li>
-<li><strong>Recommendation:</strong> Conditional (weak). Consider pilot testing in controlled environments with strong safeguards. Not recommended for widespread replacement of pharmacist judgment.</li>
+<li><strong>Evidence Quality:</strong> Moderate certainty. Strong technical evidence across multiple datasets, but no patient outcomes.</li>
+<li><strong>Recommendation:</strong> Strongly recommend pharmacy informatics teams adopt an evaluation framework (like XAI-Eval) when implementing AI-driven CDS, especially in medication safety contexts.</li>
 </ul>
 <hr>
 <h2 id="bottom-line">Bottom Line<a hidden class="anchor" aria-hidden="true" href="#bottom-line">#</a></h2>
-<p>Ong et al. (2025) demonstrated that a GPT-4 powered CDSS, when paired with a pharmacist, improved detection of prescribing errors, especially high-severity ones, but overall accuracy was ~60%.</p>
-<p>The LLM “co-pilot” is promising but not foolproof. It should be piloted cautiously, with robust oversight, validation, and integration into workflows.</p>
+<ul>
+<li>Select explanation methods as carefully as predictive models.</li>
+<li>Use XAI-Eval or similar frameworks to vet methods before deployment.</li>
+<li>Integrate explanations into workflow (e.g., Epic alerts) to improve trust and reduce alert fatigue.</li>
+<li>Transparency = Safety: Explainable AI supports safer pharmacy decision-making.</li>
+</ul>
 <hr>
 <h2 id="citation">Citation<a hidden class="anchor" aria-hidden="true" href="#citation">#</a></h2>
-<p>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]</p>
+<p>Agrawal K, El Shawi R, Ahmed N. eXplainable artificial intelligence-Eval: A framework for comparative evaluation of explanation methods in healthcare. Digit Health. 2025;11:20552076251368045. DOI: 10.1177/20552076251368045</p>
 <hr>
 <h2 id="references-primary--comparative-studies">References (Primary + Comparative Studies)<a hidden class="anchor" aria-hidden="true" href="#references-primary--comparative-studies">#</a></h2>
 <ol>
-<li>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804.</li>
-<li>Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. <em>Nat Med.</em> 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8.</li>
-<li>Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. <em>J Am Pharm Assoc.</em> 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023.</li>
-<li>Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. <em>ASHP Midyear Meeting 2023</em> – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed).</li>
+<li>Agrawal K, El Shawi R, Ahmed N. eXplainable artificial intelligence-Eval: A framework for comparative evaluation of explanation methods in healthcare. Digit Health. 2025;11:20552076251368045. DOI: 10.1177/20552076251368045</li>
+<li>Qureshi MA, Noor AA, Manzoor A, et al. Explainability in Action: A Metric-Driven Assessment of Five XAI Methods for Healthcare Tabular Models. medRxiv. 2025 May 20;2025.05.20.25327976. DOI: 10.1101/2025.05.20.25327976</li>
+<li>Liu S, McCoy AB, Peterson JF, et al. Leveraging explainable artificial intelligence to optimize clinical decision support. J Am Med Inform Assoc. 2024;31(4):968-974. DOI: 10.1093/jamia/ocae019</li>
+<li>Noor AA, Manzoor A, Qureshi MDM, et al. Unveiling Explainable AI in Healthcare: Current Trends, Challenges, and Future Directions. Wiley Interdiscip Rev Data Min Knowl Discov. 2025;15(4):e70018. DOI: 10.1002/widm.70018</li>
 </ol>
 
 

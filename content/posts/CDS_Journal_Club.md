@@ -4,7 +4,7 @@ draft = false
 title = 'LLM-Based Clinical Decision Support for Medication Safety'
 description = 'A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.'
 authors = 'Ong JCL, Jin L, Elangovan K, et al.'
-journal = 'Cell Reports Medicine, 2025;6:102323'
+journal = 'Cell Reports Medicine'
 doi = '10.1016/j.xcrm.2025.102323'
 +++
 
