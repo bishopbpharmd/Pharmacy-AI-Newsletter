@@ -1,11 +1,338 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Deep Learning Model for the Prediction of Vancomycin Trough Concentration | Pharmacy AI Newsletter</title><meta name=keywords content><meta name=description content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing."><meta name=author content><link rel=canonical href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/><link crossorigin=anonymous href=/Pharmacy-AI-Newsletter/assets/css/stylesheet.545c6d6a23408d57a668f13a02267cc0c845854c4b9f08d6f505bc4943dfed28.css integrity="sha256-VFxtaiNAjVemaPE6AiZ8wMhFhUxLnwjW9QW8SUPf7Sg=" rel="preload stylesheet" as=style><link rel=icon href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-32x32.png><link rel=apple-touch-icon href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/apple-touch-icon.png><link rel=mask-icon href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:url" content="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/"><meta property="og:site_name" content="Pharmacy AI Newsletter"><meta property="og:title" content="Deep Learning Model for the Prediction of Vancomycin Trough Concentration"><meta property="og:description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing."><meta property="og:locale" content="en-us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-10-04T11:38:37-04:00"><meta property="article:modified_time" content="2025-10-04T11:38:37-04:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Deep Learning Model for the Prediction of Vancomycin Trough Concentration"><meta name=twitter:description content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/"},{"@type":"ListItem","position":2,"name":"Deep Learning Model for the Prediction of Vancomycin Trough Concentration","item":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Deep Learning Model for the Prediction of Vancomycin Trough Concentration","name":"Deep Learning Model for the Prediction of Vancomycin Trough Concentration","description":"Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.","keywords":[],"articleBody":"Clinical/Operational Question Can a sequential deep learning model (“Nephrocast-V”) accurately forecast vancomycin trough levels ~48 hours ahead in ICU patients and recommend dose adjustments to attain therapeutic levels, compared to standard pharmacist-driven Bayesian dosing?\nBackground \u0026 Rationale TDM Challenge: Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).\nNeed for Precision: Guidelines endorse AUC-guided dosing (target AUC/MIC 400–600) via Bayesian tools, but implementation is labor-intensive and not universally adopted. Pharmacist-led dosing improves outcomes yet requires time-intensive individualization.\nAI Potential: Machine learning can learn from high-dimensional EHR data and capture complex PK dynamics. Prior vancomycin ML models showed improved accuracy over PopPK but had limitations—short windows, no direct comparison to clinicians, or only initial troughs. Nephrocast-V addresses these by predicting 48h ahead and benchmarking against pharmacists.\nMethods Snapshot Design/Setting: Retrospective single-center cohort at two UCSD ICUs (Jan 2016–Jun 2024). Inclusion: Adult ICU patients ≥24h, intermittent IV vancomycin. Exclusions: Continuous infusions, RRT within 7d, ICU stay \u003e14d. Outcome: Steady-state trough ~2 days after prediction point. Model: LSTM + 2-head attention + dense layer with skip connections. Predictors: 253 EHR variables—demographics, comorbidities, labs, vitals, meds, prior vanco levels, doses between prediction and trough. Comparison: ICU pharmacists using PrecisePK Bayesian software. Dose Adjustment Simulation: Incremental ±250mg adjustments tested. Key Results Cohort: 2,205 ICU vancomycin encounters (~2,492 troughs). Median age 58; 64% male; 44% experienced AKI. Prediction Accuracy: MAE 3.15 mg/L, RMSE 4.17 mg/L—comparable to pharmacists (MAE 3.06, RMSE 4.07). Therapeutic Range Classification: Both model and pharmacists ~56% accuracy in categorizing troughs. High-Error Scenarios: AKI onset/recovery, low muscle mass, obesity, very low baseline SCr. Key Feature Drivers: Current dose most influential, followed by SCr, length of stay, lab values, sex, sepsis/SIRS indicators. Dose Recommendations: Closer alignment with Nephrocast-V dosing associated with more therapeutic troughs. Strengths Large real-world ICU dataset (≈2.5k troughs, \u003e2k encounters). Broad inputs beyond PopPK models. Modern architecture (LSTM + attention, skip connections). Benchmark against pharmacists with Bayesian software. Actionable dose recommendations, not just predictions. Thorough error analysis and feature importance transparency. Limitations Single-center, internal validation only. Excluded dialysis and prolonged ICU cases. Trough-focused despite AUC guideline emphasis. Retrospective—no prospective patient outcomes. Semi-structured data extraction may introduce bias. Mostly adult/White cohort; pediatric/ethnic subgroup performance unknown. AI-Specific Considerations Training/Generalizability: Local UCSD data only; external validation needed. Explainability: Gradient-based importance aligned with clinical logic, but SHAP/interpretability tools recommended. Bias \u0026 Fairness: Possible subgroup differences (e.g., sex, ICU type). Regulatory Oversight: Likely CDS under FDA regulation if logic opaque. Maintenance: Risk of model drift—requires periodic re-training. Applicability to Pharmacy Informatics Integration via CDS Hooks or SMART-on-FHIR (e.g., during order verification). Workflow fit: EMR side-panel, BPA, or dosing advisor. Data pipeline: HL7/FHIR mapping of SCr, dosing history, labs. Alerting: Non-intrusive, rationale-based to avoid fatigue. Training \u0026 Acceptance: Scope/limits education, pilot phase trials. Governance: Override logging, pharmacist review, continuous QI. Related Literature Synthesis Table [A] Hu et al. 2025 (Front Pharmacol)\nRandom Forest vs PopPK for troughs (n=546). Achieved 84% accuracy vs Bayesian 57%. No dose recommendations; short prediction horizon. Takeaway: Even simple ML \u003e PopPK; supports AI in trough targeting. [B] Chen et al. 2025 (Microbiol Spectr)\nICU sepsis cohort (n=4,059). Compared PopPK, Bayesian, ML, Hybrid PK+ML. Hybrid best without drug levels; Bayesian best with trough data. Takeaway: Optimal approach context-dependent; future CDS may dynamically select method. [C] Nigo et al. 2022 (J Biomed Inform)\nPK-RNN-VE, deep learning on 55k vanco levels. Outperformed Bayesian RMSE 5.39 vs 6.29 mg/L. Did not provide dosing adjustments. Takeaway: Early validation of RNN-based AI in vancomycin; Nephrocast-V extends horizon + attention. Evidence Quality \u0026 Recommendation GRADE: Low (retrospective, single-site, indirect outcomes). Practice Recommendation: Do not replace pharmacist judgment yet. Use as adjunct in pilot studies with oversight. Discussion Prompt: What safeguards would you want before trusting AI dosing in ICU? Bottom Line Nephrocast-V predicted vancomycin troughs ~48h ahead with pharmacist-level accuracy in ICU patients. It leverages rich EHR data, offers dose recommendations, and could enhance dosing precision where PopPK models fall short.\nBefore clinical adoption: external validation, workflow integration, and governance structures are needed. Pharmacists remain central to evaluating and applying AI outputs safely.\nCitation Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Nephrocast-V: A Deep Learning Model for the Prediction of Vancomycin Trough Concentration Using Electronic Health Record Data. Pharmacotherapy. 2025. doi:10.1002/phar.70062\nReferences (Primary + Comparative Studies) Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Pharmacotherapy. 2025. doi:10.1002/phar.70062 Hu T, Ding X, Han F, An Z. Front Pharmacol. 2025;16:1549500. doi:10.3389/fphar.2025.1549500 Chen K, Wang C, Wei Y, Ma S, Huang W, Dong Y, et al. Microbiol Spectr. 2025;13(5):e0049925. doi:10.1128/spectrum.00499-25 Nigo M, Tran HTN, Xie Z, Feng H, Mao B, Rasmy L, et al. J Biomed Inform. 2022;133:104166. doi:10.1016/j.jbi.2022.104166 ","wordCount":"807","inLanguage":"en","datePublished":"2025-10-04T11:38:37-04:00","dateModified":"2025-10-04T11:38:37-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/"},"publisher":{"@type":"Organization","name":"Pharmacy AI Newsletter","logo":{"@type":"ImageObject","url":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/ accesskey=h title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
-<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu></ul></nav></header><main class=main><nav class=post-navigation><a href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/ class=back-to-posts><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-<span>Back to Posts</span></a></nav><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">Deep Learning Model for the Prediction of Vancomycin Trough Concentration</h1><div class=post-metadata-card><div class=metadata-row><span class=metadata-label>Authors:</span>
-<span class=metadata-value>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z.</span></div><div class=metadata-row><span class=metadata-label>Journal:</span>
-<span class=metadata-value>Pharmacotherapy</span></div><div class=metadata-row><span class=metadata-label>DOI:</span>
-<span class=metadata-value><a href=https://doi.org/10.1002/phar.70062 target=_blank rel=noopener>10.1002/phar.70062</a></span></div></div><div class=post-description>Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.</div><div class=post-meta><span title='2025-10-04 11:38:37 -0400 EDT'>October 4, 2025</span></div></header><div class="post-content journal-club-content"><h2 id=clinicaloperational-question>Clinical/Operational Question<a hidden class=anchor aria-hidden=true href=#clinicaloperational-question>#</a></h2><p>Can a sequential deep learning model (“Nephrocast-V”) accurately forecast vancomycin trough levels ~48 hours ahead in ICU patients and recommend dose adjustments to attain therapeutic levels, compared to standard pharmacist-driven Bayesian dosing?</p><hr><h2 id=background--rationale>Background & Rationale<a hidden class=anchor aria-hidden=true href=#background--rationale>#</a></h2><p><strong>TDM Challenge:</strong> Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).</p><p><strong>Need for Precision:</strong> Guidelines endorse AUC-guided dosing (target AUC/MIC 400–600) via Bayesian tools, but implementation is labor-intensive and not universally adopted. Pharmacist-led dosing improves outcomes yet requires time-intensive individualization.</p><p><strong>AI Potential:</strong> Machine learning can learn from high-dimensional EHR data and capture complex PK dynamics. Prior vancomycin ML models showed improved accuracy over PopPK but had limitations—short windows, no direct comparison to clinicians, or only initial troughs. Nephrocast-V addresses these by predicting 48h ahead and benchmarking against pharmacists.</p><hr><h2 id=methods-snapshot>Methods Snapshot<a hidden class=anchor aria-hidden=true href=#methods-snapshot>#</a></h2><ul><li><strong>Design/Setting:</strong> Retrospective single-center cohort at two UCSD ICUs (Jan 2016–Jun 2024).</li><li><strong>Inclusion:</strong> Adult ICU patients ≥24h, intermittent IV vancomycin.</li><li><strong>Exclusions:</strong> Continuous infusions, RRT within 7d, ICU stay >14d.</li><li><strong>Outcome:</strong> Steady-state trough ~2 days after prediction point.</li><li><strong>Model:</strong> LSTM + 2-head attention + dense layer with skip connections.</li><li><strong>Predictors:</strong> 253 EHR variables—demographics, comorbidities, labs, vitals, meds, prior vanco levels, doses between prediction and trough.</li><li><strong>Comparison:</strong> ICU pharmacists using PrecisePK Bayesian software.</li><li><strong>Dose Adjustment Simulation:</strong> Incremental ±250mg adjustments tested.</li></ul><hr><h2 id=key-results>Key Results<a hidden class=anchor aria-hidden=true href=#key-results>#</a></h2><ul><li><strong>Cohort:</strong> 2,205 ICU vancomycin encounters (~2,492 troughs). Median age 58; 64% male; 44% experienced AKI.</li><li><strong>Prediction Accuracy:</strong> MAE 3.15 mg/L, RMSE 4.17 mg/L—comparable to pharmacists (MAE 3.06, RMSE 4.07).</li><li><strong>Therapeutic Range Classification:</strong> Both model and pharmacists ~56% accuracy in categorizing troughs.</li><li><strong>High-Error Scenarios:</strong> AKI onset/recovery, low muscle mass, obesity, very low baseline SCr.</li><li><strong>Key Feature Drivers:</strong> Current dose most influential, followed by SCr, length of stay, lab values, sex, sepsis/SIRS indicators.</li><li><strong>Dose Recommendations:</strong> Closer alignment with Nephrocast-V dosing associated with more therapeutic troughs.</li></ul><hr><h2 id=strengths>Strengths<a hidden class=anchor aria-hidden=true href=#strengths>#</a></h2><ul><li>Large real-world ICU dataset (≈2.5k troughs, >2k encounters).</li><li>Broad inputs beyond PopPK models.</li><li>Modern architecture (LSTM + attention, skip connections).</li><li>Benchmark against pharmacists with Bayesian software.</li><li>Actionable dose recommendations, not just predictions.</li><li>Thorough error analysis and feature importance transparency.</li></ul><hr><h2 id=limitations>Limitations<a hidden class=anchor aria-hidden=true href=#limitations>#</a></h2><ul><li>Single-center, internal validation only.</li><li>Excluded dialysis and prolonged ICU cases.</li><li>Trough-focused despite AUC guideline emphasis.</li><li>Retrospective—no prospective patient outcomes.</li><li>Semi-structured data extraction may introduce bias.</li><li>Mostly adult/White cohort; pediatric/ethnic subgroup performance unknown.</li></ul><hr><h2 id=ai-specific-considerations>AI-Specific Considerations<a hidden class=anchor aria-hidden=true href=#ai-specific-considerations>#</a></h2><ul><li><strong>Training/Generalizability:</strong> Local UCSD data only; external validation needed.</li><li><strong>Explainability:</strong> Gradient-based importance aligned with clinical logic, but SHAP/interpretability tools recommended.</li><li><strong>Bias & Fairness:</strong> Possible subgroup differences (e.g., sex, ICU type).</li><li><strong>Regulatory Oversight:</strong> Likely CDS under FDA regulation if logic opaque.</li><li><strong>Maintenance:</strong> Risk of model drift—requires periodic re-training.</li></ul><hr><h2 id=applicability-to-pharmacy-informatics>Applicability to Pharmacy Informatics<a hidden class=anchor aria-hidden=true href=#applicability-to-pharmacy-informatics>#</a></h2><ul><li>Integration via CDS Hooks or SMART-on-FHIR (e.g., during order verification).</li><li>Workflow fit: EMR side-panel, BPA, or dosing advisor.</li><li>Data pipeline: HL7/FHIR mapping of SCr, dosing history, labs.</li><li>Alerting: Non-intrusive, rationale-based to avoid fatigue.</li><li>Training & Acceptance: Scope/limits education, pilot phase trials.</li><li>Governance: Override logging, pharmacist review, continuous QI.</li></ul><hr><h2 id=related-literature-synthesis-table>Related Literature Synthesis Table<a hidden class=anchor aria-hidden=true href=#related-literature-synthesis-table>#</a></h2><p><strong>[A] Hu et al. 2025 (Front Pharmacol)</strong></p><ul><li>Random Forest vs PopPK for troughs (n=546).</li><li>Achieved 84% accuracy vs Bayesian 57%.</li><li>No dose recommendations; short prediction horizon.</li><li><strong>Takeaway:</strong> Even simple ML > PopPK; supports AI in trough targeting.</li></ul><p><strong>[B] Chen et al. 2025 (Microbiol Spectr)</strong></p><ul><li>ICU sepsis cohort (n=4,059). Compared PopPK, Bayesian, ML, Hybrid PK+ML.</li><li>Hybrid best without drug levels; Bayesian best with trough data.</li><li><strong>Takeaway:</strong> Optimal approach context-dependent; future CDS may dynamically select method.</li></ul><p><strong>[C] Nigo et al. 2022 (J Biomed Inform)</strong></p><ul><li>PK-RNN-VE, deep learning on 55k vanco levels.</li><li>Outperformed Bayesian RMSE 5.39 vs 6.29 mg/L.</li><li>Did not provide dosing adjustments.</li><li><strong>Takeaway:</strong> Early validation of RNN-based AI in vancomycin; Nephrocast-V extends horizon + attention.</li></ul><hr><h2 id=evidence-quality--recommendation>Evidence Quality & Recommendation<a hidden class=anchor aria-hidden=true href=#evidence-quality--recommendation>#</a></h2><ul><li><strong>GRADE:</strong> Low (retrospective, single-site, indirect outcomes).</li><li><strong>Practice Recommendation:</strong> Do not replace pharmacist judgment yet. Use as adjunct in pilot studies with oversight.</li><li><strong>Discussion Prompt:</strong> What safeguards would you want before trusting AI dosing in ICU?</li></ul><hr><h2 id=bottom-line>Bottom Line<a hidden class=anchor aria-hidden=true href=#bottom-line>#</a></h2><p>Nephrocast-V predicted vancomycin troughs ~48h ahead with pharmacist-level accuracy in ICU patients. It leverages rich EHR data, offers dose recommendations, and could enhance dosing precision where PopPK models fall short.</p><p>Before clinical adoption: external validation, workflow integration, and governance structures are needed. Pharmacists remain central to evaluating and applying AI outputs safely.</p><hr><h2 id=citation>Citation<a hidden class=anchor aria-hidden=true href=#citation>#</a></h2><p>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Nephrocast-V: A Deep Learning Model for the Prediction of Vancomycin Trough Concentration Using Electronic Health Record Data. <em>Pharmacotherapy</em>. 2025. doi:10.1002/phar.70062</p><hr><h2 id=references-primary--comparative-studies>References (Primary + Comparative Studies)<a hidden class=anchor aria-hidden=true href=#references-primary--comparative-studies>#</a></h2><ol><li>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. <em>Pharmacotherapy</em>. 2025. doi:10.1002/phar.70062</li><li>Hu T, Ding X, Han F, An Z. <em>Front Pharmacol</em>. 2025;16:1549500. doi:10.3389/fphar.2025.1549500</li><li>Chen K, Wang C, Wei Y, Ma S, Huang W, Dong Y, et al. <em>Microbiol Spectr</em>. 2025;13(5):e0049925. doi:10.1128/spectrum.00499-25</li><li>Nigo M, Tran HTN, Xie Z, Feng H, Mao B, Rasmy L, et al. <em>J Biomed Inform</em>. 2022;133:104166. doi:10.1016/j.jbi.2022.104166</li></ol></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2025 <a href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/>Pharmacy AI Newsletter</a></span> ·
-<span>Powered by
-<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
-<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/Pharmacy-AI-Newsletter/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Pharmacy-AI-Newsletter/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Deep Learning Model for the Prediction of Vancomycin Trough Concentration | Pharmacy AI Newsletter</title>
+<meta name="keywords" content="">
+<meta name="description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/">
+<link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.37722ee1e8e48e0d2e8c4a171f1904408ac86675a9b1dc1260db07996f76f425.css" integrity="sha256-N3Iu4ejkjg0ujEoXHxkEQIrIZnWpsdwSYNsHmW929CU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/Pharmacy-AI-Newsletter/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<nav class="post-navigation">
+  <a href="http://localhost:1313/Pharmacy-AI-Newsletter/" class="back-to-posts">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>Back to Posts</span>
+  </a>
+</nav>
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      Deep Learning Model for the Prediction of Vancomycin Trough Concentration
+    </h1>
+    <div class="post-metadata-card">
+      <div class="metadata-row">
+        <span class="metadata-label">Authors:</span>
+        <span class="metadata-value">Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z.</span>
+      </div>
+      <div class="metadata-row">
+        <span class="metadata-label">Journal:</span>
+        <span class="metadata-value">Pharmacotherapy</span>
+      </div>
+      <div class="metadata-row">
+        <span class="metadata-label">DOI:</span>
+        <span class="metadata-value">
+          <a href="https://doi.org/10.1002/phar.70062" target="_blank" rel="noopener">10.1002/phar.70062</a>
+        </span>
+      </div>
+    </div>
+    <div class="post-description">
+      Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.
+    </div>
+    <div class="post-meta"><span title='2025-10-04 11:38:37 -0400 EDT'>October 4, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content journal-club-content"><h2 id="clinicaloperational-question">Clinical/Operational Question<a hidden class="anchor" aria-hidden="true" href="#clinicaloperational-question">#</a></h2>
+<p>Can a sequential deep learning model (“Nephrocast-V”) accurately forecast vancomycin trough levels ~48 hours ahead in ICU patients and recommend dose adjustments to attain therapeutic levels, compared to standard pharmacist-driven Bayesian dosing?</p>
+<hr>
+<h2 id="background--rationale">Background &amp; Rationale<a hidden class="anchor" aria-hidden="true" href="#background--rationale">#</a></h2>
+<p><strong>TDM Challenge:</strong> Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).</p>
+<p><strong>Need for Precision:</strong> Guidelines endorse AUC-guided dosing (target AUC/MIC 400–600) via Bayesian tools, but implementation is labor-intensive and not universally adopted. Pharmacist-led dosing improves outcomes yet requires time-intensive individualization.</p>
+<p><strong>AI Potential:</strong> Machine learning can learn from high-dimensional EHR data and capture complex PK dynamics. Prior vancomycin ML models showed improved accuracy over PopPK but had limitations—short windows, no direct comparison to clinicians, or only initial troughs. Nephrocast-V addresses these by predicting 48h ahead and benchmarking against pharmacists.</p>
+<hr>
+<h2 id="methods-snapshot">Methods Snapshot<a hidden class="anchor" aria-hidden="true" href="#methods-snapshot">#</a></h2>
+<ul>
+<li><strong>Design/Setting:</strong> Retrospective single-center cohort at two UCSD ICUs (Jan 2016–Jun 2024).</li>
+<li><strong>Inclusion:</strong> Adult ICU patients ≥24h, intermittent IV vancomycin.</li>
+<li><strong>Exclusions:</strong> Continuous infusions, RRT within 7d, ICU stay &gt;14d.</li>
+<li><strong>Outcome:</strong> Steady-state trough ~2 days after prediction point.</li>
+<li><strong>Model:</strong> LSTM + 2-head attention + dense layer with skip connections.</li>
+<li><strong>Predictors:</strong> 253 EHR variables—demographics, comorbidities, labs, vitals, meds, prior vanco levels, doses between prediction and trough.</li>
+<li><strong>Comparison:</strong> ICU pharmacists using PrecisePK Bayesian software.</li>
+<li><strong>Dose Adjustment Simulation:</strong> Incremental ±250mg adjustments tested.</li>
+</ul>
+<hr>
+<h2 id="key-results">Key Results<a hidden class="anchor" aria-hidden="true" href="#key-results">#</a></h2>
+<ul>
+<li><strong>Cohort:</strong> 2,205 ICU vancomycin encounters (~2,492 troughs). Median age 58; 64% male; 44% experienced AKI.</li>
+<li><strong>Prediction Accuracy:</strong> MAE 3.15 mg/L, RMSE 4.17 mg/L—comparable to pharmacists (MAE 3.06, RMSE 4.07).</li>
+<li><strong>Therapeutic Range Classification:</strong> Both model and pharmacists ~56% accuracy in categorizing troughs.</li>
+<li><strong>High-Error Scenarios:</strong> AKI onset/recovery, low muscle mass, obesity, very low baseline SCr.</li>
+<li><strong>Key Feature Drivers:</strong> Current dose most influential, followed by SCr, length of stay, lab values, sex, sepsis/SIRS indicators.</li>
+<li><strong>Dose Recommendations:</strong> Closer alignment with Nephrocast-V dosing associated with more therapeutic troughs.</li>
+</ul>
+<hr>
+<h2 id="strengths">Strengths<a hidden class="anchor" aria-hidden="true" href="#strengths">#</a></h2>
+<ul>
+<li>Large real-world ICU dataset (≈2.5k troughs, &gt;2k encounters).</li>
+<li>Broad inputs beyond PopPK models.</li>
+<li>Modern architecture (LSTM + attention, skip connections).</li>
+<li>Benchmark against pharmacists with Bayesian software.</li>
+<li>Actionable dose recommendations, not just predictions.</li>
+<li>Thorough error analysis and feature importance transparency.</li>
+</ul>
+<hr>
+<h2 id="limitations">Limitations<a hidden class="anchor" aria-hidden="true" href="#limitations">#</a></h2>
+<ul>
+<li>Single-center, internal validation only.</li>
+<li>Excluded dialysis and prolonged ICU cases.</li>
+<li>Trough-focused despite AUC guideline emphasis.</li>
+<li>Retrospective—no prospective patient outcomes.</li>
+<li>Semi-structured data extraction may introduce bias.</li>
+<li>Mostly adult/White cohort; pediatric/ethnic subgroup performance unknown.</li>
+</ul>
+<hr>
+<h2 id="ai-specific-considerations">AI-Specific Considerations<a hidden class="anchor" aria-hidden="true" href="#ai-specific-considerations">#</a></h2>
+<ul>
+<li><strong>Training/Generalizability:</strong> Local UCSD data only; external validation needed.</li>
+<li><strong>Explainability:</strong> Gradient-based importance aligned with clinical logic, but SHAP/interpretability tools recommended.</li>
+<li><strong>Bias &amp; Fairness:</strong> Possible subgroup differences (e.g., sex, ICU type).</li>
+<li><strong>Regulatory Oversight:</strong> Likely CDS under FDA regulation if logic opaque.</li>
+<li><strong>Maintenance:</strong> Risk of model drift—requires periodic re-training.</li>
+</ul>
+<hr>
+<h2 id="applicability-to-pharmacy-informatics">Applicability to Pharmacy Informatics<a hidden class="anchor" aria-hidden="true" href="#applicability-to-pharmacy-informatics">#</a></h2>
+<ul>
+<li>Integration via CDS Hooks or SMART-on-FHIR (e.g., during order verification).</li>
+<li>Workflow fit: EMR side-panel, BPA, or dosing advisor.</li>
+<li>Data pipeline: HL7/FHIR mapping of SCr, dosing history, labs.</li>
+<li>Alerting: Non-intrusive, rationale-based to avoid fatigue.</li>
+<li>Training &amp; Acceptance: Scope/limits education, pilot phase trials.</li>
+<li>Governance: Override logging, pharmacist review, continuous QI.</li>
+</ul>
+<hr>
+<h2 id="related-literature-synthesis-table">Related Literature Synthesis Table<a hidden class="anchor" aria-hidden="true" href="#related-literature-synthesis-table">#</a></h2>
+<p><strong>[A] Hu et al. 2025 (Front Pharmacol)</strong></p>
+<ul>
+<li>Random Forest vs PopPK for troughs (n=546).</li>
+<li>Achieved 84% accuracy vs Bayesian 57%.</li>
+<li>No dose recommendations; short prediction horizon.</li>
+<li><strong>Takeaway:</strong> Even simple ML &gt; PopPK; supports AI in trough targeting.</li>
+</ul>
+<p><strong>[B] Chen et al. 2025 (Microbiol Spectr)</strong></p>
+<ul>
+<li>ICU sepsis cohort (n=4,059). Compared PopPK, Bayesian, ML, Hybrid PK+ML.</li>
+<li>Hybrid best without drug levels; Bayesian best with trough data.</li>
+<li><strong>Takeaway:</strong> Optimal approach context-dependent; future CDS may dynamically select method.</li>
+</ul>
+<p><strong>[C] Nigo et al. 2022 (J Biomed Inform)</strong></p>
+<ul>
+<li>PK-RNN-V<!-- raw HTML omitted -->E<!-- raw HTML omitted -->, deep learning on 55k vanco levels.</li>
+<li>Outperformed Bayesian RMSE 5.39 vs 6.29 mg/L.</li>
+<li>Did not provide dosing adjustments.</li>
+<li><strong>Takeaway:</strong> Early validation of RNN-based AI in vancomycin; Nephrocast-V extends horizon + attention.</li>
+</ul>
+<hr>
+<h2 id="evidence-quality--recommendation">Evidence Quality &amp; Recommendation<a hidden class="anchor" aria-hidden="true" href="#evidence-quality--recommendation">#</a></h2>
+<ul>
+<li><strong>GRADE:</strong> Low (retrospective, single-site, indirect outcomes).</li>
+<li><strong>Practice Recommendation:</strong> Do not replace pharmacist judgment yet. Use as adjunct in pilot studies with oversight.</li>
+<li><strong>Discussion Prompt:</strong> What safeguards would you want before trusting AI dosing in ICU?</li>
+</ul>
+<hr>
+<h2 id="bottom-line">Bottom Line<a hidden class="anchor" aria-hidden="true" href="#bottom-line">#</a></h2>
+<p>Nephrocast-V predicted vancomycin troughs ~48h ahead with pharmacist-level accuracy in ICU patients. It leverages rich EHR data, offers dose recommendations, and could enhance dosing precision where PopPK models fall short.</p>
+<p>Before clinical adoption: external validation, workflow integration, and governance structures are needed. Pharmacists remain central to evaluating and applying AI outputs safely.</p>
+<hr>
+<h2 id="citation">Citation<a hidden class="anchor" aria-hidden="true" href="#citation">#</a></h2>
+<p>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Nephrocast-V: A Deep Learning Model for the Prediction of Vancomycin Trough Concentration Using Electronic Health Record Data. <em>Pharmacotherapy</em>. 2025. doi:10.1002/phar.70062</p>
+<hr>
+<h2 id="references-primary--comparative-studies">References (Primary + Comparative Studies)<a hidden class="anchor" aria-hidden="true" href="#references-primary--comparative-studies">#</a></h2>
+<ol>
+<li>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. <em>Pharmacotherapy</em>. 2025. doi:10.1002/phar.70062</li>
+<li>Hu T, Ding X, Han F, An Z. <em>Front Pharmacol</em>. 2025;16:1549500. doi:10.3389/fphar.2025.1549500</li>
+<li>Chen K, Wang C, Wei Y, Ma S, Huang W, Dong Y, et al. <em>Microbiol Spectr</em>. 2025;13(5):e0049925. doi:10.1128/spectrum.00499-25</li>
+<li>Nigo M, Tran HTN, Xie Z, Feng H, Mao B, Rasmy L, et al. <em>J Biomed Inform</em>. 2022;133:104166. doi:10.1016/j.jbi.2022.104166</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/Pharmacy-AI-Newsletter/">Pharmacy AI Newsletter</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

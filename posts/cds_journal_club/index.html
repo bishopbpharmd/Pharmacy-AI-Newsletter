@@ -1,11 +1,317 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>LLM-Based Clinical Decision Support for Medication Safety | Pharmacy AI Newsletter</title><meta name=keywords content><meta name=description content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties."><meta name=author content><link rel=canonical href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/><link crossorigin=anonymous href=/Pharmacy-AI-Newsletter/assets/css/stylesheet.545c6d6a23408d57a668f13a02267cc0c845854c4b9f08d6f505bc4943dfed28.css integrity="sha256-VFxtaiNAjVemaPE6AiZ8wMhFhUxLnwjW9QW8SUPf7Sg=" rel="preload stylesheet" as=style><link rel=icon href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-32x32.png><link rel=apple-touch-icon href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/apple-touch-icon.png><link rel=mask-icon href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:url" content="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/"><meta property="og:site_name" content="Pharmacy AI Newsletter"><meta property="og:title" content="LLM-Based Clinical Decision Support for Medication Safety"><meta property="og:description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties."><meta property="og:locale" content="en-us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-10-04T09:41:46-04:00"><meta property="article:modified_time" content="2025-10-04T09:41:46-04:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="LLM-Based Clinical Decision Support for Medication Safety"><meta name=twitter:description content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/"},{"@type":"ListItem","position":2,"name":"LLM-Based Clinical Decision Support for Medication Safety","item":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"LLM-Based Clinical Decision Support for Medication Safety","name":"LLM-Based Clinical Decision Support for Medication Safety","description":"A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.","keywords":[],"articleBody":"Clinical/Operational Question Key Question: Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?\nBackground \u0026 Rationale Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.\nLLMs (e.g., GPT-4) can interpret free-text clinical scenarios and guidelines, raising interest in using them to catch errors that rigid rule systems might miss. An LLM-based “co-pilot” could review medication orders with contextual understanding, potentially reducing serious errors.\nInvestigators hypothesized that an LLM CDSS, especially when paired with a pharmacist, would augment error detection beyond what either could achieve alone. This stems from the idea that AI can rapidly cross-check vast medical knowledge, while humans provide judgment and oversight.\nMethods Snapshot Design: Prospective, cross-over simulation study using 91 prescribing error scenarios derived from 40 clinical vignettes across 16 medical/surgical specialties. A multidisciplinary expert panel established “ground truth” by classifying drug-related problems (DRPs) and rating error severity (using PCNE criteria and NCC-MERP harm index).\nIntervention: Five LLM-based models were developed with a retrieval-augmented generation (RAG) approach. The best-performing LLM model (e.g., GPT-4 with domain fine-tuning) was tested in three modes:\nLLM-CDSS alone Pharmacist + LLM-CDSS (co-pilot) Pharmacist alone Junior hospital pharmacists (≤2 years experience) participated in the co-pilot and solo arms.\nOutcome Measures: Primary outcome was accuracy in identifying DRPs. Secondary metrics included precision, recall, and F1-score. Researchers also recorded performance on serious harm errors and differences between various underlying LLMs.\nKey Results Co-Pilot Best Performance: Pharmacist+LLM co-pilot achieved highest accuracy (~61%) for error detection, outperforming both LLM alone and pharmacist alone. Serious Harm Errors: Co-pilot caught ~1.5× more high-severity errors than pharmacist-alone. LLM Alone: Reasonable but inferior to co-pilot. Recall improved from 0.47 to 0.61 with pharmacist oversight. Precision Trade-off: Co-pilot had lower precision (more false positives) than pharmacist-alone. Comparative LLMs: GPT-4 with RAG performed best among tested models. Strengths / Limitations Strengths\nProspective, cross-specialty design (16 specialties). Realistic co-pilot workflow tested. Comprehensive metrics with expert-validated gold standard. Limitations\nSimulated cases only, not live patients. Only junior pharmacists tested; unclear generalizability to experienced clinicians. Moderate accuracy (~61% overall). False positives may cause alert fatigue. Single-center (Singapore); limited generalizability. AI-Specific Considerations Hallucinations: Risk of incorrect AI recommendations. Prompt Sensitivity: Dependent on how queries are structured. Knowledge Updates: Models risk being outdated; RAG helps but needs constant validation. Black-Box Reasoning: Lack of transparency raises trust and regulatory concerns. Bias: Training data may underrepresent populations; calibration needed. Data Privacy: HIPAA concerns if using cloud APIs. Applicability to Pharmacy Informatics Epic Willow Integration: Could function at order entry/verification steps via CDS Hooks. Pyxis ES: Potential for AI alerts to propagate to dispensing checks. Validation Burden: Continuous validation required for every update or version change. Data Feeds: Needs comprehensive HL7/FHIR feeds for real-time integration. GPU/Cloud Requirements: Deployment decisions between on-premises vs. cloud APIs. Regulatory Fit: FDA guidance uncertain; transparency lacking may push toward regulation. Related Literature Synthesis Pais et al., 2024 (Nat Med): LLM MEDIC reduced dispensing instruction errors by ~33%. Domain-specific fine-tuning + guardrails lowered false positives. Roosan et al., 2024 (J Am Pharm Assoc): GPT-4 solved 39/39 MTM cases but lacked precise dosing recommendations. Grossman et al., 2023 (ASHP Abstract): Free ChatGPT gave inaccurate/incomplete answers to 74% of drug queries and fabricated references. Evidence Quality \u0026 Recommendation (GRADE-style) Quality of Evidence: Low to Moderate (simulation only, modest sample, evolving technology). Recommendation: Conditional (weak). Consider pilot testing in controlled environments with strong safeguards. Not recommended for widespread replacement of pharmacist judgment. Bottom Line Ong et al. (2025) demonstrated that a GPT-4 powered CDSS, when paired with a pharmacist, improved detection of prescribing errors, especially high-severity ones, but overall accuracy was ~60%.\nThe LLM “co-pilot” is promising but not foolproof. It should be piloted cautiously, with robust oversight, validation, and integration into workflows.\nCitation Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. Cell Rep Med. 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]\nReferences (Primary + Comparative Studies) Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. Cell Rep Med. 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804. Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. Nat Med. 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8. Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. J Am Pharm Assoc. 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023. Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. ASHP Midyear Meeting 2023 – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed). ","wordCount":"820","inLanguage":"en","datePublished":"2025-10-04T09:41:46-04:00","dateModified":"2025-10-04T09:41:46-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/"},"publisher":{"@type":"Organization","name":"Pharmacy AI Newsletter","logo":{"@type":"ImageObject","url":"https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/ accesskey=h title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
-<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu></ul></nav></header><main class=main><nav class=post-navigation><a href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/ class=back-to-posts><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-<span>Back to Posts</span></a></nav><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">LLM-Based Clinical Decision Support for Medication Safety</h1><div class=post-metadata-card><div class=metadata-row><span class=metadata-label>Authors:</span>
-<span class=metadata-value>Ong JCL, Jin L, Elangovan K, et al.</span></div><div class=metadata-row><span class=metadata-label>Journal:</span>
-<span class=metadata-value>Cell Reports Medicine</span></div><div class=metadata-row><span class=metadata-label>DOI:</span>
-<span class=metadata-value><a href=https://doi.org/10.1016/j.xcrm.2025.102323 target=_blank rel=noopener>10.1016/j.xcrm.2025.102323</a></span></div></div><div class=post-description>A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.</div><div class=post-meta><span title='2025-10-04 09:41:46 -0400 EDT'>October 4, 2025</span></div></header><div class="post-content journal-club-content"><h2 id=clinicaloperational-question>Clinical/Operational Question<a hidden class=anchor aria-hidden=true href=#clinicaloperational-question>#</a></h2><p><strong>Key Question:</strong> Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?</p><hr><h2 id=background--rationale>Background & Rationale<a hidden class=anchor aria-hidden=true href=#background--rationale>#</a></h2><p>Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.</p><p>LLMs (e.g., GPT-4) can interpret free-text clinical scenarios and guidelines, raising interest in using them to catch errors that rigid rule systems might miss. An LLM-based “co-pilot” could review medication orders with contextual understanding, potentially reducing serious errors.</p><p>Investigators hypothesized that an LLM CDSS, especially when paired with a pharmacist, would augment error detection beyond what either could achieve alone. This stems from the idea that AI can rapidly cross-check vast medical knowledge, while humans provide judgment and oversight.</p><hr><h2 id=methods-snapshot>Methods Snapshot<a hidden class=anchor aria-hidden=true href=#methods-snapshot>#</a></h2><p><strong>Design:</strong> Prospective, cross-over simulation study using 91 prescribing error scenarios derived from 40 clinical vignettes across 16 medical/surgical specialties. A multidisciplinary expert panel established “ground truth” by classifying drug-related problems (DRPs) and rating error severity (using PCNE criteria and NCC-MERP harm index).</p><p><strong>Intervention:</strong> Five LLM-based models were developed with a retrieval-augmented generation (RAG) approach. The best-performing LLM model (e.g., GPT-4 with domain fine-tuning) was tested in three modes:</p><ol><li>LLM-CDSS alone</li><li>Pharmacist + LLM-CDSS (co-pilot)</li><li>Pharmacist alone</li></ol><p>Junior hospital pharmacists (≤2 years experience) participated in the co-pilot and solo arms.</p><p><strong>Outcome Measures:</strong> Primary outcome was accuracy in identifying DRPs. Secondary metrics included precision, recall, and F1-score. Researchers also recorded performance on serious harm errors and differences between various underlying LLMs.</p><hr><h2 id=key-results>Key Results<a hidden class=anchor aria-hidden=true href=#key-results>#</a></h2><ul><li><strong>Co-Pilot Best Performance:</strong> Pharmacist+LLM co-pilot achieved highest accuracy (~61%) for error detection, outperforming both LLM alone and pharmacist alone.</li><li><strong>Serious Harm Errors:</strong> Co-pilot caught ~1.5× more high-severity errors than pharmacist-alone.</li><li><strong>LLM Alone:</strong> Reasonable but inferior to co-pilot. Recall improved from 0.47 to 0.61 with pharmacist oversight.</li><li><strong>Precision Trade-off:</strong> Co-pilot had lower precision (more false positives) than pharmacist-alone.</li><li><strong>Comparative LLMs:</strong> GPT-4 with RAG performed best among tested models.</li></ul><hr><h2 id=strengths--limitations>Strengths / Limitations<a hidden class=anchor aria-hidden=true href=#strengths--limitations>#</a></h2><p><strong>Strengths</strong></p><ul><li>Prospective, cross-specialty design (16 specialties).</li><li>Realistic co-pilot workflow tested.</li><li>Comprehensive metrics with expert-validated gold standard.</li></ul><p><strong>Limitations</strong></p><ul><li>Simulated cases only, not live patients.</li><li>Only junior pharmacists tested; unclear generalizability to experienced clinicians.</li><li>Moderate accuracy (~61% overall).</li><li>False positives may cause alert fatigue.</li><li>Single-center (Singapore); limited generalizability.</li></ul><hr><h2 id=ai-specific-considerations>AI-Specific Considerations<a hidden class=anchor aria-hidden=true href=#ai-specific-considerations>#</a></h2><ul><li><strong>Hallucinations:</strong> Risk of incorrect AI recommendations.</li><li><strong>Prompt Sensitivity:</strong> Dependent on how queries are structured.</li><li><strong>Knowledge Updates:</strong> Models risk being outdated; RAG helps but needs constant validation.</li><li><strong>Black-Box Reasoning:</strong> Lack of transparency raises trust and regulatory concerns.</li><li><strong>Bias:</strong> Training data may underrepresent populations; calibration needed.</li><li><strong>Data Privacy:</strong> HIPAA concerns if using cloud APIs.</li></ul><hr><h2 id=applicability-to-pharmacy-informatics>Applicability to Pharmacy Informatics<a hidden class=anchor aria-hidden=true href=#applicability-to-pharmacy-informatics>#</a></h2><ul><li><strong>Epic Willow Integration:</strong> Could function at order entry/verification steps via CDS Hooks.</li><li><strong>Pyxis ES:</strong> Potential for AI alerts to propagate to dispensing checks.</li><li><strong>Validation Burden:</strong> Continuous validation required for every update or version change.</li><li><strong>Data Feeds:</strong> Needs comprehensive HL7/FHIR feeds for real-time integration.</li><li><strong>GPU/Cloud Requirements:</strong> Deployment decisions between on-premises vs. cloud APIs.</li><li><strong>Regulatory Fit:</strong> FDA guidance uncertain; transparency lacking may push toward regulation.</li></ul><hr><h2 id=related-literature-synthesis>Related Literature Synthesis<a hidden class=anchor aria-hidden=true href=#related-literature-synthesis>#</a></h2><ul><li><strong>Pais et al., 2024 (Nat Med):</strong> LLM MEDIC reduced dispensing instruction errors by ~33%. Domain-specific fine-tuning + guardrails lowered false positives.</li><li><strong>Roosan et al., 2024 (J Am Pharm Assoc):</strong> GPT-4 solved 39/39 MTM cases but lacked precise dosing recommendations.</li><li><strong>Grossman et al., 2023 (ASHP Abstract):</strong> Free ChatGPT gave inaccurate/incomplete answers to 74% of drug queries and fabricated references.</li></ul><hr><h2 id=evidence-quality--recommendation-grade-style>Evidence Quality & Recommendation (GRADE-style)<a hidden class=anchor aria-hidden=true href=#evidence-quality--recommendation-grade-style>#</a></h2><ul><li><strong>Quality of Evidence:</strong> Low to Moderate (simulation only, modest sample, evolving technology).</li><li><strong>Recommendation:</strong> Conditional (weak). Consider pilot testing in controlled environments with strong safeguards. Not recommended for widespread replacement of pharmacist judgment.</li></ul><hr><h2 id=bottom-line>Bottom Line<a hidden class=anchor aria-hidden=true href=#bottom-line>#</a></h2><p>Ong et al. (2025) demonstrated that a GPT-4 powered CDSS, when paired with a pharmacist, improved detection of prescribing errors, especially high-severity ones, but overall accuracy was ~60%.</p><p>The LLM “co-pilot” is promising but not foolproof. It should be piloted cautiously, with robust oversight, validation, and integration into workflows.</p><hr><h2 id=citation>Citation<a hidden class=anchor aria-hidden=true href=#citation>#</a></h2><p>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]</p><hr><h2 id=references-primary--comparative-studies>References (Primary + Comparative Studies)<a hidden class=anchor aria-hidden=true href=#references-primary--comparative-studies>#</a></h2><ol><li>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804.</li><li>Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. <em>Nat Med.</em> 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8.</li><li>Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. <em>J Am Pharm Assoc.</em> 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023.</li><li>Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. <em>ASHP Midyear Meeting 2023</em> – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed).</li></ol></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2025 <a href=https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/>Pharmacy AI Newsletter</a></span> ·
-<span>Powered by
-<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
-<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/Pharmacy-AI-Newsletter/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Pharmacy-AI-Newsletter/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>LLM-Based Clinical Decision Support for Medication Safety | Pharmacy AI Newsletter</title>
+<meta name="keywords" content="">
+<meta name="description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.37722ee1e8e48e0d2e8c4a171f1904408ac86675a9b1dc1260db07996f76f425.css" integrity="sha256-N3Iu4ejkjg0ujEoXHxkEQIrIZnWpsdwSYNsHmW929CU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/Pharmacy-AI-Newsletter/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<nav class="post-navigation">
+  <a href="http://localhost:1313/Pharmacy-AI-Newsletter/" class="back-to-posts">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>Back to Posts</span>
+  </a>
+</nav>
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title entry-hint-parent">
+      LLM-Based Clinical Decision Support for Medication Safety
+    </h1>
+    <div class="post-metadata-card">
+      <div class="metadata-row">
+        <span class="metadata-label">Authors:</span>
+        <span class="metadata-value">Ong JCL, Jin L, Elangovan K, et al.</span>
+      </div>
+      <div class="metadata-row">
+        <span class="metadata-label">Journal:</span>
+        <span class="metadata-value">Cell Reports Medicine</span>
+      </div>
+      <div class="metadata-row">
+        <span class="metadata-label">DOI:</span>
+        <span class="metadata-value">
+          <a href="https://doi.org/10.1016/j.xcrm.2025.102323" target="_blank" rel="noopener">10.1016/j.xcrm.2025.102323</a>
+        </span>
+      </div>
+    </div>
+    <div class="post-description">
+      A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.
+    </div>
+    <div class="post-meta"><span title='2025-10-04 09:41:46 -0400 EDT'>October 4, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content journal-club-content"><h2 id="clinicaloperational-question">Clinical/Operational Question<a hidden class="anchor" aria-hidden="true" href="#clinicaloperational-question">#</a></h2>
+<p><strong>Key Question:</strong> Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?</p>
+<hr>
+<h2 id="background--rationale">Background &amp; Rationale<a hidden class="anchor" aria-hidden="true" href="#background--rationale">#</a></h2>
+<p>Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.</p>
+<p>LLMs (e.g., GPT-4) can interpret free-text clinical scenarios and guidelines, raising interest in using them to catch errors that rigid rule systems might miss. An LLM-based “co-pilot” could review medication orders with contextual understanding, potentially reducing serious errors.</p>
+<p>Investigators hypothesized that an LLM CDSS, especially when paired with a pharmacist, would augment error detection beyond what either could achieve alone. This stems from the idea that AI can rapidly cross-check vast medical knowledge, while humans provide judgment and oversight.</p>
+<hr>
+<h2 id="methods-snapshot">Methods Snapshot<a hidden class="anchor" aria-hidden="true" href="#methods-snapshot">#</a></h2>
+<p><strong>Design:</strong> Prospective, cross-over simulation study using 91 prescribing error scenarios derived from 40 clinical vignettes across 16 medical/surgical specialties. A multidisciplinary expert panel established “ground truth” by classifying drug-related problems (DRPs) and rating error severity (using PCNE criteria and NCC-MERP harm index).</p>
+<p><strong>Intervention:</strong> Five LLM-based models were developed with a retrieval-augmented generation (RAG) approach. The best-performing LLM model (e.g., GPT-4 with domain fine-tuning) was tested in three modes:</p>
+<ol>
+<li>LLM-CDSS alone</li>
+<li>Pharmacist + LLM-CDSS (co-pilot)</li>
+<li>Pharmacist alone</li>
+</ol>
+<p>Junior hospital pharmacists (≤2 years experience) participated in the co-pilot and solo arms.</p>
+<p><strong>Outcome Measures:</strong> Primary outcome was accuracy in identifying DRPs. Secondary metrics included precision, recall, and F1-score. Researchers also recorded performance on serious harm errors and differences between various underlying LLMs.</p>
+<hr>
+<h2 id="key-results">Key Results<a hidden class="anchor" aria-hidden="true" href="#key-results">#</a></h2>
+<ul>
+<li><strong>Co-Pilot Best Performance:</strong> Pharmacist+LLM co-pilot achieved highest accuracy (~61%) for error detection, outperforming both LLM alone and pharmacist alone.</li>
+<li><strong>Serious Harm Errors:</strong> Co-pilot caught ~1.5× more high-severity errors than pharmacist-alone.</li>
+<li><strong>LLM Alone:</strong> Reasonable but inferior to co-pilot. Recall improved from 0.47 to 0.61 with pharmacist oversight.</li>
+<li><strong>Precision Trade-off:</strong> Co-pilot had lower precision (more false positives) than pharmacist-alone.</li>
+<li><strong>Comparative LLMs:</strong> GPT-4 with RAG performed best among tested models.</li>
+</ul>
+<hr>
+<h2 id="strengths--limitations">Strengths / Limitations<a hidden class="anchor" aria-hidden="true" href="#strengths--limitations">#</a></h2>
+<p><strong>Strengths</strong></p>
+<ul>
+<li>Prospective, cross-specialty design (16 specialties).</li>
+<li>Realistic co-pilot workflow tested.</li>
+<li>Comprehensive metrics with expert-validated gold standard.</li>
+</ul>
+<p><strong>Limitations</strong></p>
+<ul>
+<li>Simulated cases only, not live patients.</li>
+<li>Only junior pharmacists tested; unclear generalizability to experienced clinicians.</li>
+<li>Moderate accuracy (~61% overall).</li>
+<li>False positives may cause alert fatigue.</li>
+<li>Single-center (Singapore); limited generalizability.</li>
+</ul>
+<hr>
+<h2 id="ai-specific-considerations">AI-Specific Considerations<a hidden class="anchor" aria-hidden="true" href="#ai-specific-considerations">#</a></h2>
+<ul>
+<li><strong>Hallucinations:</strong> Risk of incorrect AI recommendations.</li>
+<li><strong>Prompt Sensitivity:</strong> Dependent on how queries are structured.</li>
+<li><strong>Knowledge Updates:</strong> Models risk being outdated; RAG helps but needs constant validation.</li>
+<li><strong>Black-Box Reasoning:</strong> Lack of transparency raises trust and regulatory concerns.</li>
+<li><strong>Bias:</strong> Training data may underrepresent populations; calibration needed.</li>
+<li><strong>Data Privacy:</strong> HIPAA concerns if using cloud APIs.</li>
+</ul>
+<hr>
+<h2 id="applicability-to-pharmacy-informatics">Applicability to Pharmacy Informatics<a hidden class="anchor" aria-hidden="true" href="#applicability-to-pharmacy-informatics">#</a></h2>
+<ul>
+<li><strong>Epic Willow Integration:</strong> Could function at order entry/verification steps via CDS Hooks.</li>
+<li><strong>Pyxis ES:</strong> Potential for AI alerts to propagate to dispensing checks.</li>
+<li><strong>Validation Burden:</strong> Continuous validation required for every update or version change.</li>
+<li><strong>Data Feeds:</strong> Needs comprehensive HL7/FHIR feeds for real-time integration.</li>
+<li><strong>GPU/Cloud Requirements:</strong> Deployment decisions between on-premises vs. cloud APIs.</li>
+<li><strong>Regulatory Fit:</strong> FDA guidance uncertain; transparency lacking may push toward regulation.</li>
+</ul>
+<hr>
+<h2 id="related-literature-synthesis">Related Literature Synthesis<a hidden class="anchor" aria-hidden="true" href="#related-literature-synthesis">#</a></h2>
+<ul>
+<li><strong>Pais et al., 2024 (Nat Med):</strong> LLM MEDIC reduced dispensing instruction errors by ~33%. Domain-specific fine-tuning + guardrails lowered false positives.</li>
+<li><strong>Roosan et al., 2024 (J Am Pharm Assoc):</strong> GPT-4 solved 39/39 MTM cases but lacked precise dosing recommendations.</li>
+<li><strong>Grossman et al., 2023 (ASHP Abstract):</strong> Free ChatGPT gave inaccurate/incomplete answers to 74% of drug queries and fabricated references.</li>
+</ul>
+<hr>
+<h2 id="evidence-quality--recommendation-grade-style">Evidence Quality &amp; Recommendation (GRADE-style)<a hidden class="anchor" aria-hidden="true" href="#evidence-quality--recommendation-grade-style">#</a></h2>
+<ul>
+<li><strong>Quality of Evidence:</strong> Low to Moderate (simulation only, modest sample, evolving technology).</li>
+<li><strong>Recommendation:</strong> Conditional (weak). Consider pilot testing in controlled environments with strong safeguards. Not recommended for widespread replacement of pharmacist judgment.</li>
+</ul>
+<hr>
+<h2 id="bottom-line">Bottom Line<a hidden class="anchor" aria-hidden="true" href="#bottom-line">#</a></h2>
+<p>Ong et al. (2025) demonstrated that a GPT-4 powered CDSS, when paired with a pharmacist, improved detection of prescribing errors, especially high-severity ones, but overall accuracy was ~60%.</p>
+<p>The LLM “co-pilot” is promising but not foolproof. It should be piloted cautiously, with robust oversight, validation, and integration into workflows.</p>
+<hr>
+<h2 id="citation">Citation<a hidden class="anchor" aria-hidden="true" href="#citation">#</a></h2>
+<p>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]</p>
+<hr>
+<h2 id="references-primary--comparative-studies">References (Primary + Comparative Studies)<a hidden class="anchor" aria-hidden="true" href="#references-primary--comparative-studies">#</a></h2>
+<ol>
+<li>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804.</li>
+<li>Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. <em>Nat Med.</em> 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8.</li>
+<li>Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. <em>J Am Pharm Assoc.</em> 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023.</li>
+<li>Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. <em>ASHP Midyear Meeting 2023</em> – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed).</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/Pharmacy-AI-Newsletter/">Pharmacy AI Newsletter</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
