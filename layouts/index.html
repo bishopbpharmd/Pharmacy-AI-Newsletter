@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="post-tiles">
+  {{ range .Site.RegularPages }}
+  <div class="post-tile">
+    <a href="{{ .RelPermalink }}">
+      <div class="tile-content">
+        <h2>{{ .Title }}</h2>
+        <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
+        <div class="tile-meta">
+          <time>{{ .Date.Format "January 2, 2006" }}</time>
+        </div>
+      </div>
+    </a>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

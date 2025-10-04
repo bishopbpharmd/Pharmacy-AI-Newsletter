@@ -1,0 +1,414 @@
+/* ============================================
+   INDEX PAGE - POST TILES
+   ============================================ */
+
+.post-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+.post-tile {
+  background: var(--theme);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.post-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary);
+}
+
+.post-tile a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+
+.tile-content {
+  padding: 1.5rem;
+}
+
+.tile-content h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--primary);
+}
+
+.tile-content p {
+  margin: 0 0 1rem 0;
+  color: var(--secondary);
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.tile-meta {
+  font-size: 0.8rem;
+  color: var(--tertiary);
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.tile-meta time {
+  font-style: italic;
+}
+
+/* Dark mode adjustments */
+.dark .post-tile {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .post-tile:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .post-tiles {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 0.5rem;
+  }
+  
+  .tile-content {
+    padding: 1rem;
+  }
+  
+  .tile-content h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .post-tiles {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
+
+
+/* ============================================
+   SINGLE POST PAGE - HEADER STYLING
+   ============================================ */
+
+/* Header wrapper - contains entire header in one tile */
+.post-header {
+  background: linear-gradient(135deg, var(--code-bg) 0%, var(--entry) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Metadata card styling */
+.post-metadata-card {
+  margin: 1rem 0 0.5rem 0;
+  padding: 0;
+}
+
+.metadata-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin: 0.4rem 0;
+  gap: 0.5rem;
+}
+
+.metadata-row:first-child {
+  margin-top: 0;
+}
+
+.metadata-row:last-child {
+  margin-bottom: 0;
+}
+
+.metadata-label {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+  min-width: 80px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.metadata-value {
+  color: var(--content);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.metadata-value a {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--primary);
+  transition: all 0.2s ease;
+}
+
+.metadata-value a:hover {
+  border-bottom-style: solid;
+  opacity: 0.8;
+}
+
+/* Post description styling within header */
+.post-header .post-description {
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.6;
+}
+
+/* Post meta (date, etc.) styling within header */
+.post-header .post-meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Responsive header */
+@media (max-width: 768px) {
+  .post-header {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .metadata-row {
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0.35rem 0;
+  }
+  
+  .metadata-label {
+    min-width: auto;
+  }
+  
+  .metadata-value {
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================
+   SINGLE POST PAGE - JOURNAL CLUB STYLING
+   ============================================ */
+
+.journal-club-content {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+/* Main heading (H1 in markdown) */
+.journal-club-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Section headings (H2 in markdown) */
+.journal-club-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--code-bg);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  color: var(--primary);
+}
+
+/* Subsection headings (H3 in markdown) */
+.journal-club-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem 0;
+  color: var(--primary);
+}
+
+/* Horizontal rules between sections */
+.journal-club-content hr {
+  margin: 2.5rem 0;
+  border: none;
+  border-top: 2px solid var(--border);
+  opacity: 0.3;
+}
+
+/* Strong/bold text styling */
+.journal-club-content strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Lists styling */
+.journal-club-content ul,
+.journal-club-content ol {
+  margin: 1rem 0 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.journal-club-content li {
+  margin: 0.5rem 0;
+  line-height: 1.7;
+}
+
+.journal-club-content ul li::marker {
+  color: var(--primary);
+}
+
+/* Nested lists */
+.journal-club-content ul ul,
+.journal-club-content ol ol {
+  margin: 0.5rem 0;
+}
+
+/* Blockquotes (if used) */
+.journal-club-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: var(--code-bg);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+/* Code blocks */
+.journal-club-content code {
+  background: var(--code-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--primary);
+}
+
+.journal-club-content pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.journal-club-content pre code {
+  background: none;
+  padding: 0;
+  color: var(--content);
+}
+
+/* Tables (if used) */
+.journal-club-content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.journal-club-content th {
+  background: var(--primary);
+  color: var(--theme);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.journal-club-content td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.journal-club-content tr:last-child td {
+  border-bottom: none;
+}
+
+.journal-club-content tr:hover {
+  background: var(--code-bg);
+}
+
+/* Links */
+.journal-club-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+}
+
+.journal-club-content a:hover {
+  text-decoration-thickness: 2px;
+  opacity: 0.8;
+}
+
+/* Paragraphs */
+.journal-club-content p {
+  margin: 1rem 0;
+  text-align: justify;
+}
+
+/* Special styling for "Strengths" and "Limitations" sections */
+.journal-club-content h3 + p,
+.journal-club-content h3 + ul {
+  margin-top: 0.5rem;
+}
+
+/* References section - smaller font */
+.journal-club-content ol li {
+  font-size: 0.95rem;
+}
+
+/* Citation styling */
+.journal-club-content em {
+  color: var(--secondary);
+  font-style: italic;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .journal-club-content {
+    font-size: 1rem;
+  }
+  
+  .journal-club-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .journal-club-content h2 {
+    font-size: 1.35rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .journal-club-content h3 {
+    font-size: 1.15rem;
+  }
+  
+  .journal-club-content ul,
+  .journal-club-content ol {
+    padding-left: 1.5rem;
+  }
+  
+  .journal-club-content p {
+    text-align: left;
+  }
+}
+
+/* Print styles */
+@media print {
+  .journal-club-content h2 {
+    page-break-after: avoid;
+  }
+  
+  .journal-club-content hr {
+    border-top: 1px solid #000;
+  }
+}

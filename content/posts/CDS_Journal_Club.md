@@ -2,18 +2,11 @@
 date = '2025-10-04T09:41:46-04:00'
 draft = false
 title = 'LLM-Based Clinical Decision Support for Medication Safety'
+description = 'A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.'
+authors = 'Ong JCL, Jin L, Elangovan K, et al.'
+journal = 'Cell Reports Medicine, 2025;6:102323'
+doi = '10.1016/j.xcrm.2025.102323'
 +++
-
-# LLM-Based Clinical Decision Support for Medication Safety  
-**Author(s):** Ong JCL, Jin L, Elangovan K, et al.  
-**Journal:** Cell Reports Medicine, 2025;6:102323. doi:10.1016/j.xcrm.2025.102323  
-
----
-
-## Citation  
-Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. *Cell Rep Med.* 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]  
-
----
 
 ## Clinical/Operational Question  
 **Key Question:** Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?  
@@ -107,8 +100,14 @@ The LLM “co-pilot” is promising but not foolproof. It should be piloted caut
 
 ---
 
+## Citation  
+Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. *Cell Rep Med.* 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]  
+
+---
+
 ## References (Primary + Comparative Studies)  
 1. Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. *Cell Rep Med.* 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804.  
 2. Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. *Nat Med.* 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8.  
 3. Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. *J Am Pharm Assoc.* 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023.  
 4. Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. *ASHP Midyear Meeting 2023* – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed).  
+
