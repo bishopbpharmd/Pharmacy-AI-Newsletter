@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>LLM-Based Clinical Decision Support for Medication Safety | Pharmacy AI Newsletter</title>
+<title>Deep Learning Model for the Prediction of Vancomycin Trough Concentration | Pharmacy AI Newsletter</title>
 <meta name="keywords" content="">
-<meta name="description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
+<meta name="description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<link rel="canonical" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/">
 <link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.fbc02d6a9055a8a8cf4aecf3d628d465d32148fed3f9e0a4e731319a5a45e55a.css" integrity="sha256-&#43;8AtapBVqKjPSuzz1ijUZdMhSP7T&#43;eCk5zExmlpF5Vo=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/Pharmacy-AI-Newsletter/favicon-16x16.png">
@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="http://localhost:1313/Pharmacy-AI-Newsletter/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/">
 <noscript>
     <style>
         #theme-toggle,
@@ -116,121 +116,142 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title entry-hint-parent">
-      LLM-Based Clinical Decision Support for Medication Safety
+      Deep Learning Model for the Prediction of Vancomycin Trough Concentration
     </h1>
     <div class="post-metadata-card">
       <div class="metadata-row">
         <span class="metadata-label">Authors:</span>
-        <span class="metadata-value">Ong JCL, Jin L, Elangovan K, et al.</span>
+        <span class="metadata-value">Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z.</span>
       </div>
       <div class="metadata-row">
         <span class="metadata-label">Journal:</span>
-        <span class="metadata-value">Cell Reports Medicine</span>
+        <span class="metadata-value">Pharmacotherapy</span>
       </div>
       <div class="metadata-row">
         <span class="metadata-label">DOI:</span>
         <span class="metadata-value">
-          <a href="https://doi.org/10.1016/j.xcrm.2025.102323" target="_blank" rel="noopener">10.1016/j.xcrm.2025.102323</a>
+          <a href="https://doi.org/10.1002/phar.70062" target="_blank" rel="noopener">10.1002/phar.70062</a>
         </span>
       </div>
     </div>
     <div class="post-description">
-      A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.
+      Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.
     </div>
-    <div class="post-meta"><span title='2025-10-04 09:41:46 -0400 EDT'>October 4, 2025</span>
+    <div class="post-meta"><span title='2025-10-04 11:38:37 -0400 EDT'>October 4, 2025</span>
 
 </div>
   </header> 
   <div class="post-content journal-club-content"><h2 id="clinicaloperational-question">Clinical/Operational Question<a hidden class="anchor" aria-hidden="true" href="#clinicaloperational-question">#</a></h2>
-<p><strong>Key Question:</strong> Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?</p>
+<p>Can a sequential deep learning model (“Nephrocast-V”) accurately forecast vancomycin trough levels ~48 hours ahead in ICU patients and recommend dose adjustments to attain therapeutic levels, compared to standard pharmacist-driven Bayesian dosing?</p>
 <hr>
 <h2 id="background--rationale">Background &amp; Rationale<a hidden class="anchor" aria-hidden="true" href="#background--rationale">#</a></h2>
-<p>Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.</p>
-<p>LLMs (e.g., GPT-4) can interpret free-text clinical scenarios and guidelines, raising interest in using them to catch errors that rigid rule systems might miss. An LLM-based “co-pilot” could review medication orders with contextual understanding, potentially reducing serious errors.</p>
-<p>Investigators hypothesized that an LLM CDSS, especially when paired with a pharmacist, would augment error detection beyond what either could achieve alone. This stems from the idea that AI can rapidly cross-check vast medical knowledge, while humans provide judgment and oversight.</p>
+<p><strong>TDM Challenge:</strong> Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).</p>
+<p><strong>Need for Precision:</strong> Guidelines endorse AUC-guided dosing (target AUC/MIC 400–600) via Bayesian tools, but implementation is labor-intensive and not universally adopted. Pharmacist-led dosing improves outcomes yet requires time-intensive individualization.</p>
+<p><strong>AI Potential:</strong> Machine learning can learn from high-dimensional EHR data and capture complex PK dynamics. Prior vancomycin ML models showed improved accuracy over PopPK but had limitations—short windows, no direct comparison to clinicians, or only initial troughs. Nephrocast-V addresses these by predicting 48h ahead and benchmarking against pharmacists.</p>
 <hr>
 <h2 id="methods-snapshot">Methods Snapshot<a hidden class="anchor" aria-hidden="true" href="#methods-snapshot">#</a></h2>
-<p><strong>Design:</strong> Prospective, cross-over simulation study using 91 prescribing error scenarios derived from 40 clinical vignettes across 16 medical/surgical specialties. A multidisciplinary expert panel established “ground truth” by classifying drug-related problems (DRPs) and rating error severity (using PCNE criteria and NCC-MERP harm index).</p>
-<p><strong>Intervention:</strong> Five LLM-based models were developed with a retrieval-augmented generation (RAG) approach. The best-performing LLM model (e.g., GPT-4 with domain fine-tuning) was tested in three modes:</p>
-<ol>
-<li>LLM-CDSS alone</li>
-<li>Pharmacist + LLM-CDSS (co-pilot)</li>
-<li>Pharmacist alone</li>
-</ol>
-<p>Junior hospital pharmacists (≤2 years experience) participated in the co-pilot and solo arms.</p>
-<p><strong>Outcome Measures:</strong> Primary outcome was accuracy in identifying DRPs. Secondary metrics included precision, recall, and F1-score. Researchers also recorded performance on serious harm errors and differences between various underlying LLMs.</p>
+<ul>
+<li><strong>Design/Setting:</strong> Retrospective single-center cohort at two UCSD ICUs (Jan 2016–Jun 2024).</li>
+<li><strong>Inclusion:</strong> Adult ICU patients ≥24h, intermittent IV vancomycin.</li>
+<li><strong>Exclusions:</strong> Continuous infusions, RRT within 7d, ICU stay &gt;14d.</li>
+<li><strong>Outcome:</strong> Steady-state trough ~2 days after prediction point.</li>
+<li><strong>Model:</strong> LSTM + 2-head attention + dense layer with skip connections.</li>
+<li><strong>Predictors:</strong> 253 EHR variables—demographics, comorbidities, labs, vitals, meds, prior vanco levels, doses between prediction and trough.</li>
+<li><strong>Comparison:</strong> ICU pharmacists using PrecisePK Bayesian software.</li>
+<li><strong>Dose Adjustment Simulation:</strong> Incremental ±250mg adjustments tested.</li>
+</ul>
 <hr>
 <h2 id="key-results">Key Results<a hidden class="anchor" aria-hidden="true" href="#key-results">#</a></h2>
 <ul>
-<li><strong>Co-Pilot Best Performance:</strong> Pharmacist+LLM co-pilot achieved highest accuracy (~61%) for error detection, outperforming both LLM alone and pharmacist alone.</li>
-<li><strong>Serious Harm Errors:</strong> Co-pilot caught ~1.5× more high-severity errors than pharmacist-alone.</li>
-<li><strong>LLM Alone:</strong> Reasonable but inferior to co-pilot. Recall improved from 0.47 to 0.61 with pharmacist oversight.</li>
-<li><strong>Precision Trade-off:</strong> Co-pilot had lower precision (more false positives) than pharmacist-alone.</li>
-<li><strong>Comparative LLMs:</strong> GPT-4 with RAG performed best among tested models.</li>
+<li><strong>Cohort:</strong> 2,205 ICU vancomycin encounters (~2,492 troughs). Median age 58; 64% male; 44% experienced AKI.</li>
+<li><strong>Prediction Accuracy:</strong> MAE 3.15 mg/L, RMSE 4.17 mg/L—comparable to pharmacists (MAE 3.06, RMSE 4.07).</li>
+<li><strong>Therapeutic Range Classification:</strong> Both model and pharmacists ~56% accuracy in categorizing troughs.</li>
+<li><strong>High-Error Scenarios:</strong> AKI onset/recovery, low muscle mass, obesity, very low baseline SCr.</li>
+<li><strong>Key Feature Drivers:</strong> Current dose most influential, followed by SCr, length of stay, lab values, sex, sepsis/SIRS indicators.</li>
+<li><strong>Dose Recommendations:</strong> Closer alignment with Nephrocast-V dosing associated with more therapeutic troughs.</li>
 </ul>
 <hr>
-<h2 id="strengths--limitations">Strengths / Limitations<a hidden class="anchor" aria-hidden="true" href="#strengths--limitations">#</a></h2>
-<p><strong>Strengths</strong></p>
+<h2 id="strengths">Strengths<a hidden class="anchor" aria-hidden="true" href="#strengths">#</a></h2>
 <ul>
-<li>Prospective, cross-specialty design (16 specialties).</li>
-<li>Realistic co-pilot workflow tested.</li>
-<li>Comprehensive metrics with expert-validated gold standard.</li>
+<li>Large real-world ICU dataset (≈2.5k troughs, &gt;2k encounters).</li>
+<li>Broad inputs beyond PopPK models.</li>
+<li>Modern architecture (LSTM + attention, skip connections).</li>
+<li>Benchmark against pharmacists with Bayesian software.</li>
+<li>Actionable dose recommendations, not just predictions.</li>
+<li>Thorough error analysis and feature importance transparency.</li>
 </ul>
-<p><strong>Limitations</strong></p>
+<hr>
+<h2 id="limitations">Limitations<a hidden class="anchor" aria-hidden="true" href="#limitations">#</a></h2>
 <ul>
-<li>Simulated cases only, not live patients.</li>
-<li>Only junior pharmacists tested; unclear generalizability to experienced clinicians.</li>
-<li>Moderate accuracy (~61% overall).</li>
-<li>False positives may cause alert fatigue.</li>
-<li>Single-center (Singapore); limited generalizability.</li>
+<li>Single-center, internal validation only.</li>
+<li>Excluded dialysis and prolonged ICU cases.</li>
+<li>Trough-focused despite AUC guideline emphasis.</li>
+<li>Retrospective—no prospective patient outcomes.</li>
+<li>Semi-structured data extraction may introduce bias.</li>
+<li>Mostly adult/White cohort; pediatric/ethnic subgroup performance unknown.</li>
 </ul>
 <hr>
 <h2 id="ai-specific-considerations">AI-Specific Considerations<a hidden class="anchor" aria-hidden="true" href="#ai-specific-considerations">#</a></h2>
 <ul>
-<li><strong>Hallucinations:</strong> Risk of incorrect AI recommendations.</li>
-<li><strong>Prompt Sensitivity:</strong> Dependent on how queries are structured.</li>
-<li><strong>Knowledge Updates:</strong> Models risk being outdated; RAG helps but needs constant validation.</li>
-<li><strong>Black-Box Reasoning:</strong> Lack of transparency raises trust and regulatory concerns.</li>
-<li><strong>Bias:</strong> Training data may underrepresent populations; calibration needed.</li>
-<li><strong>Data Privacy:</strong> HIPAA concerns if using cloud APIs.</li>
+<li><strong>Training/Generalizability:</strong> Local UCSD data only; external validation needed.</li>
+<li><strong>Explainability:</strong> Gradient-based importance aligned with clinical logic, but SHAP/interpretability tools recommended.</li>
+<li><strong>Bias &amp; Fairness:</strong> Possible subgroup differences (e.g., sex, ICU type).</li>
+<li><strong>Regulatory Oversight:</strong> Likely CDS under FDA regulation if logic opaque.</li>
+<li><strong>Maintenance:</strong> Risk of model drift—requires periodic re-training.</li>
 </ul>
 <hr>
 <h2 id="applicability-to-pharmacy-informatics">Applicability to Pharmacy Informatics<a hidden class="anchor" aria-hidden="true" href="#applicability-to-pharmacy-informatics">#</a></h2>
 <ul>
-<li><strong>Epic Willow Integration:</strong> Could function at order entry/verification steps via CDS Hooks.</li>
-<li><strong>Pyxis ES:</strong> Potential for AI alerts to propagate to dispensing checks.</li>
-<li><strong>Validation Burden:</strong> Continuous validation required for every update or version change.</li>
-<li><strong>Data Feeds:</strong> Needs comprehensive HL7/FHIR feeds for real-time integration.</li>
-<li><strong>GPU/Cloud Requirements:</strong> Deployment decisions between on-premises vs. cloud APIs.</li>
-<li><strong>Regulatory Fit:</strong> FDA guidance uncertain; transparency lacking may push toward regulation.</li>
+<li>Integration via CDS Hooks or SMART-on-FHIR (e.g., during order verification).</li>
+<li>Workflow fit: EMR side-panel, BPA, or dosing advisor.</li>
+<li>Data pipeline: HL7/FHIR mapping of SCr, dosing history, labs.</li>
+<li>Alerting: Non-intrusive, rationale-based to avoid fatigue.</li>
+<li>Training &amp; Acceptance: Scope/limits education, pilot phase trials.</li>
+<li>Governance: Override logging, pharmacist review, continuous QI.</li>
 </ul>
 <hr>
-<h2 id="related-literature-synthesis">Related Literature Synthesis<a hidden class="anchor" aria-hidden="true" href="#related-literature-synthesis">#</a></h2>
+<h2 id="related-literature-synthesis-table">Related Literature Synthesis Table<a hidden class="anchor" aria-hidden="true" href="#related-literature-synthesis-table">#</a></h2>
+<p><strong>[A] Hu et al. 2025 (Front Pharmacol)</strong></p>
 <ul>
-<li><strong>Pais et al., 2024 (Nat Med):</strong> LLM MEDIC reduced dispensing instruction errors by ~33%. Domain-specific fine-tuning + guardrails lowered false positives.</li>
-<li><strong>Roosan et al., 2024 (J Am Pharm Assoc):</strong> GPT-4 solved 39/39 MTM cases but lacked precise dosing recommendations.</li>
-<li><strong>Grossman et al., 2023 (ASHP Abstract):</strong> Free ChatGPT gave inaccurate/incomplete answers to 74% of drug queries and fabricated references.</li>
+<li>Random Forest vs PopPK for troughs (n=546).</li>
+<li>Achieved 84% accuracy vs Bayesian 57%.</li>
+<li>No dose recommendations; short prediction horizon.</li>
+<li><strong>Takeaway:</strong> Even simple ML &gt; PopPK; supports AI in trough targeting.</li>
+</ul>
+<p><strong>[B] Chen et al. 2025 (Microbiol Spectr)</strong></p>
+<ul>
+<li>ICU sepsis cohort (n=4,059). Compared PopPK, Bayesian, ML, Hybrid PK+ML.</li>
+<li>Hybrid best without drug levels; Bayesian best with trough data.</li>
+<li><strong>Takeaway:</strong> Optimal approach context-dependent; future CDS may dynamically select method.</li>
+</ul>
+<p><strong>[C] Nigo et al. 2022 (J Biomed Inform)</strong></p>
+<ul>
+<li>PK-RNN-V<!-- raw HTML omitted -->E<!-- raw HTML omitted -->, deep learning on 55k vanco levels.</li>
+<li>Outperformed Bayesian RMSE 5.39 vs 6.29 mg/L.</li>
+<li>Did not provide dosing adjustments.</li>
+<li><strong>Takeaway:</strong> Early validation of RNN-based AI in vancomycin; Nephrocast-V extends horizon + attention.</li>
 </ul>
 <hr>
-<h2 id="evidence-quality--recommendation-grade-style">Evidence Quality &amp; Recommendation (GRADE-style)<a hidden class="anchor" aria-hidden="true" href="#evidence-quality--recommendation-grade-style">#</a></h2>
+<h2 id="evidence-quality--recommendation">Evidence Quality &amp; Recommendation<a hidden class="anchor" aria-hidden="true" href="#evidence-quality--recommendation">#</a></h2>
 <ul>
-<li><strong>Quality of Evidence:</strong> Low to Moderate (simulation only, modest sample, evolving technology).</li>
-<li><strong>Recommendation:</strong> Conditional (weak). Consider pilot testing in controlled environments with strong safeguards. Not recommended for widespread replacement of pharmacist judgment.</li>
+<li><strong>GRADE:</strong> Low (retrospective, single-site, indirect outcomes).</li>
+<li><strong>Practice Recommendation:</strong> Do not replace pharmacist judgment yet. Use as adjunct in pilot studies with oversight.</li>
+<li><strong>Discussion Prompt:</strong> What safeguards would you want before trusting AI dosing in ICU?</li>
 </ul>
 <hr>
 <h2 id="bottom-line">Bottom Line<a hidden class="anchor" aria-hidden="true" href="#bottom-line">#</a></h2>
-<p>Ong et al. (2025) demonstrated that a GPT-4 powered CDSS, when paired with a pharmacist, improved detection of prescribing errors, especially high-severity ones, but overall accuracy was ~60%.</p>
-<p>The LLM “co-pilot” is promising but not foolproof. It should be piloted cautiously, with robust oversight, validation, and integration into workflows.</p>
+<p>Nephrocast-V predicted vancomycin troughs ~48h ahead with pharmacist-level accuracy in ICU patients. It leverages rich EHR data, offers dose recommendations, and could enhance dosing precision where PopPK models fall short.</p>
+<p>Before clinical adoption: external validation, workflow integration, and governance structures are needed. Pharmacists remain central to evaluating and applying AI outputs safely.</p>
 <hr>
 <h2 id="citation">Citation<a hidden class="anchor" aria-hidden="true" href="#citation">#</a></h2>
-<p>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]</p>
+<p>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Nephrocast-V: A Deep Learning Model for the Prediction of Vancomycin Trough Concentration Using Electronic Health Record Data. <em>Pharmacotherapy</em>. 2025. doi:10.1002/phar.70062</p>
 <hr>
 <h2 id="references-primary--comparative-studies">References (Primary + Comparative Studies)<a hidden class="anchor" aria-hidden="true" href="#references-primary--comparative-studies">#</a></h2>
 <ol>
-<li>Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. <em>Cell Rep Med.</em> 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804.</li>
-<li>Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. <em>Nat Med.</em> 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8.</li>
-<li>Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. <em>J Am Pharm Assoc.</em> 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023.</li>
-<li>Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. <em>ASHP Midyear Meeting 2023</em> – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed).</li>
+<li>Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. <em>Pharmacotherapy</em>. 2025. doi:10.1002/phar.70062</li>
+<li>Hu T, Ding X, Han F, An Z. <em>Front Pharmacol</em>. 2025;16:1549500. doi:10.3389/fphar.2025.1549500</li>
+<li>Chen K, Wang C, Wei Y, Ma S, Huang W, Dong Y, et al. <em>Microbiol Spectr</em>. 2025;13(5):e0049925. doi:10.1128/spectrum.00499-25</li>
+<li>Nigo M, Tran HTN, Xie Z, Feng H, Mao B, Rasmy L, et al. <em>J Biomed Inform</em>. 2022;133:104166. doi:10.1016/j.jbi.2022.104166</li>
 </ol>
 
 
