@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>External Validation on Pharmacy AI Newsletter</title>
+    <link>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/tags/external-validation/</link>
+    <description>Recent content in External Validation on Pharmacy AI Newsletter</description>
+    <generator>Hugo -- 0.151.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 Oct 2025 21:47:38 -0400</lastBuildDate>
+    <atom:link href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/tags/external-validation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>External Validation and Bias in Opioid Risk Prediction Models</title>
+      <link>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/opioid_abstract/</link>
+      <pubDate>Sat, 04 Oct 2025 21:47:38 -0400</pubDate>
+      <guid>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/opioid_abstract/</guid>
+      <description>A study evaluating an opioid risk prediction model found that external population shifts reduced performance and fairness, requiring local recalibration and subgroup-specific threshold tuning for equitable clinical use.</description>
+    </item>
+    <item>
+      <title>Limits of Inter-Hospital Model Transfer in Delirium Detection</title>
+      <link>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/delerium_abstract/</link>
+      <pubDate>Thu, 02 Oct 2025 21:48:00 -0400</pubDate>
+      <guid>https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/delerium_abstract/</guid>
+      <description>A multi-institution study deployed an open-source NLP model to detect delirium features from EHR notes, achieving feasible but variable performance across seven health systems. The project established a shared ontology, temporal conventions, and site-specific preprocessing to improve portability and consistency.</description>
+    </item>
+  </channel>
+</rss>

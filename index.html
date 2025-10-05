@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="canonical" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/">
-<link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.37722ee1e8e48e0d2e8c4a171f1904408ac86675a9b1dc1260db07996f76f425.css" integrity="sha256-N3Iu4ejkjg0ujEoXHxkEQIrIZnWpsdwSYNsHmW929CU=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-32x32.png">
@@ -98,13 +98,52 @@
         <div class="logo">
             <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+            </div>
+        </div>
+        
+        
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu">
+            
+            <div class="hamburger-icon">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+            
+            <div class="x-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+        
+        <ul id="menu" class="desktop-menu">
+            
+            
+            <li class="navbar-home">
+                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="navbar-archive">
+                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li class="navbar-subscribe">
+                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" title="Subscribe" class="subscribe-button">
+                    <span>Subscribe</span>
+                </a>
+            </li>
+            <li class="navbar-theme-toggle">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme" class="theme-toggle-button">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -118,19 +157,156 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
+            </li>
+        </ul>
+        
+        
+        <div class="mobile-menu-backdrop" id="mobile-menu-backdrop"></div>
+        
+        
+        <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-items">
+                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="mobile-menu-item">
+                        <span>Home</span>
+                    </a>
+                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/" class="mobile-menu-item">
+                        <span>Archive</span>
+                    </a>
+                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="mobile-menu-item">
+                        <span>Subscribe</span>
+                    </a>
+                    <button class="mobile-menu-item mobile-menu-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle theme">
+                        <div class="theme-toggle-content">
+                            <span class="theme-label">Theme</span>
+                            <div class="theme-icon-container">
+                                <svg id="mobile-moon" class="theme-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                <svg id="mobile-sun" class="theme-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="theme-toggle-switch">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
-        <ul id="menu">
-        </ul>
     </nav>
 </header>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const desktopThemeToggle = document.getElementById('theme-toggle');
+    
+    
+    function toggleMobileMenu() {
+        const isActive = mobileMenuOverlay.classList.contains('active');
+        
+        if (isActive) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    }
+    
+    function openMobileMenu() {
+        mobileMenuBackdrop.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+        mobileMenuToggle.classList.add('active');
+        document.body.style.overflow = 'hidden'; 
+    }
+    
+    function closeMobileMenu() {
+        mobileMenuBackdrop.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        document.body.style.overflow = ''; 
+    }
+    
+    
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+    }
+    
+    
+    if (mobileMenuBackdrop) {
+        mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+    }
+    
+    
+    const mobileMenuItems = document.querySelectorAll('.mobile-menu-item:not(.mobile-menu-theme-toggle)');
+    mobileMenuItems.forEach(item => {
+        item.addEventListener('click', closeMobileMenu);
+    });
+    
+    
+    if (mobileThemeToggle && desktopThemeToggle) {
+        mobileThemeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            desktopThemeToggle.click(); 
+            updateMobileThemeToggle(); 
+            
+        });
+    }
+    
+    
+    function updateMobileThemeToggle() {
+        const isDark = document.body.classList.contains('dark');
+        const moonIcon = document.getElementById('mobile-moon');
+        const sunIcon = document.getElementById('mobile-sun');
+        const toggleSwitch = document.querySelector('.theme-toggle-switch');
+        
+        if (isDark) {
+            moonIcon.classList.add('active');
+            sunIcon.classList.remove('active');
+            toggleSwitch.classList.add('active');
+        } else {
+            sunIcon.classList.add('active');
+            moonIcon.classList.remove('active');
+            toggleSwitch.classList.remove('active');
+        }
+    }
+    
+    
+    updateMobileThemeToggle();
+    
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+});
+</script>
 <main class="main">
 <div class="index-content">
   
   <div class="newsletter-header">
     <div class="newsletter-card">
       <div class="newsletter-eyebrow">AI + Pharmacy</div>
-      <h1 class="newsletter-title">Weekly Briefing — October 4, 2025</h1>
+      <h1 class="newsletter-title">Weekly Briefing — October 5, 2025</h1>
       <p class="newsletter-subtitle">Highlights, analyses, and scan-friendly insights from the latest research and practice updates.</p>
       
       
@@ -161,51 +337,220 @@
   </div>
 
   
-  <div class="post-tiles">
+  <div class="posts-container">
     
-    <div class="post-tile">
-      <a href="/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/">
-        <div class="tile-content">
-          <h2>Deep Learning Model for the Prediction of Vancomycin Trough Concentration</h2>
-          
-          <div class="tile-journal">Journal: Pharmacotherapy</div>
-          
-          <p>Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.</p>
-          <div class="tile-meta">
-            <time>October 4, 2025</time>
+    
+    
+    <div class="major-posts">
+      
+      <div class="post-tile">
+        <a href="/Pharmacy-AI-Newsletter/posts/vancomycin_ai_journal_club/">
+          <div class="tile-content">
+            <h2>Deep Learning Model for the Prediction of Vancomycin Trough Concentration</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-model-development">Model Development</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Pharmacotherapy</div>
+            
+            <p>Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+      
+      <div class="post-tile">
+        <a href="/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
+          <div class="tile-content">
+            <h2>Evaluation of Explainable AI Frameworks in Healthcare</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-guidelines-standards">Guidelines &amp; Standards</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Digital Health</div>
+            
+            <p>Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="post-tile">
+        <a href="/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+          <div class="tile-content">
+            <h2>LLM-Based Clinical Decision Support for Medication Safety</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-model-development">Model Development</span>
+              
+              <span class="tag-pill tag-process-outcomes">Process Outcomes</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Cell Reports Medicine</div>
+            
+            <p>A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
     </div>
     
-    <div class="post-tile">
-      <a href="/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
-        <div class="tile-content">
-          <h2>Evaluation of Explainable AI Frameworks in Healthcare</h2>
-          
-          <div class="tile-journal">Journal: Digital Health</div>
-          
-          <p>Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.</p>
-          <div class="tile-meta">
-            <time>October 4, 2025</time>
-          </div>
-        </div>
-      </a>
-    </div>
+
     
-    <div class="post-tile">
-      <a href="/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
-        <div class="tile-content">
-          <h2>LLM-Based Clinical Decision Support for Medication Safety</h2>
-          
-          <div class="tile-journal">Journal: Cell Reports Medicine</div>
-          
-          <p>A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.</p>
-          <div class="tile-meta">
-            <time>October 4, 2025</time>
+    
+    
+    <div class="minor-posts">
+      
+      <div class="post-tile post-tile-minor">
+        <a href="/Pharmacy-AI-Newsletter/posts/ddi_abstract/">
+          <div class="tile-content">
+            <h2>LLMs show partial utility for DDI checks</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-reviews-perspectives">Reviews &amp; Perspectives</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Expert Review of Clinical Pharmacology</div>
+            
+            <p>This review finds that LLMs can detect many common drug–drug interactions with clear explanations, but they miss uncommon ones, vary in severity ratings, and sometimes hallucinate contraindications.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+      
+      <div class="post-tile post-tile-minor">
+        <a href="/Pharmacy-AI-Newsletter/posts/ai_cds_abstract/">
+          <div class="tile-content">
+            <h2>Rule-Based CDS: A Literature Review of Impact and Evolution</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-reviews-perspectives">Reviews &amp; Perspectives</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Cureus</div>
+            
+            <p>This scoping review of 28 studies (2007–2023) maps how rule-based CDSS are used across medicine, highlighting both measurable gains and persistent barriers.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="post-tile post-tile-minor">
+        <a href="/Pharmacy-AI-Newsletter/posts/cardiac_surg_aki_abstract/">
+          <div class="tile-content">
+            <h2>Six-lab causal AI for early AKI detection post cardiac surgery</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-model-development">Model Development</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Lancet Digit Health</div>
+            
+            <p>A causal AI model (REACT) predicts cardiac surgery-associated acute kidney injury up to 48 hours earlier than guidelines using six routine lab values.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="post-tile post-tile-minor">
+        <a href="/Pharmacy-AI-Newsletter/posts/opioid_abstract/">
+          <div class="tile-content">
+            <h2>External Validation and Bias in Opioid Risk Prediction Models</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-external-validation">External Validation</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: JAMIA Open</div>
+            
+            <p>A study evaluating an opioid risk prediction model found that external population shifts reduced performance and fairness, requiring local recalibration and subgroup-specific threshold tuning for equitable clinical use.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="post-tile post-tile-minor">
+        <a href="/Pharmacy-AI-Newsletter/posts/voriconazole_abstract/">
+          <div class="tile-content">
+            <h2>Machine learning to guide infant voriconazole dosing</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-model-development">Model Development</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: Frontiers in Pharmacology</div>
+            
+            <p>A study combining population pharmacokinetics and machine learning to predict voriconazole exposure in immunocompromised infants under 24 months.</p>
+            <div class="tile-meta">
+              <time>October 4, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="post-tile post-tile-minor">
+        <a href="/Pharmacy-AI-Newsletter/posts/delerium_abstract/">
+          <div class="tile-content">
+            <h2>Limits of Inter-Hospital Model Transfer in Delirium Detection</h2>
+            
+            <div class="tile-tags">
+              
+              <span class="tag-pill tag-external-validation">External Validation</span>
+              
+            </div>
+            
+            
+            <div class="tile-journal">Journal: J Gerontol A Biol Sci Med Sci</div>
+            
+            <p>A multi-institution study deployed an open-source NLP model to detect delirium features from EHR notes, achieving feasible but variable performance across seven health systems. The project established a shared ontology, temporal conventions, and site-specific preprocessing to improve portability and consistency.</p>
+            <div class="tile-meta">
+              <time>October 2, 2025</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      
     </div>
     
   </div>
