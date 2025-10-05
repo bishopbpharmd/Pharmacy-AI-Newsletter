@@ -6,6 +6,8 @@ description = 'Evaluation of Nephrocast-V, a sequential deep learning model pred
 authors = 'Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z.'
 journal = 'Pharmacotherapy'
 doi = '10.1002/phar.70062'
+tags = ['Model Development']
+type = 'major'
 +++
 
 ## Clinical/Operational Question  

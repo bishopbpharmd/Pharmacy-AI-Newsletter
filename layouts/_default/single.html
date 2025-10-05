@@ -24,6 +24,14 @@
       {{- end }}
     </h1>
     
+    {{- if .Params.tags }}
+    <div class="post-tags-header">
+      {{ range .Params.tags }}
+      <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+      {{ end }}
+    </div>
+    {{- end }}
+    
     {{- if or .Params.authors .Params.journal .Params.doi }}
     <div class="post-metadata-card">
       {{- if .Params.authors }}

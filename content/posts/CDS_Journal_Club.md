@@ -6,6 +6,8 @@ description = 'A comprehensive analysis of how large language models can enhance
 authors = 'Ong JCL, Jin L, Elangovan K, et al.'
 journal = 'Cell Reports Medicine'
 doi = '10.1016/j.xcrm.2025.102323'
+tags = ['Model Development', 'Process Outcomes']
+type = 'major'
 +++
 
 ## Clinical/Operational Question  

@@ -35,21 +35,64 @@
   </div>
 
   <!-- Posts Section -->
-  <div class="post-tiles">
-    {{ range .Site.RegularPages }}
-    <div class="post-tile">
-      <a href="{{ .RelPermalink }}">
-        <div class="tile-content">
-          <h2>{{ .Title }}</h2>
-          {{ if .Params.journal }}
-          <div class="tile-journal">Journal: {{ .Params.journal }}</div>
-          {{ end }}
-          <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
-          <div class="tile-meta">
-            <time>{{ .Date.Format "January 2, 2006" }}</time>
+  <div class="posts-container">
+    <!-- Major Articles -->
+    {{ $majorPosts := where .Site.RegularPages ".Params.type" "major" }}
+    {{ if $majorPosts }}
+    <div class="major-posts">
+      {{ range $majorPosts }}
+      <div class="post-tile">
+        <a href="{{ .RelPermalink }}">
+          <div class="tile-content">
+            <h2>{{ .Title }}</h2>
+            {{ if .Params.tags }}
+            <div class="tile-tags">
+              {{ range .Params.tags }}
+              <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+              {{ end }}
+            </div>
+            {{ end }}
+            {{ if .Params.journal }}
+            <div class="tile-journal">Journal: {{ .Params.journal }}</div>
+            {{ end }}
+            <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
+            <div class="tile-meta">
+              <time>{{ .Date.Format "January 2, 2006" }}</time>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    <!-- Minor Articles -->
+    {{ $minorPosts := where .Site.RegularPages ".Params.type" "minor" }}
+    {{ if $minorPosts }}
+    <div class="minor-posts">
+      {{ range $minorPosts }}
+      <div class="post-tile post-tile-minor">
+        <a href="{{ .RelPermalink }}">
+          <div class="tile-content">
+            <h2>{{ .Title }}</h2>
+            {{ if .Params.tags }}
+            <div class="tile-tags">
+              {{ range .Params.tags }}
+              <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+              {{ end }}
+            </div>
+            {{ end }}
+            {{ if .Params.journal }}
+            <div class="tile-journal">Journal: {{ .Params.journal }}</div>
+            {{ end }}
+            <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
+            <div class="tile-meta">
+              <time>{{ .Date.Format "January 2, 2006" }}</time>
+            </div>
+          </div>
+        </a>
+      </div>
+      {{ end }}
     </div>
     {{ end }}
   </div>

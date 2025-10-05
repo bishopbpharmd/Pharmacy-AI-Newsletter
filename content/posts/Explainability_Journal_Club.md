@@ -6,6 +6,8 @@ description = 'Evaluation of multiple explainable AI methods (local and global) 
 authors = 'Agrawal K, El Shawi R, Ahmed N.'
 journal = 'Digital Health'
 doi = '10.1177/20552076251368045'
+tags = ['Guidelines & Standards']
+type = 'major'
 +++
 
 ## Clinical/Operational Question  
