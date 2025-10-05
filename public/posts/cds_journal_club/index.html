@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=54155&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>LLM-Based Clinical Decision Support for Medication Safety | Pharmacy AI Newsletter</title>
 <meta name="keywords" content="Model Development, Process Outcomes">
 <meta name="description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
 <meta name="author" content="">
-<link rel="canonical" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
-<link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/apple-touch-icon.png">
-<link rel="mask-icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:54155/posts/cds_journal_club/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:54155/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:54155/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:54155/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:54155/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:54155/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
+<link rel="alternate" hreflang="en" href="http://localhost:54155/posts/cds_journal_club/">
 <noscript>
     <style>
         #theme-toggle,
@@ -55,71 +55,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/">
-  <meta property="og:site_name" content="Pharmacy AI Newsletter">
-  <meta property="og:title" content="LLM-Based Clinical Decision Support for Medication Safety">
-  <meta property="og:description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
-  <meta property="og:locale" content="en-us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-10-04T09:41:46-04:00">
-    <meta property="article:modified_time" content="2025-10-04T09:41:46-04:00">
-    <meta property="article:tag" content="Model Development">
-    <meta property="article:tag" content="Process Outcomes">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LLM-Based Clinical Decision Support for Medication Safety">
-<meta name="twitter:description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "LLM-Based Clinical Decision Support for Medication Safety",
-      "item": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "LLM-Based Clinical Decision Support for Medication Safety",
-  "name": "LLM-Based Clinical Decision Support for Medication Safety",
-  "description": "A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.",
-  "keywords": [
-    "Model Development", "Process Outcomes"
-  ],
-  "articleBody": "Clinical/Operational Question Key Question: Can a large language model (LLM)-powered clinical decision support system (CDSS) improve detection of prescribing errors (drug-related problems) compared to standard pharmacist review, thereby enhancing medication safety in a hospital setting?\nBackground \u0026 Rationale Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.\nLLMs (e.g., GPT-4) can interpret free-text clinical scenarios and guidelines, raising interest in using them to catch errors that rigid rule systems might miss. An LLM-based “co-pilot” could review medication orders with contextual understanding, potentially reducing serious errors.\nInvestigators hypothesized that an LLM CDSS, especially when paired with a pharmacist, would augment error detection beyond what either could achieve alone. This stems from the idea that AI can rapidly cross-check vast medical knowledge, while humans provide judgment and oversight.\nMethods Snapshot Design: Prospective, cross-over simulation study using 91 prescribing error scenarios derived from 40 clinical vignettes across 16 medical/surgical specialties. A multidisciplinary expert panel established “ground truth” by classifying drug-related problems (DRPs) and rating error severity (using PCNE criteria and NCC-MERP harm index).\nIntervention: Five LLM-based models were developed with a retrieval-augmented generation (RAG) approach. The best-performing LLM model (e.g., GPT-4 with domain fine-tuning) was tested in three modes:\nLLM-CDSS alone Pharmacist + LLM-CDSS (co-pilot) Pharmacist alone Junior hospital pharmacists (≤2 years experience) participated in the co-pilot and solo arms.\nOutcome Measures: Primary outcome was accuracy in identifying DRPs. Secondary metrics included precision, recall, and F1-score. Researchers also recorded performance on serious harm errors and differences between various underlying LLMs.\nKey Results Co-Pilot Best Performance: Pharmacist+LLM co-pilot achieved highest accuracy (~61%) for error detection, outperforming both LLM alone and pharmacist alone. Serious Harm Errors: Co-pilot caught ~1.5× more high-severity errors than pharmacist-alone. LLM Alone: Reasonable but inferior to co-pilot. Recall improved from 0.47 to 0.61 with pharmacist oversight. Precision Trade-off: Co-pilot had lower precision (more false positives) than pharmacist-alone. Comparative LLMs: GPT-4 with RAG performed best among tested models. Strengths / Limitations Strengths\nProspective, cross-specialty design (16 specialties). Realistic co-pilot workflow tested. Comprehensive metrics with expert-validated gold standard. Limitations\nSimulated cases only, not live patients. Only junior pharmacists tested; unclear generalizability to experienced clinicians. Moderate accuracy (~61% overall). False positives may cause alert fatigue. Single-center (Singapore); limited generalizability. AI-Specific Considerations Hallucinations: Risk of incorrect AI recommendations. Prompt Sensitivity: Dependent on how queries are structured. Knowledge Updates: Models risk being outdated; RAG helps but needs constant validation. Black-Box Reasoning: Lack of transparency raises trust and regulatory concerns. Bias: Training data may underrepresent populations; calibration needed. Data Privacy: HIPAA concerns if using cloud APIs. Applicability to Pharmacy Informatics Epic Willow Integration: Could function at order entry/verification steps via CDS Hooks. Pyxis ES: Potential for AI alerts to propagate to dispensing checks. Validation Burden: Continuous validation required for every update or version change. Data Feeds: Needs comprehensive HL7/FHIR feeds for real-time integration. GPU/Cloud Requirements: Deployment decisions between on-premises vs. cloud APIs. Regulatory Fit: FDA guidance uncertain; transparency lacking may push toward regulation. Related Literature Synthesis Pais et al., 2024 (Nat Med): LLM MEDIC reduced dispensing instruction errors by ~33%. Domain-specific fine-tuning + guardrails lowered false positives. Roosan et al., 2024 (J Am Pharm Assoc): GPT-4 solved 39/39 MTM cases but lacked precise dosing recommendations. Grossman et al., 2023 (ASHP Abstract): Free ChatGPT gave inaccurate/incomplete answers to 74% of drug queries and fabricated references. Evidence Quality \u0026 Recommendation (GRADE-style) Quality of Evidence: Low to Moderate (simulation only, modest sample, evolving technology). Recommendation: Conditional (weak). Consider pilot testing in controlled environments with strong safeguards. Not recommended for widespread replacement of pharmacist judgment. Bottom Line Ong et al. (2025) demonstrated that a GPT-4 powered CDSS, when paired with a pharmacist, improved detection of prescribing errors, especially high-severity ones, but overall accuracy was ~60%.\nThe LLM “co-pilot” is promising but not foolproof. It should be piloted cautiously, with robust oversight, validation, and integration into workflows.\nCitation Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. Cell Rep Med. 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. [PMID: 40997804]\nReferences (Primary + Comparative Studies) Ong JCL, Jin L, Elangovan K, et al. Large language model as clinical decision support system augments medication safety in 16 clinical specialties. Cell Rep Med. 2025;6:102323. doi:10.1016/j.xcrm.2025.102323. PMID: 40997804. Pais C, Liu J, Voigt R, et al. Large language models for preventing medication direction errors in online pharmacies. Nat Med. 2024;30(8):1574–1582. doi:10.1038/s41591-024-02933-8. Roosan D, Padua P, Khan R, et al. Effectiveness of ChatGPT in clinical pharmacy and the role of artificial intelligence in medication therapy management. J Am Pharm Assoc. 2024;64(2):422-428.e8. doi:10.1016/j.japh.2023.11.023. Grossman S, Luchen G, Shah B, et al. “Pharmacists Should Be Wary of ChatGPT”: Study of AI accuracy in answering medication questions. ASHP Midyear Meeting 2023 – reported in Fox Business News, Dec 5, 2023. (Conference abstract; not peer-reviewed). ",
-  "wordCount" : "820",
-  "inLanguage": "en",
-  "datePublished": "2025-10-04T09:41:46-04:00",
-  "dateModified": "2025-10-04T09:41:46-04:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/cds_journal_club/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Pharmacy AI Newsletter",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -137,7 +73,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <a href="http://localhost:54155/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
             <div class="logo-switches">
             </div>
         </div>
@@ -163,17 +99,17 @@
             
             
             <li class="navbar-home">
-                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" title="Home">
+                <a href="http://localhost:54155/" title="Home">
                     <span>Home</span>
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/" title="Archive">
+                <a href="http://localhost:54155/posts/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li class="navbar-subscribe">
-                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" title="Subscribe" class="subscribe-button">
+                <a href="http://localhost:54155/" title="Subscribe" class="subscribe-button">
                     <span>Subscribe</span>
                 </a>
             </li>
@@ -208,13 +144,13 @@
         <div class="mobile-menu-overlay" id="mobile-menu-overlay">
             <div class="mobile-menu-content">
                 <div class="mobile-menu-items">
-                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="mobile-menu-item">
+                    <a href="http://localhost:54155/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/" class="mobile-menu-item">
+                    <a href="http://localhost:54155/posts/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
-                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="mobile-menu-item">
+                    <a href="http://localhost:54155/" class="mobile-menu-item">
                         <span>Subscribe</span>
                     </a>
                     <button class="mobile-menu-item mobile-menu-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle theme">
@@ -344,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <main class="main">
 
 <nav class="post-navigation">
-  <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="back-to-posts">
+  <a href="http://localhost:54155/" class="back-to-posts">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"></line>
       <polyline points="12 19 5 12 12 5"></polyline>
@@ -485,15 +421,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/tags/model-development/">Model Development</a></li>
-      <li><a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/tags/process-outcomes/">Process Outcomes</a></li>
+      <li><a href="http://localhost:54155/tags/model-development/">Model Development</a></li>
+      <li><a href="http://localhost:54155/tags/process-outcomes/">Process Outcomes</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/">Pharmacy AI Newsletter</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:54155/">Pharmacy AI Newsletter</a></span> · 
 
     <span>
         Powered by

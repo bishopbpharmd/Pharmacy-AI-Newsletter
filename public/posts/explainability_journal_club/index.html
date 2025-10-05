@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=54155&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>Evaluation of Explainable AI Frameworks in Healthcare | Pharmacy AI Newsletter</title>
 <meta name="keywords" content="Guidelines &amp; Standards">
 <meta name="description" content="Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.">
 <meta name="author" content="">
-<link rel="canonical" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
-<link crossorigin="anonymous" href="/Pharmacy-AI-Newsletter/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/apple-touch-icon.png">
-<link rel="mask-icon" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:54155/posts/explainability_journal_club/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:54155/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:54155/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:54155/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:54155/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:54155/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
+<link rel="alternate" hreflang="en" href="http://localhost:54155/posts/explainability_journal_club/">
 <noscript>
     <style>
         #theme-toggle,
@@ -55,70 +55,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/explainability_journal_club/">
-  <meta property="og:site_name" content="Pharmacy AI Newsletter">
-  <meta property="og:title" content="Evaluation of Explainable AI Frameworks in Healthcare">
-  <meta property="og:description" content="Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.">
-  <meta property="og:locale" content="en-us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-10-04T11:34:58-04:00">
-    <meta property="article:modified_time" content="2025-10-04T11:34:58-04:00">
-    <meta property="article:tag" content="Guidelines & Standards">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Evaluation of Explainable AI Frameworks in Healthcare">
-<meta name="twitter:description" content="Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Evaluation of Explainable AI Frameworks in Healthcare",
-      "item": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/explainability_journal_club/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Evaluation of Explainable AI Frameworks in Healthcare",
-  "name": "Evaluation of Explainable AI Frameworks in Healthcare",
-  "description": "Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.",
-  "keywords": [
-    "Guidelines \u0026 Standards"
-  ],
-  "articleBody": "Clinical/Operational Question Question: In healthcare machine learning, how do widely used explanation techniques (local and global) compare in their ability to provide trustworthy, useful explanations for clinical predictions, and how can we systematically evaluate these methods in real-world settings?\nBackground \u0026 Rationale Why it matters: AI-driven decision support in medication management and clinical care must be explainable to earn clinician trust and meet safety/regulatory requirements. Pharmacy informatics teams integrating AI (e.g., into Epic EHR alerts or dosing tools) face a critical need for transparent algorithms so pharmacists understand and validate AI recommendations before acting. Multiple eXplainable AI (XAI) methods (LIME, SHAP, Anchors, rule-based models, etc.) exist, but it’s unclear which is optimal for a given clinical task. High-stakes environments like EHR medication ordering and CDS demand rigorous evaluation of explainability – poor explanations can erode user confidence or hide biases, whereas robust explanations can improve acceptance and oversight of AI-driven alerts. This study addresses the gap by proposing a framework to quantitatively compare XAI methods on healthcare data, guiding informatics teams in choosing the right approach for safe, transparent AI deployment.\nMethods Snapshot Design: Comparative in silico evaluation of XAI techniques using retrospective clinical datasets (multiple healthcare prediction tasks). XAI Methods: Five local explainers (LIME, CIU, RuleFit, RuleMatrix, Anchors) and four global explainers (LIME, Anchors, RuleFit, RuleMatrix). Data: Diverse healthcare datasets across diagnostic and prognostic tasks. Evaluation Metrics: Fidelity, stability/robustness, complexity/simplicity, monotonicity, non-sensitivity. Analysis: Quantitative comparisons of local and global methods across datasets. Key Results No single XAI method dominated every metric. Global explanations: RuleFit and RuleMatrix were most interpretable and faithful. Local explanations: Rule-based methods excelled in stability and fidelity; CIU best at monotonicity; LIME weakest on monotonicity but avoided irrelevant features. Trade-offs: Simpler methods (LIME) offered interpretability but reduced fidelity; higher fidelity approaches tended to be more complex. Implication: Context-dependent selection is necessary based on clinical priorities. Strengths and Limitations Strengths Comprehensive head-to-head comparison of multiple methods. Structured framework with standardized metrics. Real-world healthcare datasets (not synthetic). Pragmatic, actionable guidance with no conflicts of interest. Limitations Did not include some popular methods (e.g., SHAP, counterfactuals). Lacked user/clinician validation. Retrospective only; no live EHR deployment tested. Domain-specific nuances may require re-testing. AI-Specific Considerations Transparency \u0026 Trust: Balancing clarity and completeness is key. High-fidelity and stability crucial for clinician trust. Generalizability: Rule-based global methods showed robustness, but site-specific testing required. Bias \u0026 Fairness: Explanations may reveal or obscure bias; fairness must be evaluated alongside explainability. Applicability to Pharmacy Informatics Epic Willow \u0026 Pyxis ES: Rule-based global explanations (RuleFit/RuleMatrix) can integrate as interpretable rules for pharmacists. FHIR CDS Hooks: Explanations can be embedded in alerts to improve trust. Clinical Alerting Systems: XAI-Eval framework can optimize alerts, reduce fatigue, and ensure new predictive alerts come with understandable justifications. Related Literature Synthesis Qureshi et al., 2025: SHAP achieved perfect fidelity for tree models; LIME simpler but less faithful. Reinforces that context matters. Liu et al., 2024: Applied XAI to Epic alerts, generating actionable changes that reduced ~9% of irrelevant alerts. Noor et al., 2025: Review of XAI in healthcare highlighted the need for standardized evaluation and clinical integration, echoing XAI-Eval’s importance. Evidence Quality \u0026 Recommendation Evidence Quality: Moderate certainty. Strong technical evidence across multiple datasets, but no patient outcomes. Recommendation: Strongly recommend pharmacy informatics teams adopt an evaluation framework (like XAI-Eval) when implementing AI-driven CDS, especially in medication safety contexts. Bottom Line Select explanation methods as carefully as predictive models. Use XAI-Eval or similar frameworks to vet methods before deployment. Integrate explanations into workflow (e.g., Epic alerts) to improve trust and reduce alert fatigue. Transparency = Safety: Explainable AI supports safer pharmacy decision-making. Citation Agrawal K, El Shawi R, Ahmed N. eXplainable artificial intelligence-Eval: A framework for comparative evaluation of explanation methods in healthcare. Digit Health. 2025;11:20552076251368045. DOI: 10.1177/20552076251368045\nReferences (Primary + Comparative Studies) Agrawal K, El Shawi R, Ahmed N. eXplainable artificial intelligence-Eval: A framework for comparative evaluation of explanation methods in healthcare. Digit Health. 2025;11:20552076251368045. DOI: 10.1177/20552076251368045 Qureshi MA, Noor AA, Manzoor A, et al. Explainability in Action: A Metric-Driven Assessment of Five XAI Methods for Healthcare Tabular Models. medRxiv. 2025 May 20;2025.05.20.25327976. DOI: 10.1101/2025.05.20.25327976 Liu S, McCoy AB, Peterson JF, et al. Leveraging explainable artificial intelligence to optimize clinical decision support. J Am Med Inform Assoc. 2024;31(4):968-974. DOI: 10.1093/jamia/ocae019 Noor AA, Manzoor A, Qureshi MDM, et al. Unveiling Explainable AI in Healthcare: Current Trends, Challenges, and Future Directions. Wiley Interdiscip Rev Data Min Knowl Discov. 2025;15(4):e70018. DOI: 10.1002/widm.70018 ",
-  "wordCount" : "738",
-  "inLanguage": "en",
-  "datePublished": "2025-10-04T11:34:58-04:00",
-  "dateModified": "2025-10-04T11:34:58-04:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/explainability_journal_club/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Pharmacy AI Newsletter",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -136,7 +73,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <a href="http://localhost:54155/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
             <div class="logo-switches">
             </div>
         </div>
@@ -162,17 +99,17 @@
             
             
             <li class="navbar-home">
-                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" title="Home">
+                <a href="http://localhost:54155/" title="Home">
                     <span>Home</span>
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/" title="Archive">
+                <a href="http://localhost:54155/posts/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li class="navbar-subscribe">
-                <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" title="Subscribe" class="subscribe-button">
+                <a href="http://localhost:54155/" title="Subscribe" class="subscribe-button">
                     <span>Subscribe</span>
                 </a>
             </li>
@@ -207,13 +144,13 @@
         <div class="mobile-menu-overlay" id="mobile-menu-overlay">
             <div class="mobile-menu-content">
                 <div class="mobile-menu-items">
-                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="mobile-menu-item">
+                    <a href="http://localhost:54155/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/posts/" class="mobile-menu-item">
+                    <a href="http://localhost:54155/posts/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
-                    <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="mobile-menu-item">
+                    <a href="http://localhost:54155/" class="mobile-menu-item">
                         <span>Subscribe</span>
                     </a>
                     <button class="mobile-menu-item mobile-menu-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle theme">
@@ -343,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <main class="main">
 
 <nav class="post-navigation">
-  <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/" class="back-to-posts">
+  <a href="http://localhost:54155/" class="back-to-posts">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"></line>
       <polyline points="12 19 5 12 12 5"></polyline>
@@ -476,14 +413,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/tags/guidelines--standards/">Guidelines &amp; Standards</a></li>
+      <li><a href="http://localhost:54155/tags/guidelines--standards/">Guidelines &amp; Standards</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://bishopbpharmd.github.io/Pharmacy-AI-Newsletter/">Pharmacy AI Newsletter</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:54155/">Pharmacy AI Newsletter</a></span> · 
 
     <span>
         Powered by
