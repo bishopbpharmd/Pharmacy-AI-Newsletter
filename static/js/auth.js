@@ -113,6 +113,9 @@ console.log("[auth] Script loaded and starting...");
         domain: CFG.domain,
         clientId: CFG.clientId,
         cacheLocation: CFG.cacheLocation,
+        authorizationParams: {
+          redirect_uri: window.location.origin
+        }
       });
       console.log("[auth] Auth0 client created successfully");
 
