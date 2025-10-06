@@ -289,24 +289,19 @@ console.log("[auth] Script loaded and starting...");
                 
                 if (profileBtn) {
                   profileBtn.addEventListener("click", (e) => {
-                    console.log("[auth] Desktop profile clicked");
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // TODO: Implement profile page navigation
-                    console.log("[auth] Profile page not implemented yet");
+                    console.log("[auth] Desktop profile clicked - navigating to check-subscriber page");
+                    // Let the default navigation happen - don't prevent it
                   });
                 }
                 
                 if (mobileProfileBtn) {
                   mobileProfileBtn.addEventListener("click", (e) => {
-                    console.log("[auth] Mobile profile clicked");
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // TODO: Implement profile page navigation
-                    console.log("[auth] Profile page not implemented yet");
+                    console.log("[auth] Mobile profile clicked - navigating to check-subscriber page");
+                    // Close mobile menu first, then let navigation happen
                     if (typeof closeMobileMenu === 'function') {
                       closeMobileMenu();
                     }
+                    // Don't prevent default - let the link navigate
                   });
                 }
                 
