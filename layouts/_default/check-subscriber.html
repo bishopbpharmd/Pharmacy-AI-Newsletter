@@ -111,17 +111,32 @@ async function checkSubscriptionStatus(email) {
     }
     
     // Display appropriate message based on subscription status
-    if (data.exists && data.status === 'SUBSCRIBED') {
+    if (data.exists && data.status === 'subscribed') {
       statusEl.className = 'status-message success';
       statusEl.innerHTML = `
         <p>✅ <strong>You are already subscribed to the newsletter!</strong></p>
         <p>You'll receive our latest Pharmacy AI insights delivered to your inbox.</p>
+        ${data.created_at ? `<p><small>Subscribed: ${new Date(data.created_at).toLocaleDateString()}</small></p>` : ''}
       `;
     } else if (!data.exists) {
       statusEl.className = 'status-message info';
       statusEl.innerHTML = `
         <p>📩 <strong>You are not yet subscribed to our newsletter.</strong></p>
         <p>Stay updated with the latest Pharmacy AI research and insights.</p>
+      `;
+      subscribeBtn.style.display = 'inline-block';
+    } else if (data.exists && data.status === 'pending') {
+      statusEl.className = 'status-message info';
+      statusEl.innerHTML = `
+        <p>📬 <strong>Your subscription is pending confirmation.</strong></p>
+        <p>Please check your email and click the confirmation link to complete your subscription.</p>
+      `;
+      subscribeBtn.style.display = 'inline-block';
+    } else if (data.exists && data.status === 'unsubscribed') {
+      statusEl.className = 'status-message info';
+      statusEl.innerHTML = `
+        <p>📭 <strong>You have unsubscribed from our newsletter.</strong></p>
+        <p>Would you like to resubscribe to receive our latest updates?</p>
       `;
       subscribeBtn.style.display = 'inline-block';
     } else {

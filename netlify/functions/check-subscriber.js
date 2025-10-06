@@ -1,5 +1,3 @@
-import crypto from "crypto";
-
 export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method not allowed" };
@@ -9,21 +7,58 @@ export async function handler(event) {
     const { email } = JSON.parse(event.body || "{}");
     if (!email) return { statusCode: 400, body: "Missing email" };
 
-    const emailHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
+    // EmailOctopus v2 API - Search for contact by email address
+    const url = `https://api.emailoctopus.com/lists/${process.env.EMAILOCTOPUS_LIST_ID}/contacts?email_address=${encodeURIComponent(email)}`;
+    
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${process.env.EMAILOCTOPUS_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
-    const url = `https://emailoctopus.com/api/1.6/lists/${process.env.EMAILOCTOPUS_LIST_ID}/contacts/${emailHash}?api_key=${process.env.EMAILOCTOPUS_API_KEY}`;
-
-    const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ exists: true, status: data.status, fields: data.fields || {} })
+      
+      // Check if we found any contacts
+      if (data.data && data.data.length > 0) {
+        const contact = data.data[0]; // Get the first (and likely only) contact
+        return {
+          statusCode: 200,
+          body: JSON.stringify({ 
+            exists: true, 
+            status: contact.status, 
+            fields: contact.fields || {},
+            email_address: contact.email_address,
+            created_at: contact.created_at,
+            last_updated_at: contact.last_updated_at
+          })
+        };
+      } else {
+        // No contacts found
+        return { 
+          statusCode: 200, 
+          body: JSON.stringify({ exists: false }) 
+        };
+      }
+    } else if (res.status === 404) {
+      // List not found or no contacts found
+      return { 
+        statusCode: 200, 
+        body: JSON.stringify({ exists: false }) 
       };
     } else {
-      return { statusCode: 200, body: JSON.stringify({ exists: false }) };
+      // Other API errors
+      const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+      console.error('EmailOctopus API error:', res.status, errorData);
+      return { 
+        statusCode: 500, 
+        body: JSON.stringify({ error: `API error: ${res.status}` }) 
+      };
     }
   } catch (err) {
+    console.error('Netlify function error:', err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 }
