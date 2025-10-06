@@ -197,6 +197,149 @@
   transform: translateX(20px);
 }
 
+/* ============================================
+   MOBILE AUTH BUTTONS
+   ============================================ */
+
+/* Mobile auth links - inherit mobile-menu-item styling */
+.mobile-auth-link {
+  /* Remove all custom styling - let mobile-menu-item handle it */
+}
+
+.mobile-auth-logout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ============================================
+   EMAILOCTOPUS MODAL CENTERING
+   ============================================ */
+
+/* Center EmailOctopus modals on screen - only when active */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"].active,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"].active {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 9999 !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Hide modals when not active */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"]:not(.active),
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"]:not(.active) {
+  display: none !important;
+}
+
+/* Style the modal content - dynamically sized to 2/3 of screen */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .modal-container-inner,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .modal-container-inner {
+  background-color: var(--theme) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+  width: 66vw !important; /* Two-thirds of viewport width */
+  max-width: 800px !important; /* Cap maximum width */
+  min-width: 320px !important; /* Minimum width for mobile */
+  height: 66vh !important; /* Two-thirds of viewport height */
+  max-height: 90vh !important; /* Don't exceed viewport */
+  min-height: 400px !important; /* Minimum height */
+  overflow-y: auto !important;
+  position: relative !important;
+  margin: 0 auto !important;
+}
+
+/* Close button styling */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .close,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .close {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+  color: var(--secondary) !important;
+  z-index: 10000 !important;
+  padding: 5px !important;
+}
+
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .close:hover,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .close:hover {
+  color: var(--primary) !important;
+}
+
+/* Form styling to match site theme */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .emailoctopus-form,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .emailoctopus-form {
+  padding: 30px !important;
+}
+
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] h1,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] h1 {
+  color: var(--primary) !important;
+  margin-bottom: 20px !important;
+}
+
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .form-control,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .form-control {
+  background-color: var(--code-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--primary) !important;
+  border-radius: 4px !important;
+  padding: 12px !important;
+  margin-bottom: 15px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* EmailOctopus buttons - let them use their original styling */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .btn,
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .btn {
+  /* Remove our overrides - let EmailOctopus handle button styling */
+  width: 100% !important; /* Keep full width for better UX */
+}
+
+/* Responsive modal sizing */
+@media (max-width: 768px) {
+  .modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .modal-container-inner,
+  .modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .modal-container-inner {
+    width: 90vw !important; /* Wider on mobile */
+    height: 80vh !important; /* Taller on mobile */
+    min-width: 280px !important;
+    min-height: 350px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .modal-container-inner,
+  .modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .modal-container-inner {
+    width: 95vw !important; /* Nearly full width on small screens */
+    height: 85vh !important;
+    border-radius: 8px !important;
+  }
+  
+  .modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"],
+  .modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] {
+    padding: 10px !important; /* Less padding on mobile */
+  }
+}
+
+/* Large screens - optimize for desktop */
+@media (min-width: 1200px) {
+  .modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"] .modal-container-inner,
+  .modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"] .modal-container-inner {
+    max-width: 900px !important; /* Slightly larger on big screens */
+  }
+}
+
 /* Full-screen backdrop */
 .mobile-menu-backdrop {
   position: fixed;
@@ -224,7 +367,10 @@
 .navbar-home,
 .navbar-archive,
 .navbar-subscribe,
-.navbar-theme-toggle {
+.navbar-theme-toggle,
+.navbar-auth,
+.navbar-profile,
+.navbar-logout {
   display: inline-block;
   margin-left: 12px;
 }
@@ -266,7 +412,7 @@
 }
 
 /* Subscribe link - clean text */
-.navbar-subscribe .subscribe-button {
+.navbar-subscribe a {
   color: var(--secondary);
   text-decoration: none;
   font-weight: 500;
@@ -277,7 +423,7 @@
   cursor: pointer;
 }
 
-.navbar-subscribe .subscribe-button:hover {
+.navbar-subscribe a:hover {
   color: var(--primary);
   text-decoration: underline;
   text-decoration-color: var(--primary);
@@ -297,6 +443,65 @@
   color: var(--primary);
 }
 
+/* ============================================
+   AUTH0 LOGIN/LOGOUT BUTTONS
+   ============================================ */
+
+/* Auth login link - matches navbar style */
+.auth-login-link {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+  transition: all 0.2s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.auth-login-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+}
+
+
+/* Profile link - matches navbar style */
+.auth-profile-link {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+  transition: all 0.2s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.auth-profile-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+}
+
+/* Logout link - matches navbar style */
+.auth-logout-link {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+  transition: all 0.2s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.auth-logout-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+}
+
 /* Responsive navbar */
 @media (max-width: 768px) {
   /* Show hamburger menu, hide desktop menu */
@@ -312,7 +517,10 @@
   .navbar-home,
   .navbar-archive,
   .navbar-subscribe,
-  .navbar-theme-toggle {
+  .navbar-theme-toggle,
+  .navbar-auth,
+  .navbar-profile,
+  .navbar-logout {
     display: none;
   }
 }
@@ -332,14 +540,17 @@
   .navbar-home,
   .navbar-archive,
   .navbar-subscribe,
-  .navbar-theme-toggle {
+  .navbar-theme-toggle,
+  .navbar-auth,
+  .navbar-profile,
+  .navbar-logout {
     display: inline-block;
     margin-left: 12px;
   }
   
   .navbar-home a,
   .navbar-archive a,
-  .navbar-subscribe .subscribe-button {
+  .navbar-subscribe a {
     font-size: 0.85rem;
     padding: 0.25rem 0;
   }
@@ -688,15 +899,15 @@
 
 /* Hardcoded tag colors for consistency */
 .tag-model-development {
-  background: #e0f2fe;
-  color: #0277bd;
-  border: 1px solid #b3e5fc;
+  background: #e0f7fa;
+  color: #00695c;
+  border: 1px solid #80deea;
 }
 
 .tag-process-outcomes {
-  background: #f3e5f5;
-  color: #7b1fa2;
-  border: 1px solid #ce93d8;
+  background: #f1f8e9;
+  color: #558b2f;
+  border: 1px solid #c5e1a5;
 }
 
 .tag-guidelines-standards {

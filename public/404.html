@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=54155&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:54155/404.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:54155/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:54155/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:54155/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:54155/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:54155/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:1313/404.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.59bcf1aaa10fbeff89a9a24ac5175296579168a1b0db0fdd7537621391114ee6.css" integrity="sha256-WbzxqqEPvv&#43;JqaJKxRdSlleRaKGw2w/ddTdiE5ERTuY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:54155/404.html">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/404.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,6 +56,22 @@
 
     </style>
 </noscript>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+
+
+<script>
+  window.__AUTH0 = {
+    domain: "dev-hgy0ilmv64t2vwb6.us.auth0.com",
+    clientId: "gdc8rjiQufmjTKQIF3XNASS1xAdIeNaz"
+  };
+  
+  
+  console.log("[Auth0 Config] Injected configuration:", window.__AUTH0);
+</script>
+
+
+<script src="http://localhost:1313/js/auth.js" defer></script>
+
 </head>
 
 <body class="list" id="top">
@@ -73,7 +89,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:54155/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
             <div class="logo-switches">
             </div>
         </div>
@@ -99,18 +115,33 @@
             
             
             <li class="navbar-home">
-                <a href="http://localhost:54155/" title="Home">
+                <a href="http://localhost:1313/" title="Home">
                     <span>Home</span>
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="http://localhost:54155/posts/" title="Archive">
+                <a href="http://localhost:1313/posts/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li class="navbar-subscribe">
-                <a href="http://localhost:54155/" title="Subscribe" class="subscribe-button">
+                <a href="#" id="subscribeBtn" title="Subscribe">
                     <span>Subscribe</span>
+                </a>
+            </li>
+            <li class="navbar-auth">
+                <a id="loginBtn" class="auth-login-link" href="#">
+                    <span>Login</span>
+                </a>
+            </li>
+            <li class="navbar-profile" id="profileLi" style="display: none;">
+                <a id="profileBtn" class="auth-profile-link" href="#">
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="navbar-logout" id="logoutLi" style="display: none;">
+                <a id="logoutBtn" class="auth-logout-link" href="#">
+                    <span>Logout</span>
                 </a>
             </li>
             <li class="navbar-theme-toggle">
@@ -144,15 +175,28 @@
         <div class="mobile-menu-overlay" id="mobile-menu-overlay">
             <div class="mobile-menu-content">
                 <div class="mobile-menu-items">
-                    <a href="http://localhost:54155/" class="mobile-menu-item">
+                    <a href="http://localhost:1313/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="http://localhost:54155/posts/" class="mobile-menu-item">
+                    <a href="http://localhost:1313/posts/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
-                    <a href="http://localhost:54155/" class="mobile-menu-item">
+                    <a href="#" id="mobileSubscribeBtn" class="mobile-menu-item">
                         <span>Subscribe</span>
                     </a>
+                    
+                    
+                    <a id="mobileLoginBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                        <span>Login</span>
+                    </a>
+                    <div id="mobileLogoutBtn" class="mobile-auth-logout-container" style="display: none;">
+                        <a id="mobileProfileBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                            <span>Profile</span>
+                        </a>
+                        <a id="mobileLogoutBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                            <span>Logout</span>
+                        </a>
+                    </div>
                     <button class="mobile-menu-item mobile-menu-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle theme">
                         <div class="theme-toggle-content">
                             <span class="theme-label">Theme</span>
@@ -275,6 +319,270 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMobileMenu();
         }
     });
+    
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && mobileMenuOverlay.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
+    
+    function showSubscribeForm() {
+        console.log('[Subscribe] Attempting to show EmailOctopus form...');
+        console.log('[Subscribe] Document ready state:', document.readyState);
+        console.log('[Subscribe] All scripts on page:', document.querySelectorAll('script').length);
+        
+        
+        let isDarkTheme = false;
+        
+        
+        const themePreference = localStorage.getItem("pref-theme");
+        if (themePreference === "dark") {
+            isDarkTheme = true;
+        } else if (themePreference === "light") {
+            isDarkTheme = false;
+        }
+        
+        
+        else if (document.body.classList.contains('dark')) {
+            isDarkTheme = true;
+        }
+        
+        
+        else {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const sunIcon = document.getElementById('sun');
+                const moonIcon = document.getElementById('moon');
+                if (sunIcon && sunIcon.style.display === 'none') {
+                    isDarkTheme = true;
+                } else if (moonIcon && moonIcon.style.display === 'none') {
+                    isDarkTheme = false;
+                }
+            }
+        }
+        
+        
+        if (themePreference === null) {
+            isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        
+        console.log('[Subscribe] Theme detection results:');
+        console.log('[Subscribe] localStorage pref-theme:', themePreference);
+        console.log('[Subscribe] Body classes:', document.body.className);
+        console.log('[Subscribe] Body has dark class:', document.body.classList.contains('dark'));
+        console.log('[Subscribe] System prefers dark:', window.matchMedia('(prefers-color-scheme: dark)').matches);
+        console.log('[Subscribe] Final isDark result:', isDarkTheme);
+        
+        
+        const lightFormId = 'add30b9c-a238-11f0-98d5-6727ec6b3f72';
+        const darkFormId = '5691337a-a244-11f0-aa3f-791dbf3c50f2';
+        const selectedFormId = isDarkTheme ? darkFormId : lightFormId;
+        
+        console.log('[Subscribe] Selected form ID:', selectedFormId);
+        
+        
+        const modalForm = document.querySelector(`[data-form="${selectedFormId}"]:not(script)`);
+        console.log('[Subscribe] Modal form found:', modalForm);
+        
+        
+        const emailOctopusModal = document.querySelector(`.modal-container[data-form="${selectedFormId}"]`);
+        console.log('[Subscribe] EmailOctopus modal found:', emailOctopusModal);
+        
+        
+        const targetModal = modalForm || emailOctopusModal;
+        
+        if (targetModal) {
+            console.log('[Subscribe] Modal form exists, showing it');
+            
+            targetModal.classList.add('active');
+            targetModal.style.display = 'block';
+            targetModal.style.visibility = 'visible';
+            targetModal.style.opacity = '1';
+            targetModal.style.zIndex = '9999';
+            
+            
+            const modalContainer = targetModal.closest('.modal-container') || targetModal;
+            if (modalContainer && modalContainer !== targetModal) {
+                console.log('[Subscribe] Modal container found, showing it');
+                modalContainer.classList.add('active');
+                modalContainer.style.display = 'block';
+                modalContainer.style.visibility = 'visible';
+                modalContainer.style.opacity = '1';
+                modalContainer.style.zIndex = '9999';
+            }
+            
+            
+            const closeButton = targetModal.querySelector('.close');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    console.log('[Subscribe] Close button clicked');
+                    targetModal.classList.remove('active');
+                    targetModal.style.display = 'none';
+                    if (modalContainer && modalContainer !== targetModal) {
+                        modalContainer.classList.remove('active');
+                        modalContainer.style.display = 'none';
+                    }
+                });
+            }
+            
+            
+            targetModal.addEventListener('click', function(e) {
+                if (e.target === targetModal) {
+                    console.log('[Subscribe] Backdrop clicked');
+                    targetModal.classList.remove('active');
+                    targetModal.style.display = 'none';
+                    if (modalContainer && modalContainer !== targetModal) {
+                        modalContainer.classList.remove('active');
+                        modalContainer.style.display = 'none';
+                    }
+                }
+            });
+            
+            
+            const handleModalResize = () => {
+                if (targetModal && targetModal.classList.contains('active')) {
+                    console.log('[Subscribe] Window resized, maintaining modal position');
+                    
+                    targetModal.style.display = 'none';
+                    setTimeout(() => {
+                        targetModal.style.display = 'flex';
+                    }, 10);
+                }
+            };
+            
+            window.addEventListener('resize', handleModalResize);
+            
+        } else {
+            console.log('[Subscribe] Modal form not found, checking for EmailOctopus script...');
+            
+            
+            const emailOctopusScript = document.querySelector('script[src*="eocampaign1.com"]');
+            console.log('[Subscribe] EmailOctopus script element:', emailOctopusScript);
+            
+            if (emailOctopusScript) {
+                console.log('[Subscribe] Script element exists, waiting for it to execute...');
+                
+                
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                const checkForForm = () => {
+                    attempts++;
+                    console.log(`[Subscribe] Attempt ${attempts}/${maxAttempts} to find modal form...`);
+                    
+                    const retryModal = document.querySelector(`[data-form="${selectedFormId}"]:not(script)`);
+                    const retryEmailOctopusModal = document.querySelector(`.modal-container[data-form="${selectedFormId}"]`);
+                    if (retryModal || retryEmailOctopusModal) {
+                        console.log('[Subscribe] Modal form found after waiting!');
+                        showSubscribeForm(); 
+                        return;
+                    }
+                    
+                    if (attempts < maxAttempts) {
+                        setTimeout(checkForForm, 500); 
+                    } else {
+                        console.log('[Subscribe] Modal form still not found after all attempts');
+                        console.log('[Subscribe] All elements with data-form attribute:', document.querySelectorAll('[data-form]'));
+                        console.log('[Subscribe] All modal-related elements:', document.querySelectorAll('[class*="modal"], [class*="popup"], [class*="overlay"]'));
+                        
+                        
+                        const allEmailOctopusElements = document.querySelectorAll('[class*="emailoctopus"], [id*="emailoctopus"], [data-emailoctopus]');
+                        console.log('[Subscribe] All EmailOctopus elements:', allEmailOctopusElements);
+                        
+                        
+                        console.log('[Subscribe] Trying alternative trigger methods...');
+                        
+                        
+                        const customEvent = new CustomEvent('emailoctopus:show', {
+                            detail: { formId: selectedFormId }
+                        });
+                        document.dispatchEvent(customEvent);
+                        
+                        
+                        const triggerElements = document.querySelectorAll('[data-emailoctopus-trigger], [onclick*="emailoctopus"], [href*="emailoctopus"]');
+                        console.log('[Subscribe] Trigger elements found:', triggerElements);
+                        triggerElements.forEach(el => {
+                            console.log('[Subscribe] Clicking trigger element:', el);
+                            el.click();
+                        });
+                        
+                        
+                        const hiddenForms = document.querySelectorAll('[style*="display: none"], [style*="visibility: hidden"]');
+                        hiddenForms.forEach(form => {
+                            if (form.innerHTML.includes(selectedFormId) || 
+                                form.innerHTML.includes('emailoctopus')) {
+                                console.log('[Subscribe] Found hidden EmailOctopus form, showing it');
+                                form.style.display = 'block';
+                                form.style.visibility = 'visible';
+                                form.style.opacity = '1';
+                                form.style.zIndex = '9999';
+                            }
+                        });
+                    }
+                };
+                
+                checkForForm();
+                
+            } else {
+                console.log('[Subscribe] EmailOctopus script not found in DOM');
+            }
+        }
+    }
+    
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSubscribeForm();
+        });
+    }
+    
+    if (mobileSubscribeBtn) {
+        mobileSubscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSubscribeForm();
+            closeMobileMenu(); 
+        });
+    }
+    
+    
+    function setupThemeChangeListener() {
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                console.log('[Subscribe] Theme toggle clicked, forms will update on next subscribe click');
+            });
+        }
+        
+        
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && 
+                    (mutation.attributeName === 'class' || mutation.attributeName === 'data-theme')) {
+                    console.log('[Subscribe] Theme change detected via DOM mutation');
+                }
+            });
+        });
+        
+        
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class', 'data-theme']
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+    
+    
+    setupThemeChangeListener();
 });
 </script>
 <main class="main">
@@ -282,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:54155/">Pharmacy AI Newsletter</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">Pharmacy AI Newsletter</a></span> · 
 
     <span>
         Powered by
@@ -294,7 +602,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
         <path d="M12 6H0l6-6z" />
     </svg>
-</a>
+</a><script async src="https://eocampaign1.com/form/add30b9c-a238-11f0-98d5-6727ec6b3f72.js" data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"></script>
+<script async src="https://eocampaign1.com/form/5691337a-a244-11f0-aa3f-791dbf3c50f2.js" data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"></script>
+
 
 <script>
     let menu = document.getElementById('menu')

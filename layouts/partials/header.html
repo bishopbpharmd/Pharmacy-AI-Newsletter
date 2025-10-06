@@ -155,8 +155,23 @@
                 </a>
             </li>
             <li class="navbar-subscribe">
-                <a href="{{ .Site.BaseURL }}" title="Subscribe" class="subscribe-button">
+                <a href="#" id="subscribeBtn" title="Subscribe">
                     <span>Subscribe</span>
+                </a>
+            </li>
+            <li class="navbar-auth">
+                <a id="loginBtn" class="auth-login-link" href="#">
+                    <span>Login</span>
+                </a>
+            </li>
+            <li class="navbar-profile" id="profileLi" style="display: none;">
+                <a id="profileBtn" class="auth-profile-link" href="#">
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="navbar-logout" id="logoutLi" style="display: none;">
+                <a id="logoutBtn" class="auth-logout-link" href="#">
+                    <span>Logout</span>
                 </a>
             </li>
             {{- if (not site.Params.disableThemeToggle) }}
@@ -198,9 +213,22 @@
                     <a href="{{ .Site.BaseURL }}posts/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
-                    <a href="{{ .Site.BaseURL }}" class="mobile-menu-item">
+                    <a href="#" id="mobileSubscribeBtn" class="mobile-menu-item">
                         <span>Subscribe</span>
                     </a>
+                    
+                    <!-- Auth0 Mobile Login/Logout -->
+                    <a id="mobileLoginBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                        <span>Login</span>
+                    </a>
+                    <div id="mobileLogoutBtn" class="mobile-auth-logout-container" style="display: none;">
+                        <a id="mobileProfileBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                            <span>Profile</span>
+                        </a>
+                        <a id="mobileLogoutBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                            <span>Logout</span>
+                        </a>
+                    </div>
                     {{- if (not site.Params.disableThemeToggle) }}
                     <button class="mobile-menu-item mobile-menu-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle theme">
                         <div class="theme-toggle-content">
@@ -325,5 +353,269 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMobileMenu();
         }
     });
+    
+    // Close menu when resizing to desktop view
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && mobileMenuOverlay.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Subscribe button functionality
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
+    
+    function showSubscribeForm() {
+        console.log('[Subscribe] Attempting to show EmailOctopus form...');
+        console.log('[Subscribe] Document ready state:', document.readyState);
+        console.log('[Subscribe] All scripts on page:', document.querySelectorAll('script').length);
+        
+        // Detect current theme - PaperMod specific detection
+        let isDarkTheme = false;
+        
+        // Method 1: Check PaperMod's localStorage theme preference (most reliable)
+        const themePreference = localStorage.getItem("pref-theme");
+        if (themePreference === "dark") {
+            isDarkTheme = true;
+        } else if (themePreference === "light") {
+            isDarkTheme = false;
+        }
+        
+        // Method 2: Check body class (PaperMod adds 'dark' class to body)
+        else if (document.body.classList.contains('dark')) {
+            isDarkTheme = true;
+        }
+        
+        // Method 3: Check for PaperMod theme toggle button state
+        else {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const sunIcon = document.getElementById('sun');
+                const moonIcon = document.getElementById('moon');
+                if (sunIcon && sunIcon.style.display === 'none') {
+                    isDarkTheme = true;
+                } else if (moonIcon && moonIcon.style.display === 'none') {
+                    isDarkTheme = false;
+                }
+            }
+        }
+        
+        // Method 4: Only use system preference if no explicit theme is set
+        if (themePreference === null) {
+            isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        
+        console.log('[Subscribe] Theme detection results:');
+        console.log('[Subscribe] localStorage pref-theme:', themePreference);
+        console.log('[Subscribe] Body classes:', document.body.className);
+        console.log('[Subscribe] Body has dark class:', document.body.classList.contains('dark'));
+        console.log('[Subscribe] System prefers dark:', window.matchMedia('(prefers-color-scheme: dark)').matches);
+        console.log('[Subscribe] Final isDark result:', isDarkTheme);
+        
+        // Choose form based on theme
+        const lightFormId = 'add30b9c-a238-11f0-98d5-6727ec6b3f72';
+        const darkFormId = '5691337a-a244-11f0-aa3f-791dbf3c50f2';
+        const selectedFormId = isDarkTheme ? darkFormId : lightFormId;
+        
+        console.log('[Subscribe] Selected form ID:', selectedFormId);
+        
+        // Check if the modal form exists in the DOM (exclude script tags)
+        const modalForm = document.querySelector(`[data-form="${selectedFormId}"]:not(script)`);
+        console.log('[Subscribe] Modal form found:', modalForm);
+        
+        // Also check for the actual modal container that EmailOctopus creates
+        const emailOctopusModal = document.querySelector(`.modal-container[data-form="${selectedFormId}"]`);
+        console.log('[Subscribe] EmailOctopus modal found:', emailOctopusModal);
+        
+        // Use whichever modal element we found (or both)
+        const targetModal = modalForm || emailOctopusModal;
+        
+        if (targetModal) {
+            console.log('[Subscribe] Modal form exists, showing it');
+            // Show the modal by adding/ensuring the 'active' class
+            targetModal.classList.add('active');
+            targetModal.style.display = 'block';
+            targetModal.style.visibility = 'visible';
+            targetModal.style.opacity = '1';
+            targetModal.style.zIndex = '9999';
+            
+            // Also ensure the modal container is visible
+            const modalContainer = targetModal.closest('.modal-container') || targetModal;
+            if (modalContainer && modalContainer !== targetModal) {
+                console.log('[Subscribe] Modal container found, showing it');
+                modalContainer.classList.add('active');
+                modalContainer.style.display = 'block';
+                modalContainer.style.visibility = 'visible';
+                modalContainer.style.opacity = '1';
+                modalContainer.style.zIndex = '9999';
+            }
+            
+            // Add event listener for close button
+            const closeButton = targetModal.querySelector('.close');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    console.log('[Subscribe] Close button clicked');
+                    targetModal.classList.remove('active');
+                    targetModal.style.display = 'none';
+                    if (modalContainer && modalContainer !== targetModal) {
+                        modalContainer.classList.remove('active');
+                        modalContainer.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Add event listener for backdrop click
+            targetModal.addEventListener('click', function(e) {
+                if (e.target === targetModal) {
+                    console.log('[Subscribe] Backdrop clicked');
+                    targetModal.classList.remove('active');
+                    targetModal.style.display = 'none';
+                    if (modalContainer && modalContainer !== targetModal) {
+                        modalContainer.classList.remove('active');
+                        modalContainer.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Add window resize listener to maintain modal positioning
+            const handleModalResize = () => {
+                if (targetModal && targetModal.classList.contains('active')) {
+                    console.log('[Subscribe] Window resized, maintaining modal position');
+                    // Force re-center by briefly hiding and showing
+                    targetModal.style.display = 'none';
+                    setTimeout(() => {
+                        targetModal.style.display = 'flex';
+                    }, 10);
+                }
+            };
+            
+            window.addEventListener('resize', handleModalResize);
+            
+        } else {
+            console.log('[Subscribe] Modal form not found, checking for EmailOctopus script...');
+            
+            // Check if the EmailOctopus script has loaded
+            const emailOctopusScript = document.querySelector('script[src*="eocampaign1.com"]');
+            console.log('[Subscribe] EmailOctopus script element:', emailOctopusScript);
+            
+            if (emailOctopusScript) {
+                console.log('[Subscribe] Script element exists, waiting for it to execute...');
+                
+                // Wait for the script to execute and create the form
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                const checkForForm = () => {
+                    attempts++;
+                    console.log(`[Subscribe] Attempt ${attempts}/${maxAttempts} to find modal form...`);
+                    
+                    const retryModal = document.querySelector(`[data-form="${selectedFormId}"]:not(script)`);
+                    const retryEmailOctopusModal = document.querySelector(`.modal-container[data-form="${selectedFormId}"]`);
+                    if (retryModal || retryEmailOctopusModal) {
+                        console.log('[Subscribe] Modal form found after waiting!');
+                        showSubscribeForm(); // Recursive call
+                        return;
+                    }
+                    
+                    if (attempts < maxAttempts) {
+                        setTimeout(checkForForm, 500); // Check every 500ms
+                    } else {
+                        console.log('[Subscribe] Modal form still not found after all attempts');
+                        console.log('[Subscribe] All elements with data-form attribute:', document.querySelectorAll('[data-form]'));
+                        console.log('[Subscribe] All modal-related elements:', document.querySelectorAll('[class*="modal"], [class*="popup"], [class*="overlay"]'));
+                        
+                        // Try alternative approach - look for any EmailOctopus elements
+                        const allEmailOctopusElements = document.querySelectorAll('[class*="emailoctopus"], [id*="emailoctopus"], [data-emailoctopus]');
+                        console.log('[Subscribe] All EmailOctopus elements:', allEmailOctopusElements);
+                        
+                        // Try to trigger the form using different methods
+                        console.log('[Subscribe] Trying alternative trigger methods...');
+                        
+                        // Method 1: Dispatch custom event
+                        const customEvent = new CustomEvent('emailoctopus:show', {
+                            detail: { formId: selectedFormId }
+                        });
+                        document.dispatchEvent(customEvent);
+                        
+                        // Method 2: Try to find and click any trigger elements
+                        const triggerElements = document.querySelectorAll('[data-emailoctopus-trigger], [onclick*="emailoctopus"], [href*="emailoctopus"]');
+                        console.log('[Subscribe] Trigger elements found:', triggerElements);
+                        triggerElements.forEach(el => {
+                            console.log('[Subscribe] Clicking trigger element:', el);
+                            el.click();
+                        });
+                        
+                        // Method 3: Try to manually show any hidden forms
+                        const hiddenForms = document.querySelectorAll('[style*="display: none"], [style*="visibility: hidden"]');
+                        hiddenForms.forEach(form => {
+                            if (form.innerHTML.includes(selectedFormId) || 
+                                form.innerHTML.includes('emailoctopus')) {
+                                console.log('[Subscribe] Found hidden EmailOctopus form, showing it');
+                                form.style.display = 'block';
+                                form.style.visibility = 'visible';
+                                form.style.opacity = '1';
+                                form.style.zIndex = '9999';
+                            }
+                        });
+                    }
+                };
+                
+                checkForForm();
+                
+            } else {
+                console.log('[Subscribe] EmailOctopus script not found in DOM');
+            }
+        }
+    }
+    
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSubscribeForm();
+        });
+    }
+    
+    if (mobileSubscribeBtn) {
+        mobileSubscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSubscribeForm();
+            closeMobileMenu(); // Close mobile menu after clicking subscribe
+        });
+    }
+    
+    // Listen for theme changes to update form selection
+    function setupThemeChangeListener() {
+        // Listen for theme toggle button clicks
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                console.log('[Subscribe] Theme toggle clicked, forms will update on next subscribe click');
+            });
+        }
+        
+        // Listen for DOM mutations that might indicate theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && 
+                    (mutation.attributeName === 'class' || mutation.attributeName === 'data-theme')) {
+                    console.log('[Subscribe] Theme change detected via DOM mutation');
+                }
+            });
+        });
+        
+        // Observe the document and body for theme changes
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class', 'data-theme']
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+    
+    // Initialize theme change listener
+    setupThemeChangeListener();
 });
 </script>

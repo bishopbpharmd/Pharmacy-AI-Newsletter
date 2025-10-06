@@ -1,0 +1,17 @@
+{{- /* This extends PaperMod's head section with Auth0 SDK */ -}}
+<!-- Auth0 SPA SDK -->
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+
+<!-- Inject Auth0 settings from Hugo site params -->
+<script>
+  window.__AUTH0 = {
+    domain: "{{ .Site.Params.auth0.domain }}",
+    clientId: "{{ .Site.Params.auth0.clientId }}"
+  };
+  
+  // Debug: Log the configuration
+  console.log("[Auth0 Config] Injected configuration:", window.__AUTH0);
+</script>
+
+<!-- Auth0 Integration -->
+<script src="{{ .Site.BaseURL }}js/auth.js" defer></script>

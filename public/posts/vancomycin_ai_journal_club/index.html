@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=54155&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="Model Development">
 <meta name="description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:54155/posts/vancomycin_ai_journal_club/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.27f67b446ba9d8ccec39d75b5d7adae090cbfdf0bd677ac9f3e1ec0c64a23160.css" integrity="sha256-J/Z7RGup2MzsOddbXXra4JDL/fC9Z3rJ8&#43;HsDGSiMWA=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:54155/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:54155/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:54155/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:54155/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:54155/safari-pinned-tab.svg">
+<link rel="canonical" href="http://localhost:1313/posts/vancomycin_ai_journal_club/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.1e72c87f9c6ae5086935213580ae09d02ff47d73bbcbe2b1e4e7f70f8c26b965.css" integrity="sha256-HnLIf5xq5QhpNSE1gK4J0C/0fXO7y&#43;Kx5Of3D4wmuWU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:54155/posts/vancomycin_ai_journal_club/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/vancomycin_ai_journal_club/">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,6 +56,22 @@
 
     </style>
 </noscript>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+
+
+<script>
+  window.__AUTH0 = {
+    domain: "dev-hgy0ilmv64t2vwb6.us.auth0.com",
+    clientId: "gdc8rjiQufmjTKQIF3XNASS1xAdIeNaz"
+  };
+  
+  
+  console.log("[Auth0 Config] Injected configuration:", window.__AUTH0);
+</script>
+
+
+<script src="http://localhost:1313/js/auth.js" defer></script>
+
 </head>
 
 <body class="" id="top">
@@ -73,7 +89,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:54155/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
             <div class="logo-switches">
             </div>
         </div>
@@ -99,18 +115,28 @@
             
             
             <li class="navbar-home">
-                <a href="http://localhost:54155/" title="Home">
+                <a href="http://localhost:1313/" title="Home">
                     <span>Home</span>
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="http://localhost:54155/posts/" title="Archive">
+                <a href="http://localhost:1313/posts/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
-            <li class="navbar-subscribe">
-                <a href="http://localhost:54155/" title="Subscribe" class="subscribe-button">
-                    <span>Subscribe</span>
+            <li class="navbar-auth">
+                <a id="loginBtn" class="auth-login-link" href="#">
+                    <span>Login</span>
+                </a>
+            </li>
+            <li class="navbar-profile" id="profileLi" style="display: none;">
+                <a id="profileBtn" class="auth-profile-link" href="#">
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="navbar-logout" id="logoutLi" style="display: none;">
+                <a id="logoutBtn" class="auth-logout-link" href="#">
+                    <span>Logout</span>
                 </a>
             </li>
             <li class="navbar-theme-toggle">
@@ -144,15 +170,25 @@
         <div class="mobile-menu-overlay" id="mobile-menu-overlay">
             <div class="mobile-menu-content">
                 <div class="mobile-menu-items">
-                    <a href="http://localhost:54155/" class="mobile-menu-item">
+                    <a href="http://localhost:1313/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="http://localhost:54155/posts/" class="mobile-menu-item">
+                    <a href="http://localhost:1313/posts/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
-                    <a href="http://localhost:54155/" class="mobile-menu-item">
-                        <span>Subscribe</span>
+                    
+                    
+                    <a id="mobileLoginBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                        <span>Login</span>
                     </a>
+                    <div id="mobileLogoutBtn" class="mobile-auth-logout-container" style="display: none;">
+                        <a id="mobileProfileBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                            <span>Profile</span>
+                        </a>
+                        <a id="mobileLogoutBtn" class="mobile-menu-item mobile-auth-link" href="#">
+                            <span>Logout</span>
+                        </a>
+                    </div>
                     <button class="mobile-menu-item mobile-menu-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle theme">
                         <div class="theme-toggle-content">
                             <span class="theme-label">Theme</span>
@@ -275,12 +311,19 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMobileMenu();
         }
     });
+    
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && mobileMenuOverlay.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
 });
 </script>
 <main class="main">
 
 <nav class="post-navigation">
-  <a href="http://localhost:54155/" class="back-to-posts">
+  <a href="http://localhost:1313/" class="back-to-posts">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"></line>
       <polyline points="12 19 5 12 12 5"></polyline>
@@ -440,14 +483,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:54155/tags/model-development/">Model Development</a></li>
+      <li><a href="http://localhost:1313/tags/model-development/">Model Development</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:54155/">Pharmacy AI Newsletter</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">Pharmacy AI Newsletter</a></span> · 
 
     <span>
         Powered by

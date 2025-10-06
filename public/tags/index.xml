@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Pharmacy AI Newsletter</title>
-    <link>http://localhost:54155/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Pharmacy AI Newsletter</description>
     <generator>Hugo -- 0.151.0</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 04 Oct 2025 21:47:54 -0400</lastBuildDate>
-    <atom:link href="http://localhost:54155/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reviews &amp; Perspectives</title>
-      <link>http://localhost:54155/tags/reviews--perspectives/</link>
+      <link>http://localhost:1313/tags/reviews--perspectives/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:54 -0400</pubDate>
-      <guid>http://localhost:54155/tags/reviews--perspectives/</guid>
+      <guid>http://localhost:1313/tags/reviews--perspectives/</guid>
       <description></description>
     </item>
     <item>
       <title>Model Development</title>
-      <link>http://localhost:54155/tags/model-development/</link>
+      <link>http://localhost:1313/tags/model-development/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:47 -0400</pubDate>
-      <guid>http://localhost:54155/tags/model-development/</guid>
+      <guid>http://localhost:1313/tags/model-development/</guid>
       <description></description>
     </item>
     <item>
       <title>External Validation</title>
-      <link>http://localhost:54155/tags/external-validation/</link>
+      <link>http://localhost:1313/tags/external-validation/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:38 -0400</pubDate>
-      <guid>http://localhost:54155/tags/external-validation/</guid>
+      <guid>http://localhost:1313/tags/external-validation/</guid>
       <description></description>
     </item>
     <item>
       <title>Guidelines &amp; Standards</title>
-      <link>http://localhost:54155/tags/guidelines--standards/</link>
+      <link>http://localhost:1313/tags/guidelines--standards/</link>
       <pubDate>Sat, 04 Oct 2025 11:34:58 -0400</pubDate>
-      <guid>http://localhost:54155/tags/guidelines--standards/</guid>
+      <guid>http://localhost:1313/tags/guidelines--standards/</guid>
       <description></description>
     </item>
     <item>
       <title>Process Outcomes</title>
-      <link>http://localhost:54155/tags/process-outcomes/</link>
+      <link>http://localhost:1313/tags/process-outcomes/</link>
       <pubDate>Sat, 04 Oct 2025 09:41:46 -0400</pubDate>
-      <guid>http://localhost:54155/tags/process-outcomes/</guid>
+      <guid>http://localhost:1313/tags/process-outcomes/</guid>
       <description></description>
     </item>
   </channel>
