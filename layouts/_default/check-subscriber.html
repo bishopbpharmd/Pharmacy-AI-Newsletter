@@ -1,0 +1,162 @@
+---
+title: "Check Subscription Status"
+date: '2025-01-27T10:00:00-05:00'
+draft: false
+description: "Check your newsletter subscription status"
+---
+
+<div class="check-subscriber-container">
+  <div class="check-subscriber-content">
+    <h1>Newsletter Subscription Status</h1>
+    
+    <div id="loading" class="status-message loading">
+      <div class="loading-spinner"></div>
+      <p>Checking your subscription status...</p>
+    </div>
+    
+    <div id="status" class="status-message" style="display: none;">
+      <!-- Status messages will be inserted here -->
+    </div>
+    
+    <div id="error" class="status-message error" style="display: none;">
+      <p>❌ Unable to check subscription status. Please try again later.</p>
+    </div>
+    
+    <div class="check-subscriber-action-buttons" style="display: none;">
+      <a href="{{ .Site.BaseURL }}" class="check-subscriber-btn check-subscriber-btn-primary">Back to Home</a>
+      <button id="subscribeBtn" class="check-subscriber-btn check-subscriber-btn-secondary" style="display: none;">Subscribe to Newsletter</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('[check-subscriber] Page loaded, checking Auth0 authentication...');
+  
+  const loadingEl = document.getElementById('loading');
+  const statusEl = document.getElementById('status');
+  const errorEl = document.getElementById('error');
+  const actionButtons = document.querySelector('.check-subscriber-action-buttons');
+  const subscribeBtn = document.getElementById('subscribeBtn');
+  
+  try {
+    // Wait for Auth0 to be available
+    await waitForAuth0();
+    
+    // Get the authenticated user
+    const user = await auth0Client.getUser();
+    console.log('[check-subscriber] User:', user);
+    
+    if (!user || !user.email) {
+      throw new Error('No authenticated user or email found');
+    }
+    
+    // Hide loading, show status
+    loadingEl.style.display = 'none';
+    statusEl.style.display = 'block';
+    
+    // Check subscription status
+    await checkSubscriptionStatus(user.email);
+    
+  } catch (error) {
+    console.error('[check-subscriber] Error:', error);
+    
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+    actionButtons.style.display = 'flex';
+  }
+});
+
+async function waitForAuth0() {
+  const maxAttempts = 30;
+  let attempts = 0;
+  
+  while (attempts < maxAttempts) {
+    if (window.auth0Client && typeof window.auth0Client.getUser === 'function') {
+      return;
+    }
+    await new Promise(resolve => setTimeout(resolve, 100));
+    attempts++;
+  }
+  
+  throw new Error('Auth0 client not available');
+}
+
+async function checkSubscriptionStatus(email) {
+  console.log('[check-subscriber] Checking subscription for:', email);
+  
+  const statusEl = document.getElementById('status');
+  const actionButtons = document.querySelector('.check-subscriber-action-buttons');
+  const subscribeBtn = document.getElementById('subscribeBtn');
+  
+  try {
+    const response = await fetch('/.netlify/functions/check-subscriber', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('[check-subscriber] Response:', data);
+    
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    
+    // Display appropriate message based on subscription status
+    if (data.exists && data.status === 'SUBSCRIBED') {
+      statusEl.className = 'status-message success';
+      statusEl.innerHTML = `
+        <p>✅ <strong>You are already subscribed to the newsletter!</strong></p>
+        <p>You'll receive our latest Pharmacy AI insights delivered to your inbox.</p>
+      `;
+    } else if (!data.exists) {
+      statusEl.className = 'status-message info';
+      statusEl.innerHTML = `
+        <p>📩 <strong>You are not yet subscribed to our newsletter.</strong></p>
+        <p>Stay updated with the latest Pharmacy AI research and insights.</p>
+      `;
+      subscribeBtn.style.display = 'inline-block';
+    } else {
+      statusEl.className = 'status-message info';
+      statusEl.innerHTML = `
+        <p>📬 <strong>Your subscription status: ${data.status}</strong></p>
+        <p>You have an account but may need to confirm your subscription.</p>
+      `;
+      subscribeBtn.style.display = 'inline-block';
+    }
+    
+    actionButtons.style.display = 'flex';
+    
+    // Wire up subscribe button if shown
+    if (subscribeBtn.style.display !== 'none') {
+      subscribeBtn.addEventListener('click', function() {
+        console.log('[check-subscriber] Subscribe button clicked');
+        // Trigger the existing subscribe form functionality
+        if (typeof showSubscribeForm === 'function') {
+          showSubscribeForm();
+        } else {
+          // Fallback: redirect to home page where subscribe functionality exists
+          window.location.href = '{{ .Site.BaseURL }}';
+        }
+      });
+    }
+    
+  } catch (error) {
+    console.error('[check-subscriber] Subscription check failed:', error);
+    statusEl.className = 'status-message error';
+    statusEl.innerHTML = `
+      <p>❌ <strong>Unable to check subscription status</strong></p>
+      <p>Please try again later or contact support if the problem persists.</p>
+    `;
+    actionButtons.style.display = 'flex';
+  }
+}
+</script>

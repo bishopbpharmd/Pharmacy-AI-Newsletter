@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Pharmacy AI Newsletter</title>
-    <link>https://researchbriefs.netlify.app/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Pharmacy AI Newsletter</description>
     <generator>Hugo -- 0.151.0</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 04 Oct 2025 21:47:54 -0400</lastBuildDate>
-    <atom:link href="https://researchbriefs.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LLMs show partial utility for DDI checks</title>
-      <link>https://researchbriefs.netlify.app/posts/ddi_abstract/</link>
+      <link>http://localhost:1313/posts/ddi_abstract/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:54 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/ddi_abstract/</guid>
+      <guid>http://localhost:1313/posts/ddi_abstract/</guid>
       <description>This review finds that LLMs can detect many common drug–drug interactions with clear explanations, but they miss uncommon ones, vary in severity ratings, and sometimes hallucinate contraindications.</description>
     </item>
     <item>
       <title>Rule-Based CDS: A Literature Review of Impact and Evolution</title>
-      <link>https://researchbriefs.netlify.app/posts/ai_cds_abstract/</link>
+      <link>http://localhost:1313/posts/ai_cds_abstract/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:54 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/ai_cds_abstract/</guid>
+      <guid>http://localhost:1313/posts/ai_cds_abstract/</guid>
       <description>This scoping review of 28 studies (2007–2023) maps how rule-based CDSS are used across medicine, highlighting both measurable gains and persistent barriers.</description>
     </item>
     <item>
       <title>Six-lab causal AI for early AKI detection post cardiac surgery</title>
-      <link>https://researchbriefs.netlify.app/posts/cardiac_surg_aki_abstract/</link>
+      <link>http://localhost:1313/posts/cardiac_surg_aki_abstract/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:47 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/cardiac_surg_aki_abstract/</guid>
+      <guid>http://localhost:1313/posts/cardiac_surg_aki_abstract/</guid>
       <description>A causal AI model (REACT) predicts cardiac surgery-associated acute kidney injury up to 48 hours earlier than guidelines using six routine lab values.</description>
     </item>
     <item>
       <title>External Validation and Bias in Opioid Risk Prediction Models</title>
-      <link>https://researchbriefs.netlify.app/posts/opioid_abstract/</link>
+      <link>http://localhost:1313/posts/opioid_abstract/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:38 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/opioid_abstract/</guid>
+      <guid>http://localhost:1313/posts/opioid_abstract/</guid>
       <description>A study evaluating an opioid risk prediction model found that external population shifts reduced performance and fairness, requiring local recalibration and subgroup-specific threshold tuning for equitable clinical use.</description>
     </item>
     <item>
       <title>Machine learning to guide infant voriconazole dosing</title>
-      <link>https://researchbriefs.netlify.app/posts/voriconazole_abstract/</link>
+      <link>http://localhost:1313/posts/voriconazole_abstract/</link>
       <pubDate>Sat, 04 Oct 2025 21:47:35 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/voriconazole_abstract/</guid>
+      <guid>http://localhost:1313/posts/voriconazole_abstract/</guid>
       <description>A study combining population pharmacokinetics and machine learning to predict voriconazole exposure in immunocompromised infants under 24 months.</description>
     </item>
     <item>
       <title>Deep Learning Model for the Prediction of Vancomycin Trough Concentration</title>
-      <link>https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/</link>
+      <link>http://localhost:1313/posts/vancomycin_ai_journal_club/</link>
       <pubDate>Sat, 04 Oct 2025 11:38:37 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/</guid>
+      <guid>http://localhost:1313/posts/vancomycin_ai_journal_club/</guid>
       <description>Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.</description>
     </item>
     <item>
       <title>Evaluation of Explainable AI Frameworks in Healthcare</title>
-      <link>https://researchbriefs.netlify.app/posts/explainability_journal_club/</link>
+      <link>http://localhost:1313/posts/explainability_journal_club/</link>
       <pubDate>Sat, 04 Oct 2025 11:34:58 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/explainability_journal_club/</guid>
+      <guid>http://localhost:1313/posts/explainability_journal_club/</guid>
       <description>Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.</description>
     </item>
     <item>
       <title>LLM-Based Clinical Decision Support for Medication Safety</title>
-      <link>https://researchbriefs.netlify.app/posts/cds_journal_club/</link>
+      <link>http://localhost:1313/posts/cds_journal_club/</link>
       <pubDate>Sat, 04 Oct 2025 09:41:46 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/cds_journal_club/</guid>
+      <guid>http://localhost:1313/posts/cds_journal_club/</guid>
       <description>A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.</description>
     </item>
     <item>
       <title>Limits of Inter-Hospital Model Transfer in Delirium Detection</title>
-      <link>https://researchbriefs.netlify.app/posts/delerium_abstract/</link>
+      <link>http://localhost:1313/posts/delerium_abstract/</link>
       <pubDate>Thu, 02 Oct 2025 21:48:00 -0400</pubDate>
-      <guid>https://researchbriefs.netlify.app/posts/delerium_abstract/</guid>
+      <guid>http://localhost:1313/posts/delerium_abstract/</guid>
       <description>A multi-institution study deployed an open-source NLP model to detect delirium features from EHR notes, achieving feasible but variable performance across seven health systems. The project established a shared ontology, temporal conventions, and site-specific preprocessing to improve portability and consistency.</description>
     </item>
   </channel>

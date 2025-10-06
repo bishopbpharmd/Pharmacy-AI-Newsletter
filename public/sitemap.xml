@@ -2,57 +2,60 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://researchbriefs.netlify.app/posts/ddi_abstract/</loc>
+    <loc>http://localhost:1313/posts/ddi_abstract/</loc>
     <lastmod>2025-10-04T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2025-10-04T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/</loc>
+    <loc>http://localhost:1313/posts/</loc>
     <lastmod>2025-10-04T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/tags/reviews--perspectives/</loc>
+    <loc>http://localhost:1313/tags/reviews--perspectives/</loc>
     <lastmod>2025-10-04T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/ai_cds_abstract/</loc>
+    <loc>http://localhost:1313/posts/ai_cds_abstract/</loc>
     <lastmod>2025-10-04T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-10-04T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/tags/model-development/</loc>
+    <loc>http://localhost:1313/tags/model-development/</loc>
     <lastmod>2025-10-04T21:47:47-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/cardiac_surg_aki_abstract/</loc>
+    <loc>http://localhost:1313/posts/cardiac_surg_aki_abstract/</loc>
     <lastmod>2025-10-04T21:47:47-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/tags/external-validation/</loc>
+    <loc>http://localhost:1313/tags/external-validation/</loc>
     <lastmod>2025-10-04T21:47:38-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/opioid_abstract/</loc>
+    <loc>http://localhost:1313/posts/opioid_abstract/</loc>
     <lastmod>2025-10-04T21:47:38-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/voriconazole_abstract/</loc>
+    <loc>http://localhost:1313/posts/voriconazole_abstract/</loc>
     <lastmod>2025-10-04T21:47:35-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/</loc>
+    <loc>http://localhost:1313/posts/vancomycin_ai_journal_club/</loc>
     <lastmod>2025-10-04T11:38:37-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/explainability_journal_club/</loc>
+    <loc>http://localhost:1313/posts/explainability_journal_club/</loc>
     <lastmod>2025-10-04T11:34:58-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/tags/guidelines--standards/</loc>
+    <loc>http://localhost:1313/tags/guidelines--standards/</loc>
     <lastmod>2025-10-04T11:34:58-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/cds_journal_club/</loc>
+    <loc>http://localhost:1313/posts/cds_journal_club/</loc>
     <lastmod>2025-10-04T09:41:46-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/tags/process-outcomes/</loc>
+    <loc>http://localhost:1313/tags/process-outcomes/</loc>
     <lastmod>2025-10-04T09:41:46-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/posts/delerium_abstract/</loc>
+    <loc>http://localhost:1313/posts/delerium_abstract/</loc>
     <lastmod>2025-10-02T21:48:00-04:00</lastmod>
   </url><url>
-    <loc>https://researchbriefs.netlify.app/categories/</loc>
+    <loc>http://localhost:1313/check-subscriber/</loc>
+    <lastmod>2025-01-27T10:00:00-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>
