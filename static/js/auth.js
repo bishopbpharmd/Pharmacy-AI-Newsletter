@@ -103,10 +103,12 @@ console.log("[auth] Script loaded and starting...");
       console.log("[auth] Config loaded:", window.__AUTH0);
 
       // Create Auth0 client
+      const redirectUri = window.location.origin;
       console.log("[auth] Creating Auth0 client with config:", {
         domain: CFG.domain,
         clientId: CFG.clientId,
         cacheLocation: CFG.cacheLocation,
+        redirect_uri: redirectUri
       });
       
       auth0Client = await createAuth0Client({
@@ -114,7 +116,7 @@ console.log("[auth] Script loaded and starting...");
         clientId: CFG.clientId,
         cacheLocation: CFG.cacheLocation,
         authorizationParams: {
-          redirect_uri: window.location.origin
+          redirect_uri: redirectUri
         }
       });
       console.log("[auth] Auth0 client created successfully");
@@ -174,9 +176,12 @@ console.log("[auth] Script loaded and starting...");
         return;
       }
       
+      const loginRedirectUri = window.location.origin;
+      console.log("[auth] Login redirect URI:", loginRedirectUri);
+      
       await auth0Client.loginWithRedirect({
         authorizationParams: {
-          redirect_uri: window.location.origin,
+          redirect_uri: loginRedirectUri,
           ...options.authorizationParams,
         },
       });
