@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Deep Learning Model for the Prediction of Vancomycin Trough Concentration | Pharmacy AI Newsletter</title>
 <meta name="keywords" content="Model Development">
 <meta name="description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/vancomycin_ai_journal_club/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.1e72c87f9c6ae5086935213580ae09d02ff47d73bbcbe2b1e4e7f70f8c26b965.css" integrity="sha256-HnLIf5xq5QhpNSE1gK4J0C/0fXO7y&#43;Kx5Of3D4wmuWU=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="canonical" href="https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.59bcf1aaa10fbeff89a9a24ac5175296579168a1b0db0fdd7537621391114ee6.css" integrity="sha256-WbzxqqEPvv&#43;JqaJKxRdSlleRaKGw2w/ddTdiE5ERTuY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://researchbriefs.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://researchbriefs.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://researchbriefs.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://researchbriefs.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://researchbriefs.netlify.app/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/vancomycin_ai_journal_club/">
+<link rel="alternate" hreflang="en" href="https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/">
 <noscript>
     <style>
         #theme-toggle,
@@ -70,8 +70,71 @@
 </script>
 
 
-<script src="http://localhost:1313/js/auth.js" defer></script>
+<script src="https://researchbriefs.netlify.app/js/auth.js" defer></script>
+<meta property="og:url" content="https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/">
+  <meta property="og:site_name" content="Pharmacy AI Newsletter">
+  <meta property="og:title" content="Deep Learning Model for the Prediction of Vancomycin Trough Concentration">
+  <meta property="og:description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-04T11:38:37-04:00">
+    <meta property="article:modified_time" content="2025-10-04T11:38:37-04:00">
+    <meta property="article:tag" content="Model Development">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Learning Model for the Prediction of Vancomycin Trough Concentration">
+<meta name="twitter:description" content="Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.">
 
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://researchbriefs.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Deep Learning Model for the Prediction of Vancomycin Trough Concentration",
+      "item": "https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Deep Learning Model for the Prediction of Vancomycin Trough Concentration",
+  "name": "Deep Learning Model for the Prediction of Vancomycin Trough Concentration",
+  "description": "Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.",
+  "keywords": [
+    "Model Development"
+  ],
+  "articleBody": "Clinical/Operational Question Can a sequential deep learning model (“Nephrocast-V”) accurately forecast vancomycin trough levels ~48 hours ahead in ICU patients and recommend dose adjustments to attain therapeutic levels, compared to standard pharmacist-driven Bayesian dosing?\nBackground \u0026 Rationale TDM Challenge: Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).\nNeed for Precision: Guidelines endorse AUC-guided dosing (target AUC/MIC 400–600) via Bayesian tools, but implementation is labor-intensive and not universally adopted. Pharmacist-led dosing improves outcomes yet requires time-intensive individualization.\nAI Potential: Machine learning can learn from high-dimensional EHR data and capture complex PK dynamics. Prior vancomycin ML models showed improved accuracy over PopPK but had limitations—short windows, no direct comparison to clinicians, or only initial troughs. Nephrocast-V addresses these by predicting 48h ahead and benchmarking against pharmacists.\nMethods Snapshot Design/Setting: Retrospective single-center cohort at two UCSD ICUs (Jan 2016–Jun 2024). Inclusion: Adult ICU patients ≥24h, intermittent IV vancomycin. Exclusions: Continuous infusions, RRT within 7d, ICU stay \u003e14d. Outcome: Steady-state trough ~2 days after prediction point. Model: LSTM + 2-head attention + dense layer with skip connections. Predictors: 253 EHR variables—demographics, comorbidities, labs, vitals, meds, prior vanco levels, doses between prediction and trough. Comparison: ICU pharmacists using PrecisePK Bayesian software. Dose Adjustment Simulation: Incremental ±250mg adjustments tested. Key Results Cohort: 2,205 ICU vancomycin encounters (~2,492 troughs). Median age 58; 64% male; 44% experienced AKI. Prediction Accuracy: MAE 3.15 mg/L, RMSE 4.17 mg/L—comparable to pharmacists (MAE 3.06, RMSE 4.07). Therapeutic Range Classification: Both model and pharmacists ~56% accuracy in categorizing troughs. High-Error Scenarios: AKI onset/recovery, low muscle mass, obesity, very low baseline SCr. Key Feature Drivers: Current dose most influential, followed by SCr, length of stay, lab values, sex, sepsis/SIRS indicators. Dose Recommendations: Closer alignment with Nephrocast-V dosing associated with more therapeutic troughs. Strengths Large real-world ICU dataset (≈2.5k troughs, \u003e2k encounters). Broad inputs beyond PopPK models. Modern architecture (LSTM + attention, skip connections). Benchmark against pharmacists with Bayesian software. Actionable dose recommendations, not just predictions. Thorough error analysis and feature importance transparency. Limitations Single-center, internal validation only. Excluded dialysis and prolonged ICU cases. Trough-focused despite AUC guideline emphasis. Retrospective—no prospective patient outcomes. Semi-structured data extraction may introduce bias. Mostly adult/White cohort; pediatric/ethnic subgroup performance unknown. AI-Specific Considerations Training/Generalizability: Local UCSD data only; external validation needed. Explainability: Gradient-based importance aligned with clinical logic, but SHAP/interpretability tools recommended. Bias \u0026 Fairness: Possible subgroup differences (e.g., sex, ICU type). Regulatory Oversight: Likely CDS under FDA regulation if logic opaque. Maintenance: Risk of model drift—requires periodic re-training. Applicability to Pharmacy Informatics Integration via CDS Hooks or SMART-on-FHIR (e.g., during order verification). Workflow fit: EMR side-panel, BPA, or dosing advisor. Data pipeline: HL7/FHIR mapping of SCr, dosing history, labs. Alerting: Non-intrusive, rationale-based to avoid fatigue. Training \u0026 Acceptance: Scope/limits education, pilot phase trials. Governance: Override logging, pharmacist review, continuous QI. Related Literature Synthesis Table [A] Hu et al. 2025 (Front Pharmacol)\nRandom Forest vs PopPK for troughs (n=546). Achieved 84% accuracy vs Bayesian 57%. No dose recommendations; short prediction horizon. Takeaway: Even simple ML \u003e PopPK; supports AI in trough targeting. [B] Chen et al. 2025 (Microbiol Spectr)\nICU sepsis cohort (n=4,059). Compared PopPK, Bayesian, ML, Hybrid PK+ML. Hybrid best without drug levels; Bayesian best with trough data. Takeaway: Optimal approach context-dependent; future CDS may dynamically select method. [C] Nigo et al. 2022 (J Biomed Inform)\nPK-RNN-VE, deep learning on 55k vanco levels. Outperformed Bayesian RMSE 5.39 vs 6.29 mg/L. Did not provide dosing adjustments. Takeaway: Early validation of RNN-based AI in vancomycin; Nephrocast-V extends horizon + attention. Evidence Quality \u0026 Recommendation GRADE: Low (retrospective, single-site, indirect outcomes). Practice Recommendation: Do not replace pharmacist judgment yet. Use as adjunct in pilot studies with oversight. Discussion Prompt: What safeguards would you want before trusting AI dosing in ICU? Bottom Line Nephrocast-V predicted vancomycin troughs ~48h ahead with pharmacist-level accuracy in ICU patients. It leverages rich EHR data, offers dose recommendations, and could enhance dosing precision where PopPK models fall short.\nBefore clinical adoption: external validation, workflow integration, and governance structures are needed. Pharmacists remain central to evaluating and applying AI outputs safely.\nCitation Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Nephrocast-V: A Deep Learning Model for the Prediction of Vancomycin Trough Concentration Using Electronic Health Record Data. Pharmacotherapy. 2025. doi:10.1002/phar.70062\nReferences (Primary + Comparative Studies) Ghanbari G, Stevens C, Aronoff-Spencer E, Malhotra A, Nemati S, Yousif Z. Pharmacotherapy. 2025. doi:10.1002/phar.70062 Hu T, Ding X, Han F, An Z. Front Pharmacol. 2025;16:1549500. doi:10.3389/fphar.2025.1549500 Chen K, Wang C, Wei Y, Ma S, Huang W, Dong Y, et al. Microbiol Spectr. 2025;13(5):e0049925. doi:10.1128/spectrum.00499-25 Nigo M, Tran HTN, Xie Z, Feng H, Mao B, Rasmy L, et al. J Biomed Inform. 2022;133:104166. doi:10.1016/j.jbi.2022.104166 ",
+  "wordCount" : "807",
+  "inLanguage": "en",
+  "datePublished": "2025-10-04T11:38:37-04:00",
+  "dateModified": "2025-10-04T11:38:37-04:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://researchbriefs.netlify.app/posts/vancomycin_ai_journal_club/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pharmacy AI Newsletter",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://researchbriefs.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -89,7 +152,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
+            <a href="https://researchbriefs.netlify.app/" accesskey="h" title="Pharmacy AI Newsletter (Alt + H)">Pharmacy AI Newsletter</a>
             <div class="logo-switches">
             </div>
         </div>
@@ -115,13 +178,18 @@
             
             
             <li class="navbar-home">
-                <a href="http://localhost:1313/" title="Home">
+                <a href="https://researchbriefs.netlify.app/" title="Home">
                     <span>Home</span>
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="http://localhost:1313/posts/" title="Archive">
+                <a href="https://researchbriefs.netlify.app/posts/" title="Archive">
                     <span>Archive</span>
+                </a>
+            </li>
+            <li class="navbar-subscribe">
+                <a href="#" id="subscribeBtn" title="Subscribe">
+                    <span>Subscribe</span>
                 </a>
             </li>
             <li class="navbar-auth">
@@ -170,11 +238,14 @@
         <div class="mobile-menu-overlay" id="mobile-menu-overlay">
             <div class="mobile-menu-content">
                 <div class="mobile-menu-items">
-                    <a href="http://localhost:1313/" class="mobile-menu-item">
+                    <a href="https://researchbriefs.netlify.app/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="http://localhost:1313/posts/" class="mobile-menu-item">
+                    <a href="https://researchbriefs.netlify.app/posts/" class="mobile-menu-item">
                         <span>Archive</span>
+                    </a>
+                    <a href="#" id="mobileSubscribeBtn" class="mobile-menu-item">
+                        <span>Subscribe</span>
                     </a>
                     
                     
@@ -318,12 +389,269 @@ document.addEventListener('DOMContentLoaded', function() {
             closeMobileMenu();
         }
     });
+    
+    
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
+    
+    function showSubscribeForm() {
+        console.log('[Subscribe] Attempting to show EmailOctopus form...');
+        console.log('[Subscribe] Document ready state:', document.readyState);
+        console.log('[Subscribe] All scripts on page:', document.querySelectorAll('script').length);
+        
+        
+        let isDarkTheme = false;
+        
+        
+        const themePreference = localStorage.getItem("pref-theme");
+        if (themePreference === "dark") {
+            isDarkTheme = true;
+        } else if (themePreference === "light") {
+            isDarkTheme = false;
+        }
+        
+        
+        else if (document.body.classList.contains('dark')) {
+            isDarkTheme = true;
+        }
+        
+        
+        else {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const sunIcon = document.getElementById('sun');
+                const moonIcon = document.getElementById('moon');
+                if (sunIcon && sunIcon.style.display === 'none') {
+                    isDarkTheme = true;
+                } else if (moonIcon && moonIcon.style.display === 'none') {
+                    isDarkTheme = false;
+                }
+            }
+        }
+        
+        
+        if (themePreference === null) {
+            isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        
+        console.log('[Subscribe] Theme detection results:');
+        console.log('[Subscribe] localStorage pref-theme:', themePreference);
+        console.log('[Subscribe] Body classes:', document.body.className);
+        console.log('[Subscribe] Body has dark class:', document.body.classList.contains('dark'));
+        console.log('[Subscribe] System prefers dark:', window.matchMedia('(prefers-color-scheme: dark)').matches);
+        console.log('[Subscribe] Final isDark result:', isDarkTheme);
+        
+        
+        const lightFormId = 'add30b9c-a238-11f0-98d5-6727ec6b3f72';
+        const darkFormId = '5691337a-a244-11f0-aa3f-791dbf3c50f2';
+        const selectedFormId = isDarkTheme ? darkFormId : lightFormId;
+        
+        console.log('[Subscribe] Selected form ID:', selectedFormId);
+        
+        
+        const modalForm = document.querySelector(`[data-form="${selectedFormId}"]:not(script)`);
+        console.log('[Subscribe] Modal form found:', modalForm);
+        
+        
+        const emailOctopusModal = document.querySelector(`.modal-container[data-form="${selectedFormId}"]`);
+        console.log('[Subscribe] EmailOctopus modal found:', emailOctopusModal);
+        
+        
+        const targetModal = modalForm || emailOctopusModal;
+        
+        if (targetModal) {
+            console.log('[Subscribe] Modal form exists, showing it');
+            
+            targetModal.classList.add('active');
+            targetModal.style.display = 'block';
+            targetModal.style.visibility = 'visible';
+            targetModal.style.opacity = '1';
+            targetModal.style.zIndex = '9999';
+            
+            
+            const modalContainer = targetModal.closest('.modal-container') || targetModal;
+            if (modalContainer && modalContainer !== targetModal) {
+                console.log('[Subscribe] Modal container found, showing it');
+                modalContainer.classList.add('active');
+                modalContainer.style.display = 'block';
+                modalContainer.style.visibility = 'visible';
+                modalContainer.style.opacity = '1';
+                modalContainer.style.zIndex = '9999';
+            }
+            
+            
+            const closeButton = targetModal.querySelector('.close');
+            if (closeButton) {
+                closeButton.addEventListener('click', function() {
+                    console.log('[Subscribe] Close button clicked');
+                    targetModal.classList.remove('active');
+                    targetModal.style.display = 'none';
+                    if (modalContainer && modalContainer !== targetModal) {
+                        modalContainer.classList.remove('active');
+                        modalContainer.style.display = 'none';
+                    }
+                });
+            }
+            
+            
+            targetModal.addEventListener('click', function(e) {
+                if (e.target === targetModal) {
+                    console.log('[Subscribe] Backdrop clicked');
+                    targetModal.classList.remove('active');
+                    targetModal.style.display = 'none';
+                    if (modalContainer && modalContainer !== targetModal) {
+                        modalContainer.classList.remove('active');
+                        modalContainer.style.display = 'none';
+                    }
+                }
+            });
+            
+            
+            const handleModalResize = () => {
+                if (targetModal && targetModal.classList.contains('active')) {
+                    console.log('[Subscribe] Window resized, maintaining modal position');
+                    
+                    targetModal.style.display = 'none';
+                    setTimeout(() => {
+                        targetModal.style.display = 'flex';
+                    }, 10);
+                }
+            };
+            
+            window.addEventListener('resize', handleModalResize);
+            
+        } else {
+            console.log('[Subscribe] Modal form not found, checking for EmailOctopus script...');
+            
+            
+            const emailOctopusScript = document.querySelector('script[src*="eocampaign1.com"]');
+            console.log('[Subscribe] EmailOctopus script element:', emailOctopusScript);
+            
+            if (emailOctopusScript) {
+                console.log('[Subscribe] Script element exists, waiting for it to execute...');
+                
+                
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                const checkForForm = () => {
+                    attempts++;
+                    console.log(`[Subscribe] Attempt ${attempts}/${maxAttempts} to find modal form...`);
+                    
+                    const retryModal = document.querySelector(`[data-form="${selectedFormId}"]:not(script)`);
+                    const retryEmailOctopusModal = document.querySelector(`.modal-container[data-form="${selectedFormId}"]`);
+                    if (retryModal || retryEmailOctopusModal) {
+                        console.log('[Subscribe] Modal form found after waiting!');
+                        showSubscribeForm(); 
+                        return;
+                    }
+                    
+                    if (attempts < maxAttempts) {
+                        setTimeout(checkForForm, 500); 
+                    } else {
+                        console.log('[Subscribe] Modal form still not found after all attempts');
+                        console.log('[Subscribe] All elements with data-form attribute:', document.querySelectorAll('[data-form]'));
+                        console.log('[Subscribe] All modal-related elements:', document.querySelectorAll('[class*="modal"], [class*="popup"], [class*="overlay"]'));
+                        
+                        
+                        const allEmailOctopusElements = document.querySelectorAll('[class*="emailoctopus"], [id*="emailoctopus"], [data-emailoctopus]');
+                        console.log('[Subscribe] All EmailOctopus elements:', allEmailOctopusElements);
+                        
+                        
+                        console.log('[Subscribe] Trying alternative trigger methods...');
+                        
+                        
+                        const customEvent = new CustomEvent('emailoctopus:show', {
+                            detail: { formId: selectedFormId }
+                        });
+                        document.dispatchEvent(customEvent);
+                        
+                        
+                        const triggerElements = document.querySelectorAll('[data-emailoctopus-trigger], [onclick*="emailoctopus"], [href*="emailoctopus"]');
+                        console.log('[Subscribe] Trigger elements found:', triggerElements);
+                        triggerElements.forEach(el => {
+                            console.log('[Subscribe] Clicking trigger element:', el);
+                            el.click();
+                        });
+                        
+                        
+                        const hiddenForms = document.querySelectorAll('[style*="display: none"], [style*="visibility: hidden"]');
+                        hiddenForms.forEach(form => {
+                            if (form.innerHTML.includes(selectedFormId) || 
+                                form.innerHTML.includes('emailoctopus')) {
+                                console.log('[Subscribe] Found hidden EmailOctopus form, showing it');
+                                form.style.display = 'block';
+                                form.style.visibility = 'visible';
+                                form.style.opacity = '1';
+                                form.style.zIndex = '9999';
+                            }
+                        });
+                    }
+                };
+                
+                checkForForm();
+                
+            } else {
+                console.log('[Subscribe] EmailOctopus script not found in DOM');
+            }
+        }
+    }
+    
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSubscribeForm();
+        });
+    }
+    
+    if (mobileSubscribeBtn) {
+        mobileSubscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSubscribeForm();
+            closeMobileMenu(); 
+        });
+    }
+    
+    
+    function setupThemeChangeListener() {
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                console.log('[Subscribe] Theme toggle clicked, forms will update on next subscribe click');
+            });
+        }
+        
+        
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && 
+                    (mutation.attributeName === 'class' || mutation.attributeName === 'data-theme')) {
+                    console.log('[Subscribe] Theme change detected via DOM mutation');
+                }
+            });
+        });
+        
+        
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class', 'data-theme']
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+    
+    
+    setupThemeChangeListener();
 });
 </script>
 <main class="main">
 
 <nav class="post-navigation">
-  <a href="http://localhost:1313/" class="back-to-posts">
+  <a href="https://researchbriefs.netlify.app/" class="back-to-posts">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"></line>
       <polyline points="12 19 5 12 12 5"></polyline>
@@ -483,14 +811,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/model-development/">Model Development</a></li>
+      <li><a href="https://researchbriefs.netlify.app/tags/model-development/">Model Development</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://localhost:1313/">Pharmacy AI Newsletter</a></span> · 
+        <span>&copy; 2025 <a href="https://researchbriefs.netlify.app/">Pharmacy AI Newsletter</a></span> · 
 
     <span>
         Powered by
@@ -502,7 +830,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
         <path d="M12 6H0l6-6z" />
     </svg>
-</a>
+</a><script async src="https://eocampaign1.com/form/add30b9c-a238-11f0-98d5-6727ec6b3f72.js" data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"></script>
+<script async src="https://eocampaign1.com/form/5691337a-a244-11f0-aa3f-791dbf3c50f2.js" data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"></script>
+
 
 <script>
     let menu = document.getElementById('menu')
