@@ -33,6 +33,20 @@ description: "Check your newsletter subscription status"
       <!-- Status messages will be inserted here -->
     </div>
     
+    <!-- Subscription Status Summary -->
+    <div id="subscription-summary" class="subscription-summary" style="display: none;">
+      <div class="summary-header">
+        <h2>Subscription Status</h2>
+      </div>
+      <div class="summary-content">
+        <div class="status-indicator" id="statusIndicator">
+          <div class="status-icon" id="statusIcon"></div>
+          <div class="status-text" id="statusText"></div>
+        </div>
+        <div class="status-details" id="statusDetails"></div>
+      </div>
+    </div>
+    
     <div id="error" class="status-message error" style="display: none;">
       <p>❌ Unable to check subscription status. Please try again later.</p>
     </div>
@@ -59,6 +73,10 @@ document.addEventListener('DOMContentLoaded', async function() {
   const userInfoEl = document.getElementById('user-info');
   const userNameEl = document.getElementById('userName');
   const userEmailEl = document.getElementById('userEmail');
+  const subscriptionSummaryEl = document.getElementById('subscription-summary');
+  const statusIconEl = document.getElementById('statusIcon');
+  const statusTextEl = document.getElementById('statusText');
+  const statusDetailsEl = document.getElementById('statusDetails');
   
   try {
     // Wait for Auth0 to be available
@@ -138,41 +156,81 @@ async function checkSubscriptionStatus(email) {
       throw new Error(data.error);
     }
     
-    // Display appropriate message based on subscription status
+    // Display clear subscription status
     if (data.exists && data.status === 'subscribed') {
-      statusEl.className = 'status-message success';
-      statusEl.innerHTML = `
-        <p>✅ <strong>You are already subscribed to the newsletter!</strong></p>
+      // SUBSCRIBED
+      statusIconEl.className = 'status-icon subscribed';
+      statusIconEl.textContent = '✓';
+      statusTextEl.textContent = 'SUBSCRIBED';
+      statusDetailsEl.innerHTML = `
+        <p><strong>You are successfully subscribed to our newsletter!</strong></p>
         <p>You'll receive our latest Pharmacy AI insights delivered to your inbox.</p>
-        ${data.created_at ? `<p><small>Subscribed: ${new Date(data.created_at).toLocaleDateString()}</small></p>` : ''}
+        ${data.created_at ? `<p class="subscription-date">Subscribed on: ${new Date(data.created_at).toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })}</p>` : ''}
       `;
+      
+      // Hide the old status message and show summary
+      statusEl.style.display = 'none';
+      subscriptionSummaryEl.style.display = 'block';
+      
     } else if (!data.exists) {
-      statusEl.className = 'status-message info';
-      statusEl.innerHTML = `
-        <p>📩 <strong>You are not yet subscribed to our newsletter.</strong></p>
-        <p>Stay updated with the latest Pharmacy AI research and insights.</p>
+      // NOT SUBSCRIBED
+      statusIconEl.className = 'status-icon not-found';
+      statusIconEl.textContent = '✗';
+      statusTextEl.textContent = 'NOT SUBSCRIBED';
+      statusDetailsEl.innerHTML = `
+        <p><strong>You are not yet subscribed to our newsletter.</strong></p>
+        <p>Stay updated with the latest Pharmacy AI research and insights by subscribing below.</p>
       `;
+      
+      statusEl.style.display = 'none';
+      subscriptionSummaryEl.style.display = 'block';
       subscribeBtn.style.display = 'inline-block';
+      
     } else if (data.exists && data.status === 'pending') {
-      statusEl.className = 'status-message info';
-      statusEl.innerHTML = `
-        <p>📬 <strong>Your subscription is pending confirmation.</strong></p>
+      // PENDING CONFIRMATION
+      statusIconEl.className = 'status-icon pending';
+      statusIconEl.textContent = '⏳';
+      statusTextEl.textContent = 'PENDING CONFIRMATION';
+      statusDetailsEl.innerHTML = `
+        <p><strong>Your subscription is pending confirmation.</strong></p>
         <p>Please check your email and click the confirmation link to complete your subscription.</p>
+        <p>If you don't see the email, check your spam folder.</p>
       `;
+      
+      statusEl.style.display = 'none';
+      subscriptionSummaryEl.style.display = 'block';
       subscribeBtn.style.display = 'inline-block';
+      
     } else if (data.exists && data.status === 'unsubscribed') {
-      statusEl.className = 'status-message info';
-      statusEl.innerHTML = `
-        <p>📭 <strong>You have unsubscribed from our newsletter.</strong></p>
+      // UNSUBSCRIBED
+      statusIconEl.className = 'status-icon unsubscribed';
+      statusIconEl.textContent = '🚫';
+      statusTextEl.textContent = 'UNSUBSCRIBED';
+      statusDetailsEl.innerHTML = `
+        <p><strong>You have unsubscribed from our newsletter.</strong></p>
         <p>Would you like to resubscribe to receive our latest updates?</p>
       `;
+      
+      statusEl.style.display = 'none';
+      subscriptionSummaryEl.style.display = 'block';
       subscribeBtn.style.display = 'inline-block';
+      
     } else {
-      statusEl.className = 'status-message info';
-      statusEl.innerHTML = `
-        <p>📬 <strong>Your subscription status: ${data.status}</strong></p>
+      // OTHER STATUS
+      statusIconEl.className = 'status-icon pending';
+      statusIconEl.textContent = '❓';
+      statusTextEl.textContent = data.status.toUpperCase();
+      statusDetailsEl.innerHTML = `
+        <p><strong>Your subscription status: ${data.status}</strong></p>
         <p>You have an account but may need to confirm your subscription.</p>
       `;
+      
+      statusEl.style.display = 'none';
+      subscriptionSummaryEl.style.display = 'block';
       subscribeBtn.style.display = 'inline-block';
     }
     
@@ -194,11 +252,19 @@ async function checkSubscriptionStatus(email) {
     
   } catch (error) {
     console.error('[check-subscriber] Subscription check failed:', error);
-    statusEl.className = 'status-message error';
-    statusEl.innerHTML = `
-      <p>❌ <strong>Unable to check subscription status</strong></p>
+    
+    // Show error in subscription summary
+    statusIconEl.className = 'status-icon error';
+    statusIconEl.textContent = '⚠';
+    statusTextEl.textContent = 'ERROR';
+    statusDetailsEl.innerHTML = `
+      <p><strong>Unable to check subscription status</strong></p>
       <p>Please try again later or contact support if the problem persists.</p>
+      <p><small>Error: ${error.message}</small></p>
     `;
+    
+    statusEl.style.display = 'none';
+    subscriptionSummaryEl.style.display = 'block';
     actionButtons.style.display = 'flex';
   }
 }
