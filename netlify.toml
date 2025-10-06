@@ -3,6 +3,7 @@
   command = "hugo"
   # The directory Hugo outputs the site to
   publish = "public"
+  functions = "netlify/functions"
 
 [build.environment]
   # Set the Hugo version (match your local version: run `hugo version`)
@@ -14,6 +15,3 @@
 
 [context.deploy-preview]
   command = "hugo -D" # include drafts on preview builds
-
-[build]
-  functions = "netlify/functions"
