@@ -9,6 +9,21 @@ description: "Check your newsletter subscription status"
   <div class="check-subscriber-content">
     <h1>Newsletter Subscription Status</h1>
     
+    <div id="user-info" class="user-info" style="display: none;">
+      <div class="user-info-content">
+        <div class="user-avatar">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="user-details">
+          <p class="user-name" id="userName"></p>
+          <p class="user-email" id="userEmail"></p>
+        </div>
+      </div>
+    </div>
+    
     <div id="loading" class="status-message loading">
       <div class="loading-spinner"></div>
       <p>Checking your subscription status...</p>
@@ -33,24 +48,37 @@ description: "Check your newsletter subscription status"
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
   console.log('[check-subscriber] Page loaded, checking Auth0 authentication...');
+  console.log('[check-subscriber] Current URL:', window.location.href);
+  console.log('[check-subscriber] URL search params:', window.location.search);
   
   const loadingEl = document.getElementById('loading');
   const statusEl = document.getElementById('status');
   const errorEl = document.getElementById('error');
   const actionButtons = document.querySelector('.check-subscriber-action-buttons');
   const subscribeBtn = document.getElementById('subscribeBtn');
+  const userInfoEl = document.getElementById('user-info');
+  const userNameEl = document.getElementById('userName');
+  const userEmailEl = document.getElementById('userEmail');
   
   try {
     // Wait for Auth0 to be available
+    console.log('[check-subscriber] Waiting for Auth0 client...');
     await waitForAuth0();
+    console.log('[check-subscriber] Auth0 client is available');
     
     // Get the authenticated user
     const user = await auth0Client.getUser();
-    console.log('[check-subscriber] User:', user);
+    console.log('[check-subscriber] User data:', user);
     
     if (!user || !user.email) {
       throw new Error('No authenticated user or email found');
     }
+    
+    // Display user information
+    console.log('[check-subscriber] Displaying user info');
+    userNameEl.textContent = user.name || user.nickname || 'User';
+    userEmailEl.textContent = user.email;
+    userInfoEl.style.display = 'block';
     
     // Hide loading, show status
     loadingEl.style.display = 'none';

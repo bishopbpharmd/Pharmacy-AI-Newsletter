@@ -125,11 +125,26 @@ console.log("[auth] Script loaded and starting...");
       if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
         try {
           console.log("[auth] Handling redirect callback...");
+          console.log("[auth] Current URL:", window.location.href);
+          console.log("[auth] URL search params:", window.location.search);
           await auth0Client.handleRedirectCallback();
+          
+          // Check if we should redirect to check-subscriber page
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectTo = urlParams.get('redirect_to') || urlParams.get('returnTo');
+          console.log("[auth] Redirect parameter found:", redirectTo);
+          
+          if (redirectTo && redirectTo.includes('check-subscriber')) {
+            console.log("[auth] Redirecting to check-subscriber page:", redirectTo);
+            window.location.href = redirectTo;
+            return; // Exit early to prevent further processing
+          }
+          
         } catch (err) {
           console.error("[auth] handleRedirectCallback error:", err);
         } finally {
           // clean URL
+          console.log("[auth] Cleaning URL after callback");
           window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
         }
       }
@@ -179,11 +194,25 @@ console.log("[auth] Script loaded and starting...");
       const loginRedirectUri = window.location.origin;
       console.log("[auth] Login redirect URI:", loginRedirectUri);
       
+      // Check if we're on the check-subscriber page and should return here
+      const isOnCheckSubscriber = window.location.pathname.includes('check-subscriber');
+      console.log("[auth] Currently on check-subscriber page:", isOnCheckSubscriber);
+      
+      const authParams = {
+        redirect_uri: loginRedirectUri,
+        ...options.authorizationParams,
+      };
+      
+      // If we're on check-subscriber page, add return URL parameter
+      if (isOnCheckSubscriber) {
+        authParams.redirect_to = window.location.href;
+        console.log("[auth] Adding redirect_to parameter:", authParams.redirect_to);
+      }
+      
+      console.log("[auth] Auth parameters:", authParams);
+      
       await auth0Client.loginWithRedirect({
-        authorizationParams: {
-          redirect_uri: loginRedirectUri,
-          ...options.authorizationParams,
-        },
+        authorizationParams: authParams,
       });
     } catch (err) {
       console.error("[auth] login error:", err);

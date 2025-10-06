@@ -165,7 +165,7 @@
                 </a>
             </li>
             <li class="navbar-profile" id="profileLi" style="display: none;">
-                <a id="profileBtn" class="auth-profile-link" href="#">
+                <a id="profileBtn" class="auth-profile-link" href="{{ .Site.BaseURL }}check-subscriber/">
                     <span>Profile</span>
                 </a>
             </li>
@@ -221,10 +221,10 @@
                     <a id="mobileLoginBtn" class="mobile-menu-item mobile-auth-link" href="#">
                         <span>Login</span>
                     </a>
-                    <div id="mobileLogoutBtn" class="mobile-auth-logout-container" style="display: none;">
-                        <a id="mobileProfileBtn" class="mobile-menu-item mobile-auth-link" href="#">
-                            <span>Profile</span>
-                        </a>
+                        <div id="mobileLogoutBtn" class="mobile-auth-logout-container" style="display: none;">
+                            <a id="mobileProfileBtn" class="mobile-menu-item mobile-auth-link" href="{{ .Site.BaseURL }}check-subscriber/">
+                                <span>Profile</span>
+                            </a>
                         <a id="mobileLogoutBtn" class="mobile-menu-item mobile-auth-link" href="#">
                             <span>Logout</span>
                         </a>
