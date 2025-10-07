@@ -102,64 +102,38 @@ console.log("[auth] Script loaded and starting...");
       await waitFor(() => window.__AUTH0 && window.__AUTH0.domain && window.__AUTH0.clientId);
       console.log("[auth] Config loaded:", window.__AUTH0);
 
-      // Create Auth0 client
-      const redirectUri = window.location.origin;
-      console.log("[auth] Creating Auth0 client with config:", {
-        domain: CFG.domain,
-        clientId: CFG.clientId,
-        cacheLocation: CFG.cacheLocation,
-        redirect_uri: redirectUri
-      });
-      
-      auth0Client = await createAuth0Client({
-        domain: CFG.domain,
-        clientId: CFG.clientId,
-        cacheLocation: CFG.cacheLocation,
-        authorizationParams: {
-          redirect_uri: redirectUri
-        }
-      });
+    // Create Auth0 client with callback URI
+    const callbackUri = `${window.location.origin}/callback`;
+    console.log("[auth] Creating Auth0 client with config:", {
+      domain: CFG.domain,
+      clientId: CFG.clientId,
+      cacheLocation: CFG.cacheLocation,
+      redirect_uri: callbackUri
+    });
+    
+    auth0Client = await createAuth0Client({
+      domain: CFG.domain,
+      clientId: CFG.clientId,
+      cacheLocation: CFG.cacheLocation,
+      authorizationParams: {
+        redirect_uri: callbackUri
+      }
+    });
       console.log("[auth] Auth0 client created successfully");
 
-      // Handle the Auth0 redirect (code + state) once after login
-      if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
-        try {
-          console.log("[auth] Handling redirect callback...");
-          console.log("[auth] Current URL:", window.location.href);
-          console.log("[auth] URL search params:", window.location.search);
-          await auth0Client.handleRedirectCallback();
-          
-          // Check if we should redirect to check-subscriber page
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirectTo = urlParams.get('redirect_to') || urlParams.get('returnTo');
-          console.log("[auth] Redirect parameter found:", redirectTo);
-          
-          if (redirectTo && redirectTo.includes('check-subscriber')) {
-            console.log("[auth] Redirecting to check-subscriber page:", redirectTo);
-            window.location.href = redirectTo;
-            return; // Exit early to prevent further processing
-          }
-          
-        } catch (err) {
-          console.error("[auth] handleRedirectCallback error:", err);
-        } finally {
-          // clean URL
-          console.log("[auth] Cleaning URL after callback");
-          window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
-        }
-      }
+    // Note: Auth0 redirect handling is now done in /callback page
 
-                  await refreshState();
-                  wireButtons();
-                  scheduleSilentRefresh();
-                  notify();
-                  
-                  // Add resize listener to handle screen size changes
-                  window.addEventListener('resize', () => {
-                    updateUI();
-                  });
-                  
-                  console.log("[auth] Initialization complete");
+    await refreshState();
+    wireButtons();
+    scheduleSilentRefresh();
+    notify();
+    
+    // Add resize listener to handle screen size changes
+    window.addEventListener('resize', () => {
+      updateUI();
+    });
+    
+    console.log("[auth] Initialization complete");
     } catch (error) {
       console.error("[auth] Initialization failed:", error);
       // Show login button as fallback
@@ -198,16 +172,14 @@ console.log("[auth] Script loaded and starting...");
       const isOnCheckSubscriber = window.location.pathname.includes('check-subscriber');
       console.log("[auth] Currently on check-subscriber page:", isOnCheckSubscriber);
       
+      // Always redirect to callback page for consistent flow
+      const callbackUri = `${window.location.origin}/callback`;
+      console.log("[auth] Redirecting to callback page:", callbackUri);
+      
       const authParams = {
-        redirect_uri: loginRedirectUri,
+        redirect_uri: callbackUri,
         ...options.authorizationParams,
       };
-      
-      // If we're on check-subscriber page, add return URL parameter
-      if (isOnCheckSubscriber) {
-        authParams.redirect_to = window.location.href;
-        console.log("[auth] Adding redirect_to parameter:", authParams.redirect_to);
-      }
       
       console.log("[auth] Auth parameters:", authParams);
       
@@ -223,6 +195,16 @@ console.log("[auth] Script loaded and starting...");
   function logout() {
     try {
       console.log("[auth] Starting logout...");
+      
+      // Clear user data from localStorage
+      localStorage.removeItem('user');
+      console.log("[auth] Cleared user data from localStorage");
+      
+      // Update navbar to show subscribe button
+      if (typeof updateNavbarSubscriptionButton === 'function') {
+        updateNavbarSubscriptionButton();
+      }
+      
       auth0Client.logout({ logoutParams: { returnTo: window.location.origin } });
     } catch (err) {
       console.error("[auth] logout error:", err);

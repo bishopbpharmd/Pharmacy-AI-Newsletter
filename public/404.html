@@ -124,7 +124,7 @@
                     <span>Archive</span>
                 </a>
             </li>
-            <li class="navbar-subscribe">
+            <li class="navbar-subscribe" id="navbarSubscribe">
                 <a href="#" id="subscribeBtn" title="Subscribe">
                     <span>Subscribe</span>
                 </a>
@@ -583,6 +583,61 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     setupThemeChangeListener();
+    
+    
+    updateNavbarSubscriptionButton();
+});
+
+
+
+function updateNavbarSubscriptionButton() {
+    const subscribeLi = document.getElementById('navbarSubscribe');
+    const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
+    
+    if (!subscribeLi) {
+        console.log('[navbar] Subscribe button element not found');
+        return;
+    }
+    
+    try {
+        const userData = localStorage.getItem('user');
+        if (!userData) {
+            console.log('[navbar] No user data in localStorage, showing subscribe button');
+            subscribeLi.style.display = 'inline-block';
+            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
+            return;
+        }
+        
+        const user = JSON.parse(userData);
+        console.log('[navbar] User data found:', user);
+        
+        if (user.subscribed === true) {
+            console.log('[navbar] User is subscribed, hiding subscribe button');
+            subscribeLi.style.display = 'none';
+            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'none';
+        } else {
+            console.log('[navbar] User is not subscribed, showing subscribe button');
+            subscribeLi.style.display = 'inline-block';
+            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
+        }
+        
+    } catch (error) {
+        console.error('[navbar] Error reading user data:', error);
+        
+        subscribeLi.style.display = 'inline-block';
+        if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
+    }
+}
+
+
+window.updateNavbarSubscriptionButton = updateNavbarSubscriptionButton;
+
+
+window.addEventListener('storage', function(e) {
+    if (e.key === 'user') {
+        console.log('[navbar] localStorage user data changed, updating navbar');
+        updateNavbarSubscriptionButton();
+    }
 });
 </script>
 <main class="main">
