@@ -135,6 +135,12 @@
   border: 3px solid #90caf9;
 }
 
+.status-icon.not-subscribed {
+  background: #f3e5f5;
+  color: #7b1fa2;
+  border: 3px solid #ce93d8;
+}
+
 .status-icon.error {
   background: #ffebee;
   color: #c62828;

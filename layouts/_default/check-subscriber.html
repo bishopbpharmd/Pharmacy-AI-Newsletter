@@ -235,8 +235,8 @@ async function checkSubscriptionStatus(email) {
       
     } else if (!data.exists) {
       // NOT SUBSCRIBED
-      statusIconEl.className = 'status-icon not-found';
-      statusIconEl.textContent = '✗';
+      statusIconEl.className = 'status-icon not-subscribed';
+      statusIconEl.textContent = '📧';
       statusTextEl.textContent = 'NOT SUBSCRIBED';
       statusDetailsEl.innerHTML = `
         <p><strong>You are not yet subscribed to our newsletter.</strong></p>
