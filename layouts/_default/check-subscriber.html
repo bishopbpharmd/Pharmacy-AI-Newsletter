@@ -162,7 +162,28 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.error('[check-subscriber] Error:', error);
     
     loadingEl.style.display = 'none';
-    errorEl.style.display = 'block';
+    
+    // Show specific error message based on the error type
+    if (error.message.includes('Auth0 client not available')) {
+      statusEl.style.display = 'block';
+      statusEl.className = 'status-message error';
+      statusEl.innerHTML = `
+        <p>🔧 <strong>Auth0 Client Not Available</strong></p>
+        <p>The authentication system is not loading properly. This could be due to:</p>
+        <ul style="text-align: left; margin: 1rem 0;">
+          <li>Script loading issues in production</li>
+          <li>Auth0 configuration problems</li>
+          <li>Content Security Policy restrictions</li>
+        </ul>
+        <p><strong>Debug Info:</strong></p>
+        <p><small>URL: ${window.location.href}</small></p>
+        <p><small>Error: ${error.message}</small></p>
+        <p><small>Check console for detailed logs</small></p>
+      `;
+    } else {
+      errorEl.style.display = 'block';
+    }
+    
     actionButtons.style.display = 'flex';
   }
 });
@@ -171,13 +192,42 @@ async function waitForAuth0() {
   const maxAttempts = 30;
   let attempts = 0;
   
+  console.log('[check-subscriber] Starting Auth0 client wait...');
+  console.log('[check-subscriber] Available globals:', {
+    auth0Client: typeof window.auth0Client,
+    createAuth0Client: typeof window.createAuth0Client,
+    auth0: typeof window.auth0,
+    __AUTH0: !!window.__AUTH0
+  });
+  
   while (attempts < maxAttempts) {
+    console.log(`[check-subscriber] Attempt ${attempts + 1}/${maxAttempts} - checking for Auth0 client...`);
+    
     if (window.auth0Client && typeof window.auth0Client.getUser === 'function') {
+      console.log('[check-subscriber] Auth0 client found!');
       return;
     }
+    
+    // Check for alternative Auth0 client locations
+    if (window.auth && window.auth.auth0Client) {
+      console.log('[check-subscriber] Found Auth0 client in window.auth');
+      window.auth0Client = window.auth.auth0Client;
+      return;
+    }
+    
+    console.log('[check-subscriber] Auth0 client not ready, waiting...');
     await new Promise(resolve => setTimeout(resolve, 100));
     attempts++;
   }
+  
+  console.error('[check-subscriber] Auth0 client wait timeout');
+  console.error('[check-subscriber] Final globals check:', {
+    auth0Client: typeof window.auth0Client,
+    createAuth0Client: typeof window.createAuth0Client,
+    auth0: typeof window.auth0,
+    __AUTH0: window.__AUTH0,
+    auth: typeof window.auth
+  });
   
   throw new Error('Auth0 client not available');
 }
@@ -354,6 +404,14 @@ async function testAPI() {
 // Test function to check Auth0 user
 async function testAuth0User() {
   console.log('[check-subscriber] Testing Auth0 user...');
+  console.log('[check-subscriber] Available globals:', {
+    auth0Client: typeof window.auth0Client,
+    createAuth0Client: typeof window.createAuth0Client,
+    auth0: typeof window.auth0,
+    __AUTH0: window.__AUTH0,
+    auth: typeof window.auth
+  });
+  
   try {
     if (window.auth0Client) {
       const user = await window.auth0Client.getUser();
@@ -362,6 +420,29 @@ async function testAuth0User() {
       console.log('[check-subscriber] All user properties:', Object.keys(user || {}));
     } else {
       console.log('[check-subscriber] Auth0 client not available');
+      console.log('[check-subscriber] Trying to create Auth0 client manually...');
+      
+      if (typeof window.createAuth0Client === 'function' && window.__AUTH0) {
+        try {
+          const client = await window.createAuth0Client({
+            domain: window.__AUTH0.domain,
+            clientId: window.__AUTH0.clientId,
+            cacheLocation: 'localstorage',
+            authorizationParams: {
+              redirect_uri: window.location.origin
+            }
+          });
+          console.log('[check-subscriber] Successfully created Auth0 client manually');
+          window.auth0Client = client;
+          
+          const user = await client.getUser();
+          console.log('[check-subscriber] Manual Auth0 user test:', user);
+        } catch (createError) {
+          console.error('[check-subscriber] Failed to create Auth0 client manually:', createError);
+        }
+      } else {
+        console.log('[check-subscriber] Cannot create Auth0 client - missing dependencies');
+      }
     }
   } catch (error) {
     console.error('[check-subscriber] Auth0 user test error:', error);
