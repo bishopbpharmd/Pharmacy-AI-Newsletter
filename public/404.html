@@ -586,6 +586,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     updateNavbarSubscriptionButton();
+    
+    
+    checkAuthAndClearStorage();
 });
 
 
@@ -630,7 +633,51 @@ function updateNavbarSubscriptionButton() {
 }
 
 
+
+async function checkAuthAndClearStorage() {
+    try {
+        
+        const userData = localStorage.getItem('user');
+        if (!userData) {
+            return; 
+        }
+        
+        console.log('[navbar] Checking if stored user is still authenticated...');
+        
+        
+        let auth0Client = null;
+        if (window.auth0Client) {
+            auth0Client = window.auth0Client;
+        } else if (window.auth && window.auth.auth0Client) {
+            auth0Client = window.auth.auth0Client;
+        }
+        
+        if (!auth0Client) {
+            console.log('[navbar] Auth0 client not available, keeping localStorage');
+            return;
+        }
+        
+        
+        const isAuthenticated = await auth0Client.isAuthenticated();
+        if (!isAuthenticated) {
+            console.log('[navbar] User not authenticated, clearing localStorage');
+            localStorage.removeItem('user');
+            updateNavbarSubscriptionButton();
+        } else {
+            console.log('[navbar] User is authenticated, keeping localStorage');
+        }
+        
+    } catch (error) {
+        console.error('[navbar] Error checking authentication:', error);
+        
+        localStorage.removeItem('user');
+        updateNavbarSubscriptionButton();
+    }
+}
+
+
 window.updateNavbarSubscriptionButton = updateNavbarSubscriptionButton;
+window.checkAuthAndClearStorage = checkAuthAndClearStorage;
 
 
 window.addEventListener('storage', function(e) {

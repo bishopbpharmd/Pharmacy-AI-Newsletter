@@ -620,6 +620,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize navbar subscription button visibility
     updateNavbarSubscriptionButton();
+    
+    // Check if user is actually authenticated and clear localStorage if not
+    checkAuthAndClearStorage();
 });
 
 /**
@@ -664,8 +667,53 @@ function updateNavbarSubscriptionButton() {
     }
 }
 
+/**
+ * Check if user is actually authenticated and clear localStorage if not
+ */
+async function checkAuthAndClearStorage() {
+    try {
+        // Check if we have user data in localStorage
+        const userData = localStorage.getItem('user');
+        if (!userData) {
+            return; // No user data to check
+        }
+        
+        console.log('[navbar] Checking if stored user is still authenticated...');
+        
+        // Try to get Auth0 client and check authentication
+        let auth0Client = null;
+        if (window.auth0Client) {
+            auth0Client = window.auth0Client;
+        } else if (window.auth && window.auth.auth0Client) {
+            auth0Client = window.auth.auth0Client;
+        }
+        
+        if (!auth0Client) {
+            console.log('[navbar] Auth0 client not available, keeping localStorage');
+            return;
+        }
+        
+        // Check if user is actually authenticated
+        const isAuthenticated = await auth0Client.isAuthenticated();
+        if (!isAuthenticated) {
+            console.log('[navbar] User not authenticated, clearing localStorage');
+            localStorage.removeItem('user');
+            updateNavbarSubscriptionButton();
+        } else {
+            console.log('[navbar] User is authenticated, keeping localStorage');
+        }
+        
+    } catch (error) {
+        console.error('[navbar] Error checking authentication:', error);
+        // On error, clear localStorage to be safe
+        localStorage.removeItem('user');
+        updateNavbarSubscriptionButton();
+    }
+}
+
 // Make function available globally
 window.updateNavbarSubscriptionButton = updateNavbarSubscriptionButton;
+window.checkAuthAndClearStorage = checkAuthAndClearStorage;
 
 // Listen for localStorage changes (in case user data is updated on other tabs)
 window.addEventListener('storage', function(e) {

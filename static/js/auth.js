@@ -146,10 +146,34 @@ console.log("[auth] Script loaded and starting...");
       _isAuthenticated = await auth0Client.isAuthenticated();
       _user = _isAuthenticated ? await auth0Client.getUser() : null;
       console.log("[auth] State refreshed:", { isAuthenticated: _isAuthenticated, user: _user?.email });
+      
+      // Clear localStorage if user is not authenticated
+      if (!_isAuthenticated) {
+        const existingUser = localStorage.getItem('user');
+        if (existingUser) {
+          console.log("[auth] User not authenticated, clearing localStorage");
+          localStorage.removeItem('user');
+          // Update navbar to show subscribe button
+          if (typeof updateNavbarSubscriptionButton === 'function') {
+            updateNavbarSubscriptionButton();
+          }
+        }
+      }
     } catch (err) {
       console.warn("[auth] refreshState error:", err);
       _isAuthenticated = false;
       _user = null;
+      
+      // Clear localStorage on error
+      const existingUser = localStorage.getItem('user');
+      if (existingUser) {
+        console.log("[auth] Auth error, clearing localStorage");
+        localStorage.removeItem('user');
+        // Update navbar to show subscribe button
+        if (typeof updateNavbarSubscriptionButton === 'function') {
+          updateNavbarSubscriptionButton();
+        }
+      }
     } finally {
       updateUI();
     }
@@ -158,6 +182,10 @@ console.log("[auth] Script loaded and starting...");
   async function login(options = {}) {
     try {
       console.log("[auth] Starting login...");
+      
+      // Clear any existing user data when starting new login
+      localStorage.removeItem('user');
+      console.log("[auth] Cleared existing user data for new login");
       
       if (!auth0Client) {
         console.error("[auth] Auth0 client not initialized!");
