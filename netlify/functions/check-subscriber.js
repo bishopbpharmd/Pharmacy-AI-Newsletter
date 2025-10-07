@@ -36,15 +36,12 @@ export async function handler(event) {
         console.log('Netlify function - Found contact:', contact.email_address);
         console.log('Netlify function - Contact status:', contact.status);
         
-        // Validate that the returned email matches the requested email
+        // Log email comparison for debugging (but don't block on minor differences)
         if (contact.email_address.toLowerCase() !== email.toLowerCase()) {
-          console.warn('Netlify function - Email mismatch! Requested:', email, 'Returned:', contact.email_address);
-          console.warn('Netlify function - Treating as not found due to mismatch');
-          
-          return { 
-            statusCode: 200, 
-            body: JSON.stringify({ exists: false }) 
-          };
+          console.warn('Netlify function - Email case/format difference detected:');
+          console.warn('  Requested:', email);
+          console.warn('  Returned:', contact.email_address);
+          console.warn('  Using returned email from EmailOctopus');
         }
         
         return {

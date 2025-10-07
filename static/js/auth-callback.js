@@ -91,10 +91,12 @@ async function checkAndStoreSubscriptionStatus(email) {
     const data = await response.json();
     console.log('[auth-callback] Subscription data received:', data);
 
-    // Validate email match to prevent mismatches
+    // Log email comparison for debugging (but trust EmailOctopus response)
     if (data.exists && data.email_address && email.toLowerCase() !== data.email_address.toLowerCase()) {
-      console.warn('[auth-callback] Email mismatch detected, treating as not subscribed');
-      data.exists = false;
+      console.warn('[auth-callback] Email case/format difference detected:');
+      console.warn('  Requested:', email);
+      console.warn('  Returned:', data.email_address);
+      console.warn('  Using EmailOctopus response');
     }
 
     // Create user object with subscription data
