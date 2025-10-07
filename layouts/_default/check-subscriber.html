@@ -88,8 +88,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('[check-subscriber] Auth0 client is available');
     
     // Get the authenticated user
-    const user = await auth0Client.getUser();
-    console.log('[check-subscriber] User data:', user);
+    console.log('[check-subscriber] Getting user from Auth0...');
+    let user;
+    try {
+      user = await auth0Client.getUser();
+      console.log('[check-subscriber] Raw user data:', user);
+      console.log('[check-subscriber] User type:', typeof user);
+      console.log('[check-subscriber] User keys:', user ? Object.keys(user) : 'null');
+      console.log('[check-subscriber] User email:', user?.email);
+      console.log('[check-subscriber] User name:', user?.name);
+      console.log('[check-subscriber] User nickname:', user?.nickname);
+    } catch (authError) {
+      console.error('[check-subscriber] Error getting user from Auth0:', authError);
+      loadingEl.style.display = 'none';
+      statusEl.style.display = 'block';
+      statusEl.className = 'status-message error';
+      statusEl.innerHTML = `
+        <p>❌ <strong>Authentication Error</strong></p>
+        <p>Unable to retrieve user information from Auth0.</p>
+        <p><small>Error: ${authError.message}</small></p>
+      `;
+      actionButtons.style.display = 'flex';
+      return;
+    }
     
     if (!user || !user.email) {
       console.log('[check-subscriber] No authenticated user found, showing login prompt');
@@ -108,8 +129,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // Display user information
     console.log('[check-subscriber] Displaying user info');
-    userNameEl.textContent = user.name || user.nickname || 'User';
-    userEmailEl.textContent = user.email;
+    
+    // Try different ways to get user name and email
+    const userName = user.name || user.nickname || user.given_name || user.family_name || 'User';
+    const userEmail = user.email || user.email_verified || 'No email found';
+    
+    console.log('[check-subscriber] Final user name:', userName);
+    console.log('[check-subscriber] Final user email:', userEmail);
+    
+    userNameEl.textContent = userName;
+    userEmailEl.textContent = userEmail;
     userInfoEl.style.display = 'block';
     
     // Hide loading, show status
@@ -117,7 +146,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     statusEl.style.display = 'block';
     
     // Check subscription status
-    await checkSubscriptionStatus(user.email);
+    if (user.email) {
+      await checkSubscriptionStatus(user.email);
+    } else {
+      console.error('[check-subscriber] No email found in user object');
+      statusEl.className = 'status-message error';
+      statusEl.innerHTML = `
+        <p>❌ <strong>No Email Found</strong></p>
+        <p>Unable to find email address in user profile.</p>
+        <p><small>User object keys: ${Object.keys(user).join(', ')}</small></p>
+      `;
+    }
     
   } catch (error) {
     console.error('[check-subscriber] Error:', error);
@@ -312,13 +351,34 @@ async function testAPI() {
   }
 }
 
-// Make test function available globally for debugging
+// Test function to check Auth0 user
+async function testAuth0User() {
+  console.log('[check-subscriber] Testing Auth0 user...');
+  try {
+    if (window.auth0Client) {
+      const user = await window.auth0Client.getUser();
+      console.log('[check-subscriber] Auth0 user test:', user);
+      console.log('[check-subscriber] User email:', user?.email);
+      console.log('[check-subscriber] All user properties:', Object.keys(user || {}));
+    } else {
+      console.log('[check-subscriber] Auth0 client not available');
+    }
+  } catch (error) {
+    console.error('[check-subscriber] Auth0 user test error:', error);
+  }
+}
+
+// Make test functions available globally for debugging
 window.testAPI = testAPI;
+window.testAuth0User = testAuth0User;
 </script>
 
 <!-- Debug panel for testing -->
 <div style="position: fixed; top: 10px; right: 10px; background: #333; color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 9999;">
-  <button onclick="testAPI()" style="background: #007cba; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Test API</button>
+  <div style="margin-bottom: 5px;">
+    <button onclick="testAPI()" style="background: #007cba; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-right: 5px;">Test API</button>
+    <button onclick="testAuth0User()" style="background: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Test Auth0</button>
+  </div>
 </div>
 
 {{ end }}
