@@ -12,9 +12,12 @@ export async function handler(event) {
 
     // EmailOctopus v2 API - Search for contact by email address
     // Note: The email_address parameter should do exact matching, but let's verify
-    const url = `https://api.emailoctopus.com/lists/${process.env.EMAILOCTOPUS_LIST_ID}/contacts?email_address=${encodeURIComponent(email)}`;
+    const encodedEmail = encodeURIComponent(email);
+    const url = `https://api.emailoctopus.com/lists/${process.env.EMAILOCTOPUS_LIST_ID}/contacts?email_address=${encodedEmail}`;
+    console.log('Netlify function - Original email:', email);
+    console.log('Netlify function - Encoded email:', encodedEmail);
     console.log('Netlify function - EmailOctopus URL:', url);
-    console.log('Netlify function - Encoded email:', encodeURIComponent(email));
+    console.log('Netlify function - Decoded URL email:', decodeURIComponent(encodedEmail));
     
     const res = await fetch(url, {
       method: 'GET',
@@ -36,12 +39,27 @@ export async function handler(event) {
         console.log('Netlify function - Found contact:', contact.email_address);
         console.log('Netlify function - Contact status:', contact.status);
         
-        // Log email comparison for debugging (but don't block on minor differences)
-        if (contact.email_address.toLowerCase() !== email.toLowerCase()) {
-          console.warn('Netlify function - Email case/format difference detected:');
+        // Check for significant email mismatch (different domains/users)
+        const requestedDomain = email.split('@')[1]?.toLowerCase();
+        const returnedDomain = contact.email_address.split('@')[1]?.toLowerCase();
+        const requestedUser = email.split('@')[0]?.toLowerCase();
+        const returnedUser = contact.email_address.split('@')[0]?.toLowerCase();
+        
+        if (requestedDomain !== returnedDomain || requestedUser !== returnedUser) {
+          console.warn('Netlify function - SIGNIFICANT email mismatch detected!');
           console.warn('  Requested:', email);
           console.warn('  Returned:', contact.email_address);
-          console.warn('  Using returned email from EmailOctopus');
+          console.warn('  Different user/domain - treating as not found');
+          
+          return { 
+            statusCode: 200, 
+            body: JSON.stringify({ exists: false }) 
+          };
+        } else if (contact.email_address.toLowerCase() !== email.toLowerCase()) {
+          console.warn('Netlify function - Minor email case difference detected:');
+          console.warn('  Requested:', email);
+          console.warn('  Returned:', contact.email_address);
+          console.warn('  Same user/domain - using returned email');
         }
         
         return {

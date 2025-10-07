@@ -46,7 +46,10 @@ document.addEventListener('DOMContentLoaded', async function() {
           return;
         }
 
-        console.log('[auth-callback] User authenticated:', user.email);
+        console.log('[auth-callback] Full Auth0 user object:', user);
+        console.log('[auth-callback] User email from Auth0:', user.email);
+        console.log('[auth-callback] User email_verified:', user.email_verified);
+        console.log('[auth-callback] User sub (ID):', user.sub);
         
         // Check subscription status
         await checkAndStoreSubscriptionStatus(user.email);
@@ -91,12 +94,25 @@ async function checkAndStoreSubscriptionStatus(email) {
     const data = await response.json();
     console.log('[auth-callback] Subscription data received:', data);
 
-    // Log email comparison for debugging (but trust EmailOctopus response)
-    if (data.exists && data.email_address && email.toLowerCase() !== data.email_address.toLowerCase()) {
-      console.warn('[auth-callback] Email case/format difference detected:');
-      console.warn('  Requested:', email);
-      console.warn('  Returned:', data.email_address);
-      console.warn('  Using EmailOctopus response');
+    // Check for significant email mismatch (different domains/users)
+    if (data.exists && data.email_address) {
+      const requestedDomain = email.split('@')[1]?.toLowerCase();
+      const returnedDomain = data.email_address.split('@')[1]?.toLowerCase();
+      const requestedUser = email.split('@')[0]?.toLowerCase();
+      const returnedUser = data.email_address.split('@')[0]?.toLowerCase();
+      
+      if (requestedDomain !== returnedDomain || requestedUser !== returnedUser) {
+        console.warn('[auth-callback] SIGNIFICANT email mismatch detected!');
+        console.warn('  Requested:', email);
+        console.warn('  Returned:', data.email_address);
+        console.warn('  Different user/domain - treating as not found');
+        data.exists = false;
+      } else if (data.email_address.toLowerCase() !== email.toLowerCase()) {
+        console.warn('[auth-callback] Minor email case difference detected:');
+        console.warn('  Requested:', email);
+        console.warn('  Returned:', data.email_address);
+        console.warn('  Same user/domain - using EmailOctopus response');
+      }
     }
 
     // Create user object with subscription data
