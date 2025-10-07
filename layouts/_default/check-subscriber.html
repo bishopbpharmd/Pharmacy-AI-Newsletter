@@ -58,9 +58,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
-  console.log('[check-subscriber] Page loaded, checking Auth0 authentication...');
+  console.log('[check-subscriber] Page loaded, checking authentication...');
   console.log('[check-subscriber] Current URL:', window.location.href);
-  console.log('[check-subscriber] URL search params:', window.location.search);
   
   // Set debug info
   const loadTimeEl = document.getElementById('load-time');
@@ -82,79 +81,72 @@ document.addEventListener('DOMContentLoaded', async function() {
   const statusDetailsEl = document.getElementById('statusDetails');
   
   try {
-    // Wait for Auth0 to be available
-    console.log('[check-subscriber] Waiting for Auth0 client...');
-    await waitForAuth0();
-    console.log('[check-subscriber] Auth0 client is available');
+    // Simple approach: Try to get user from Auth0 if available, otherwise show manual input
+    let userEmail = null;
+    let userName = null;
     
-    // Get the authenticated user
-    console.log('[check-subscriber] Getting user from Auth0...');
-    let user;
-    try {
-      user = await auth0Client.getUser();
-      console.log('[check-subscriber] Raw user data:', user);
-      console.log('[check-subscriber] User type:', typeof user);
-      console.log('[check-subscriber] User keys:', user ? Object.keys(user) : 'null');
-      console.log('[check-subscriber] User email:', user?.email);
-      console.log('[check-subscriber] User name:', user?.name);
-      console.log('[check-subscriber] User nickname:', user?.nickname);
-    } catch (authError) {
-      console.error('[check-subscriber] Error getting user from Auth0:', authError);
-      loadingEl.style.display = 'none';
-      statusEl.style.display = 'block';
-      statusEl.className = 'status-message error';
-      statusEl.innerHTML = `
-        <p>❌ <strong>Authentication Error</strong></p>
-        <p>Unable to retrieve user information from Auth0.</p>
-        <p><small>Error: ${authError.message}</small></p>
-      `;
-      actionButtons.style.display = 'flex';
-      return;
+    console.log('[check-subscriber] Attempting to get user from Auth0...');
+    
+    // Try multiple ways to get the Auth0 client
+    let auth0Client = null;
+    if (window.auth0Client) {
+      auth0Client = window.auth0Client;
+    } else if (window.auth && window.auth.auth0Client) {
+      auth0Client = window.auth.auth0Client;
+    } else if (typeof window.createAuth0Client === 'function' && window.__AUTH0) {
+      try {
+        auth0Client = await window.createAuth0Client({
+          domain: window.__AUTH0.domain,
+          clientId: window.__AUTH0.clientId,
+          cacheLocation: 'localstorage'
+        });
+        console.log('[check-subscriber] Created Auth0 client on demand');
+      } catch (createError) {
+        console.log('[check-subscriber] Could not create Auth0 client:', createError);
+      }
     }
     
-    if (!user || !user.email) {
-      console.log('[check-subscriber] No authenticated user found, showing login prompt');
-      // Show a message to login first
+    if (auth0Client) {
+      try {
+        const user = await auth0Client.getUser();
+        if (user && user.email) {
+          userEmail = user.email;
+          userName = user.name || user.nickname || user.given_name || 'User';
+          console.log('[check-subscriber] Found authenticated user:', userEmail);
+        }
+      } catch (authError) {
+        console.log('[check-subscriber] Auth0 getUser failed:', authError);
+      }
+    }
+    
+    if (userEmail) {
+      // User is authenticated - show their info and check subscription
+      userNameEl.textContent = userName;
+      userEmailEl.textContent = userEmail;
+      userInfoEl.style.display = 'block';
+      
+      loadingEl.style.display = 'none';
+      statusEl.style.display = 'block';
+      
+      await checkSubscriptionStatus(userEmail);
+    } else {
+      // No authenticated user - show manual email input option
+      console.log('[check-subscriber] No authenticated user, showing manual input');
       loadingEl.style.display = 'none';
       statusEl.style.display = 'block';
       statusEl.className = 'status-message info';
       statusEl.innerHTML = `
-        <p>🔐 <strong>Please log in first</strong></p>
-        <p>You need to be logged in to check your subscription status.</p>
-        <a href="{{ .Site.BaseURL }}" class="check-subscriber-btn check-subscriber-btn-primary" style="margin-top: 1rem; display: inline-block;">Go to Home Page</a>
-      `;
-      actionButtons.style.display = 'flex';
-      return;
-    }
-    
-    // Display user information
-    console.log('[check-subscriber] Displaying user info');
-    
-    // Try different ways to get user name and email
-    const userName = user.name || user.nickname || user.given_name || user.family_name || 'User';
-    const userEmail = user.email || user.email_verified || 'No email found';
-    
-    console.log('[check-subscriber] Final user name:', userName);
-    console.log('[check-subscriber] Final user email:', userEmail);
-    
-    userNameEl.textContent = userName;
-    userEmailEl.textContent = userEmail;
-    userInfoEl.style.display = 'block';
-    
-    // Hide loading, show status
-    loadingEl.style.display = 'none';
-    statusEl.style.display = 'block';
-    
-    // Check subscription status
-    if (user.email) {
-      await checkSubscriptionStatus(user.email);
-    } else {
-      console.error('[check-subscriber] No email found in user object');
-      statusEl.className = 'status-message error';
-      statusEl.innerHTML = `
-        <p>❌ <strong>No Email Found</strong></p>
-        <p>Unable to find email address in user profile.</p>
-        <p><small>User object keys: ${Object.keys(user).join(', ')}</small></p>
+        <p>📧 <strong>Check Subscription Status</strong></p>
+        <p>Enter your email address to check your subscription status:</p>
+        <div style="margin: 1rem 0;">
+          <input type="email" id="emailInput" placeholder="your.email@example.com" 
+                 style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 1rem;">
+          <button onclick="checkEmailSubscription()" 
+                  style="background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; width: 100%;">
+            Check Subscription
+          </button>
+        </div>
+        <p><small>Or <a href="{{ .Site.BaseURL }}" style="color: var(--primary);">log in</a> to automatically check your status.</small></p>
       `;
     }
     
@@ -162,28 +154,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.error('[check-subscriber] Error:', error);
     
     loadingEl.style.display = 'none';
-    
-    // Show specific error message based on the error type
-    if (error.message.includes('Auth0 client not available')) {
-      statusEl.style.display = 'block';
-      statusEl.className = 'status-message error';
-      statusEl.innerHTML = `
-        <p>🔧 <strong>Auth0 Client Not Available</strong></p>
-        <p>The authentication system is not loading properly. This could be due to:</p>
-        <ul style="text-align: left; margin: 1rem 0;">
-          <li>Script loading issues in production</li>
-          <li>Auth0 configuration problems</li>
-          <li>Content Security Policy restrictions</li>
-        </ul>
-        <p><strong>Debug Info:</strong></p>
-        <p><small>URL: ${window.location.href}</small></p>
-        <p><small>Error: ${error.message}</small></p>
-        <p><small>Check console for detailed logs</small></p>
-      `;
-    } else {
-      errorEl.style.display = 'block';
-    }
-    
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-message error';
+    statusEl.innerHTML = `
+      <p>❌ <strong>Error Loading Page</strong></p>
+      <p>Something went wrong. Please try again or contact support.</p>
+      <p><small>Error: ${error.message}</small></p>
+    `;
     actionButtons.style.display = 'flex';
   }
 });
@@ -449,9 +426,51 @@ async function testAuth0User() {
   }
 }
 
-// Make test functions available globally for debugging
+// Function to check subscription with manual email input
+async function checkEmailSubscription() {
+  const emailInput = document.getElementById('emailInput');
+  const email = emailInput?.value?.trim();
+  
+  if (!email) {
+    alert('Please enter an email address');
+    return;
+  }
+  
+  if (!email.includes('@')) {
+    alert('Please enter a valid email address');
+    return;
+  }
+  
+  console.log('[check-subscriber] Checking subscription for manually entered email:', email);
+  
+  // Show loading state
+  const statusEl = document.getElementById('status');
+  const subscriptionSummaryEl = document.getElementById('subscription-summary');
+  const loadingEl = document.getElementById('loading');
+  
+  statusEl.style.display = 'none';
+  subscriptionSummaryEl.style.display = 'none';
+  loadingEl.style.display = 'block';
+  
+  try {
+    await checkSubscriptionStatus(email);
+  } catch (error) {
+    console.error('[check-subscriber] Manual email check failed:', error);
+    loadingEl.style.display = 'none';
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-message error';
+    statusEl.innerHTML = `
+      <p>❌ <strong>Error checking subscription</strong></p>
+      <p>Please try again or contact support.</p>
+      <p><small>Error: ${error.message}</small></p>
+    `;
+  }
+}
+
+// Make functions available globally
 window.testAPI = testAPI;
 window.testAuth0User = testAuth0User;
+window.checkEmailSubscription = checkEmailSubscription;
 </script>
 
 <!-- Debug panel for testing -->
