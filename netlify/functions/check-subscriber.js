@@ -11,8 +11,10 @@ export async function handler(event) {
     if (!email) return { statusCode: 400, body: "Missing email" };
 
     // EmailOctopus v2 API - Search for contact by email address
+    // Note: The email_address parameter should do exact matching, but let's verify
     const url = `https://api.emailoctopus.com/lists/${process.env.EMAILOCTOPUS_LIST_ID}/contacts?email_address=${encodeURIComponent(email)}`;
     console.log('Netlify function - EmailOctopus URL:', url);
+    console.log('Netlify function - Encoded email:', encodeURIComponent(email));
     
     const res = await fetch(url, {
       method: 'GET',
@@ -33,6 +35,17 @@ export async function handler(event) {
         const contact = data.data[0]; // Get the first (and likely only) contact
         console.log('Netlify function - Found contact:', contact.email_address);
         console.log('Netlify function - Contact status:', contact.status);
+        
+        // Validate that the returned email matches the requested email
+        if (contact.email_address.toLowerCase() !== email.toLowerCase()) {
+          console.warn('Netlify function - Email mismatch! Requested:', email, 'Returned:', contact.email_address);
+          console.warn('Netlify function - Treating as not found due to mismatch');
+          
+          return { 
+            statusCode: 200, 
+            body: JSON.stringify({ exists: false }) 
+          };
+        }
         
         return {
           statusCode: 200,
