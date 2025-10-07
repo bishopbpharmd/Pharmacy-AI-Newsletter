@@ -2,9 +2,6 @@
 <div class="check-subscriber-container">
   <div class="check-subscriber-content">
     <h1>Newsletter Subscription Status</h1>
-    <div id="debug-info" style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 12px; color: #666;">
-      <strong>Debug:</strong> Page loaded at <span id="load-time"></span> | Template: check-subscriber.html
-    </div>
     
     <div id="user-info" class="user-info" style="display: none;">
       <div class="user-info-content">
@@ -61,11 +58,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   console.log('[check-subscriber] Page loaded, checking authentication...');
   console.log('[check-subscriber] Current URL:', window.location.href);
   
-  // Set debug info
-  const loadTimeEl = document.getElementById('load-time');
-  if (loadTimeEl) {
-    loadTimeEl.textContent = new Date().toLocaleTimeString();
-  }
   
   const loadingEl = document.getElementById('loading');
   const statusEl = document.getElementById('status');
@@ -165,49 +157,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 });
 
-async function waitForAuth0() {
-  const maxAttempts = 30;
-  let attempts = 0;
-  
-  console.log('[check-subscriber] Starting Auth0 client wait...');
-  console.log('[check-subscriber] Available globals:', {
-    auth0Client: typeof window.auth0Client,
-    createAuth0Client: typeof window.createAuth0Client,
-    auth0: typeof window.auth0,
-    __AUTH0: !!window.__AUTH0
-  });
-  
-  while (attempts < maxAttempts) {
-    console.log(`[check-subscriber] Attempt ${attempts + 1}/${maxAttempts} - checking for Auth0 client...`);
-    
-    if (window.auth0Client && typeof window.auth0Client.getUser === 'function') {
-      console.log('[check-subscriber] Auth0 client found!');
-      return;
-    }
-    
-    // Check for alternative Auth0 client locations
-    if (window.auth && window.auth.auth0Client) {
-      console.log('[check-subscriber] Found Auth0 client in window.auth');
-      window.auth0Client = window.auth.auth0Client;
-      return;
-    }
-    
-    console.log('[check-subscriber] Auth0 client not ready, waiting...');
-    await new Promise(resolve => setTimeout(resolve, 100));
-    attempts++;
-  }
-  
-  console.error('[check-subscriber] Auth0 client wait timeout');
-  console.error('[check-subscriber] Final globals check:', {
-    auth0Client: typeof window.auth0Client,
-    createAuth0Client: typeof window.createAuth0Client,
-    auth0: typeof window.auth0,
-    __AUTH0: window.__AUTH0,
-    auth: typeof window.auth
-  });
-  
-  throw new Error('Auth0 client not available');
-}
 
 async function checkSubscriptionStatus(email) {
   console.log('[check-subscriber] Checking subscription for:', email);
@@ -216,6 +165,10 @@ async function checkSubscriptionStatus(email) {
   const statusEl = document.getElementById('status');
   const actionButtons = document.querySelector('.check-subscriber-action-buttons');
   const subscribeBtn = document.getElementById('subscribeBtn');
+  const subscriptionSummaryEl = document.getElementById('subscription-summary');
+  const statusIconEl = document.getElementById('statusIcon');
+  const statusTextEl = document.getElementById('statusText');
+  const statusDetailsEl = document.getElementById('statusDetails');
   
   try {
     console.log('[check-subscriber] Sending POST request with email:', email);
@@ -358,73 +311,6 @@ async function checkSubscriptionStatus(email) {
   }
 }
 
-// Test function to manually test the API
-async function testAPI() {
-  console.log('[check-subscriber] Testing API with test email...');
-  try {
-    const response = await fetch('/.netlify/functions/check-subscriber', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: 'test@example.com' })
-    });
-    
-    console.log('[check-subscriber] Test response status:', response.status);
-    const data = await response.json();
-    console.log('[check-subscriber] Test response data:', data);
-  } catch (error) {
-    console.error('[check-subscriber] Test API error:', error);
-  }
-}
-
-// Test function to check Auth0 user
-async function testAuth0User() {
-  console.log('[check-subscriber] Testing Auth0 user...');
-  console.log('[check-subscriber] Available globals:', {
-    auth0Client: typeof window.auth0Client,
-    createAuth0Client: typeof window.createAuth0Client,
-    auth0: typeof window.auth0,
-    __AUTH0: window.__AUTH0,
-    auth: typeof window.auth
-  });
-  
-  try {
-    if (window.auth0Client) {
-      const user = await window.auth0Client.getUser();
-      console.log('[check-subscriber] Auth0 user test:', user);
-      console.log('[check-subscriber] User email:', user?.email);
-      console.log('[check-subscriber] All user properties:', Object.keys(user || {}));
-    } else {
-      console.log('[check-subscriber] Auth0 client not available');
-      console.log('[check-subscriber] Trying to create Auth0 client manually...');
-      
-      if (typeof window.createAuth0Client === 'function' && window.__AUTH0) {
-        try {
-          const client = await window.createAuth0Client({
-            domain: window.__AUTH0.domain,
-            clientId: window.__AUTH0.clientId,
-            cacheLocation: 'localstorage',
-            authorizationParams: {
-              redirect_uri: window.location.origin
-            }
-          });
-          console.log('[check-subscriber] Successfully created Auth0 client manually');
-          window.auth0Client = client;
-          
-          const user = await client.getUser();
-          console.log('[check-subscriber] Manual Auth0 user test:', user);
-        } catch (createError) {
-          console.error('[check-subscriber] Failed to create Auth0 client manually:', createError);
-        }
-      } else {
-        console.log('[check-subscriber] Cannot create Auth0 client - missing dependencies');
-      }
-    }
-  } catch (error) {
-    console.error('[check-subscriber] Auth0 user test error:', error);
-  }
-}
 
 // Function to check subscription with manual email input
 async function checkEmailSubscription() {
@@ -467,18 +353,9 @@ async function checkEmailSubscription() {
   }
 }
 
-// Make functions available globally
-window.testAPI = testAPI;
-window.testAuth0User = testAuth0User;
+// Make function available globally
 window.checkEmailSubscription = checkEmailSubscription;
 </script>
 
-<!-- Debug panel for testing -->
-<div style="position: fixed; top: 10px; right: 10px; background: #333; color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 9999;">
-  <div style="margin-bottom: 5px;">
-    <button onclick="testAPI()" style="background: #007cba; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-right: 5px;">Test API</button>
-    <button onclick="testAuth0User()" style="background: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Test Auth0</button>
-  </div>
-</div>
 
 {{ end }}
