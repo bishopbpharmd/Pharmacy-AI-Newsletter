@@ -1,13 +1,10 @@
----
-title: "Check Subscription Status"
-date: '2025-01-27T10:00:00-05:00'
-draft: false
-description: "Check your newsletter subscription status"
----
-
+{{ define "main" }}
 <div class="check-subscriber-container">
   <div class="check-subscriber-content">
     <h1>Newsletter Subscription Status</h1>
+    <div id="debug-info" style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 12px; color: #666;">
+      <strong>Debug:</strong> Page loaded at <span id="load-time"></span> | Template: check-subscriber.html
+    </div>
     
     <div id="user-info" class="user-info" style="display: none;">
       <div class="user-info-content">
@@ -65,6 +62,12 @@ document.addEventListener('DOMContentLoaded', async function() {
   console.log('[check-subscriber] Current URL:', window.location.href);
   console.log('[check-subscriber] URL search params:', window.location.search);
   
+  // Set debug info
+  const loadTimeEl = document.getElementById('load-time');
+  if (loadTimeEl) {
+    loadTimeEl.textContent = new Date().toLocaleTimeString();
+  }
+  
   const loadingEl = document.getElementById('loading');
   const statusEl = document.getElementById('status');
   const errorEl = document.getElementById('error');
@@ -89,7 +92,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('[check-subscriber] User data:', user);
     
     if (!user || !user.email) {
-      throw new Error('No authenticated user or email found');
+      console.log('[check-subscriber] No authenticated user found, showing login prompt');
+      // Show a message to login first
+      loadingEl.style.display = 'none';
+      statusEl.style.display = 'block';
+      statusEl.className = 'status-message info';
+      statusEl.innerHTML = `
+        <p>🔐 <strong>Please log in first</strong></p>
+        <p>You need to be logged in to check your subscription status.</p>
+        <a href="{{ .Site.BaseURL }}" class="check-subscriber-btn check-subscriber-btn-primary" style="margin-top: 1rem; display: inline-block;">Go to Home Page</a>
+      `;
+      actionButtons.style.display = 'flex';
+      return;
     }
     
     // Display user information
@@ -131,12 +145,15 @@ async function waitForAuth0() {
 
 async function checkSubscriptionStatus(email) {
   console.log('[check-subscriber] Checking subscription for:', email);
+  console.log('[check-subscriber] Making API call to: /.netlify/functions/check-subscriber');
   
   const statusEl = document.getElementById('status');
   const actionButtons = document.querySelector('.check-subscriber-action-buttons');
   const subscribeBtn = document.getElementById('subscribeBtn');
   
   try {
+    console.log('[check-subscriber] Sending POST request with email:', email);
+    
     const response = await fetch('/.netlify/functions/check-subscriber', {
       method: 'POST',
       headers: {
@@ -145,12 +162,18 @@ async function checkSubscriptionStatus(email) {
       body: JSON.stringify({ email: email })
     });
     
+    console.log('[check-subscriber] Response status:', response.status);
+    console.log('[check-subscriber] Response headers:', response.headers);
+    console.log('[check-subscriber] Response ok:', response.ok);
+    
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('[check-subscriber] Error response body:', errorText);
+      throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
     }
     
     const data = await response.json();
-    console.log('[check-subscriber] Response:', data);
+    console.log('[check-subscriber] Parsed response data:', data);
     
     if (data.error) {
       throw new Error(data.error);
@@ -268,4 +291,34 @@ async function checkSubscriptionStatus(email) {
     actionButtons.style.display = 'flex';
   }
 }
+
+// Test function to manually test the API
+async function testAPI() {
+  console.log('[check-subscriber] Testing API with test email...');
+  try {
+    const response = await fetch('/.netlify/functions/check-subscriber', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: 'test@example.com' })
+    });
+    
+    console.log('[check-subscriber] Test response status:', response.status);
+    const data = await response.json();
+    console.log('[check-subscriber] Test response data:', data);
+  } catch (error) {
+    console.error('[check-subscriber] Test API error:', error);
+  }
+}
+
+// Make test function available globally for debugging
+window.testAPI = testAPI;
 </script>
+
+<!-- Debug panel for testing -->
+<div style="position: fixed; top: 10px; right: 10px; background: #333; color: white; padding: 10px; border-radius: 5px; font-size: 12px; z-index: 9999;">
+  <button onclick="testAPI()" style="background: #007cba; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Test API</button>
+</div>
+
+{{ end }}
