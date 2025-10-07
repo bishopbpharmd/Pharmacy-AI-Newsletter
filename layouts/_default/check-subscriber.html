@@ -49,6 +49,13 @@
       <a href="{{ .Site.BaseURL }}" class="check-subscriber-btn check-subscriber-btn-primary">Back to Home</a>
       <button id="subscribeBtn" class="check-subscriber-btn check-subscriber-btn-secondary" style="display: none;">Subscribe to Newsletter</button>
     </div>
+    
+    <!-- Debug button (temporary) -->
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;">
+      <button onclick="testEmailMismatch()" style="background: #ff6b6b; color: white; border: none; padding: 10px; border-radius: 5px; font-size: 12px; cursor: pointer;">
+        Debug Email
+      </button>
+    </div>
   </div>
 </div>
 
@@ -193,6 +200,9 @@ async function checkSubscriptionStatus(email) {
     
     const data = await response.json();
     console.log('[check-subscriber] Parsed response data:', data);
+    console.log('[check-subscriber] Email sent to API:', email);
+    console.log('[check-subscriber] Email returned from API:', data.email_address);
+    console.log('[check-subscriber] Email match:', email === data.email_address);
     
     if (data.error) {
       throw new Error(data.error);
@@ -353,8 +363,34 @@ async function checkEmailSubscription() {
   }
 }
 
-// Make function available globally
+// Test function to debug email mismatch
+async function testEmailMismatch() {
+  const testEmail = 'brian.bishop@rwjbh.org';
+  console.log('[check-subscriber] Testing email mismatch with:', testEmail);
+  
+  try {
+    const response = await fetch('/.netlify/functions/check-subscriber', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: testEmail })
+    });
+    
+    const data = await response.json();
+    console.log('[check-subscriber] Test result:');
+    console.log('[check-subscriber] - Email sent:', testEmail);
+    console.log('[check-subscriber] - Email returned:', data.email_address);
+    console.log('[check-subscriber] - Match:', testEmail === data.email_address);
+    console.log('[check-subscriber] - Full response:', data);
+  } catch (error) {
+    console.error('[check-subscriber] Test error:', error);
+  }
+}
+
+// Make functions available globally
 window.checkEmailSubscription = checkEmailSubscription;
+window.testEmailMismatch = testEmailMismatch;
 </script>
 
 

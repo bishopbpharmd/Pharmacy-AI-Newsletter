@@ -5,10 +5,14 @@ export async function handler(event) {
 
   try {
     const { email } = JSON.parse(event.body || "{}");
+    console.log('Netlify function - Received email:', email);
+    console.log('Netlify function - Request body:', event.body);
+    
     if (!email) return { statusCode: 400, body: "Missing email" };
 
     // EmailOctopus v2 API - Search for contact by email address
     const url = `https://api.emailoctopus.com/lists/${process.env.EMAILOCTOPUS_LIST_ID}/contacts?email_address=${encodeURIComponent(email)}`;
+    console.log('Netlify function - EmailOctopus URL:', url);
     
     const res = await fetch(url, {
       method: 'GET',
@@ -17,13 +21,19 @@ export async function handler(event) {
         'Content-Type': 'application/json'
       }
     });
+    
+    console.log('Netlify function - EmailOctopus response status:', res.status);
 
     if (res.ok) {
       const data = await res.json();
+      console.log('Netlify function - EmailOctopus response data:', JSON.stringify(data, null, 2));
       
       // Check if we found any contacts
       if (data.data && data.data.length > 0) {
         const contact = data.data[0]; // Get the first (and likely only) contact
+        console.log('Netlify function - Found contact:', contact.email_address);
+        console.log('Netlify function - Contact status:', contact.status);
+        
         return {
           statusCode: 200,
           body: JSON.stringify({ 
