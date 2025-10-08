@@ -11,20 +11,20 @@
  */
 async function getAuthToken() {
   try {
-    // Check if Auth0 client is available
-    if (!window.auth0Client) {
-      console.warn('[readLaterApi] Auth0 client not available');
+    // Check if auth system is available
+    if (!window.auth || !window.auth0Client) {
+      console.warn('[readLaterApi] Auth system not available');
       return null;
     }
 
-    // Check if user is authenticated
-    const isAuthenticated = await window.auth0Client.isAuthenticated();
+    // Check if user is authenticated using our auth system
+    const isAuthenticated = window.auth.isAuthenticated();
     if (!isAuthenticated) {
       console.warn('[readLaterApi] User not authenticated');
       return null;
     }
 
-    // Get the access token
+    // Get the access token from Auth0 client
     const token = await window.auth0Client.getTokenSilently();
     return token;
   } catch (error) {
