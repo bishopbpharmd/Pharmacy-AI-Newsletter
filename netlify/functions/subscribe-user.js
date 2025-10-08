@@ -1,6 +1,17 @@
 export async function handler(event) {
+  // CORS and content-type headers
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
+    return { 
+      statusCode: 405, 
+      headers,
+      body: JSON.stringify({ error: "Method not allowed" }) 
+    };
   }
 
   try {
@@ -11,7 +22,8 @@ export async function handler(event) {
     // Validate required fields
     if (!firstName || !lastName || !email || !company) {
       return { 
-        statusCode: 400, 
+        statusCode: 400,
+        headers,
         body: JSON.stringify({ 
           error: "Missing required fields", 
           success: false 
@@ -23,7 +35,8 @@ export async function handler(event) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return { 
-        statusCode: 400, 
+        statusCode: 400,
+        headers,
         body: JSON.stringify({ 
           error: "Invalid email format", 
           success: false 
@@ -64,6 +77,7 @@ export async function handler(event) {
       
       return {
         statusCode: 200,
+        headers,
         body: JSON.stringify({ 
           success: true, 
           message: "Successfully subscribed to newsletter",
@@ -92,6 +106,7 @@ export async function handler(event) {
       
       return {
         statusCode: response.status >= 400 && response.status < 500 ? 400 : 500,
+        headers,
         body: JSON.stringify({ 
           success: false, 
           error: errorMessage,
@@ -103,7 +118,8 @@ export async function handler(event) {
   } catch (error) {
     console.error('Subscribe function - Unexpected error:', error);
     return { 
-      statusCode: 500, 
+      statusCode: 500,
+      headers,
       body: JSON.stringify({ 
         success: false, 
         error: "Internal server error" 
