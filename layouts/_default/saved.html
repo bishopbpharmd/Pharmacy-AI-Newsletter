@@ -49,9 +49,11 @@
     </a>
   </div>
 
-  <!-- Saved Articles Container -->
-  <div id="savedArticlesContainer" class="saved-articles-container" style="display: none;">
-    <!-- Articles will be dynamically inserted here -->
+  <!-- Saved Articles Container (uses same classes as index page) -->
+  <div id="savedArticlesContainer" class="posts-container" style="display: none;">
+    <div class="major-posts" id="savedPostsList">
+      <!-- Articles will be dynamically inserted here -->
+    </div>
   </div>
 </div>
 
@@ -153,74 +155,6 @@
   transform: translateX(-4px);
 }
 
-.saved-articles-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-/* Reuse major post tile styles */
-.saved-articles-container .post-tile {
-  display: flex;
-  flex-direction: column;
-  background: var(--theme);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  overflow: visible;
-  position: relative;
-}
-
-.saved-articles-container .post-tile:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-.saved-articles-container .post-tile a {
-  flex: 1;
-  text-decoration: none;
-  color: inherit;
-}
-
-.saved-articles-container .tile-content h2 {
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-  color: var(--content);
-}
-
-.saved-articles-container .tile-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.saved-articles-container .tile-journal {
-  font-size: 0.95rem;
-  color: #9ca3af;
-  margin-bottom: 1rem;
-}
-
-.saved-articles-container .tile-content p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--secondary);
-  margin-bottom: 1.5rem;
-}
-
-.saved-articles-container .tile-meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.9rem;
-  color: var(--secondary);
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
-  margin-top: auto;
-}
-
 /* Mobile responsive */
 @media (max-width: 768px) {
   .saved-header h1 {
@@ -275,18 +209,58 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     // Fetch all posts data from Hugo
-    // Hugo's jsonify outputs valid JSON that's embedded directly
-    const allPosts = {{ .Site.RegularPages | jsonify | safeJS }};
-    console.log('[Saved Page] Total posts available:', allPosts.length);
-    console.log('[Saved Page] Type of allPosts:', typeof allPosts, Array.isArray(allPosts));
+    // Create array in Hugo, then jsonify the entire structure once
+    {{ $allPosts := slice }}
+    {{ range .Site.RegularPages }}
+      {{ $post := dict 
+        "uniqueId" .File.UniqueID
+        "title" .Title
+        "relPermalink" .RelPermalink
+        "permalink" .Permalink
+        "date" (.Date.Format "January 2, 2006")
+        "description" (cond .Params.description .Params.description (.Summary | plainify | truncate 200))
+        "summary" (.Summary | plainify | truncate 200)
+        "journal" .Params.journal
+        "tags" .Params.tags
+      }}
+      {{ $allPosts = $allPosts | append $post }}
+    {{ end }}
+    const allPostsArray = {{ $allPosts | jsonify | safeJS }};
     
-    // Filter posts that match saved article IDs
-    const savedPosts = allPosts.filter(post => {
-      const postId = post.File?.UniqueID;
-      return postId && savedArticleIds.includes(postId);
+    // Convert array to map with uniqueId as key
+    const postsMap = {};
+    allPostsArray.forEach(post => {
+      postsMap[post.uniqueId] = post;
     });
     
+    console.log('[Saved Page] Posts map created with', Object.keys(postsMap).length, 'posts');
+    console.log('[Saved Page] Looking for saved IDs:', savedArticleIds);
+    console.log('[Saved Page] Available post IDs:', Object.keys(postsMap));
+    
+    // Filter posts that match saved article IDs
+    const savedPosts = savedArticleIds
+      .filter(id => {
+        const exists = !!postsMap[id];
+        console.log(`[Saved Page] Checking saved ID "${id}": exists=${exists}`);
+        return exists;
+      })
+      .map(id => postsMap[id]);
+    
     console.log('[Saved Page] Matched saved posts:', savedPosts.length);
+    
+    // Debug: Show which posts matched and their data
+    savedPosts.forEach((post, idx) => {
+      console.log(`[Saved Page] Post ${idx+1}: "${post.title}" (ID: ${post.uniqueId})`);
+      if (idx === 0) {
+        console.log('[Saved Page] Sample post data:', {
+          title: post.title,
+          date: post.date,
+          description: post.description,
+          journal: post.journal,
+          tags: post.tags
+        });
+      }
+    });
     
     if (savedPosts.length === 0) {
       loading.style.display = 'none';
@@ -335,11 +309,11 @@ async function waitForAuth0() {
  * Render saved posts as tiles
  */
 function renderSavedPosts(posts) {
-  const container = document.getElementById('savedArticlesContainer');
+  const postsList = document.getElementById('savedPostsList');
   
   posts.forEach(post => {
     const tile = createPostTile(post);
-    container.appendChild(tile);
+    postsList.appendChild(tile);
   });
 }
 
@@ -454,21 +428,21 @@ function createPostTile(post) {
   tile.className = 'post-tile';
   
   const link = document.createElement('a');
-  link.href = post.RelPermalink || post.Permalink;
+  link.href = post.relPermalink || post.permalink;
   
   const content = document.createElement('div');
   content.className = 'tile-content';
   
   // Title
   const title = document.createElement('h2');
-  title.textContent = post.Title;
+  title.textContent = post.title;
   content.appendChild(title);
   
   // Tags
-  if (post.Params?.tags && post.Params.tags.length > 0) {
+  if (post.tags && Array.isArray(post.tags) && post.tags.length > 0) {
     const tagsDiv = document.createElement('div');
     tagsDiv.className = 'tile-tags';
-    post.Params.tags.forEach(tag => {
+    post.tags.forEach(tag => {
       const tagSpan = document.createElement('span');
       // Use urlize transformation (lowercase, replace spaces/special chars with hyphens)
       const urlizedTag = tag.toLowerCase()
@@ -483,24 +457,26 @@ function createPostTile(post) {
   }
   
   // Journal
-  if (post.Params?.journal) {
+  if (post.journal) {
     const journal = document.createElement('div');
     journal.className = 'tile-journal';
-    journal.textContent = `Journal: ${post.Params.journal}`;
+    journal.textContent = `Journal: ${post.journal}`;
     content.appendChild(journal);
   }
   
   // Description
   const description = document.createElement('p');
-  description.textContent = post.Params?.description || post.Summary || '';
+  description.textContent = post.description || post.summary || '';
   content.appendChild(description);
   
   // Meta (date)
   const meta = document.createElement('div');
   meta.className = 'tile-meta';
   const time = document.createElement('time');
-  const date = new Date(post.Date);
-  time.textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  
+  // Date is already pre-formatted by Hugo as "January 2, 2006"
+  time.textContent = post.date || 'Date unavailable';
+  
   meta.appendChild(time);
   content.appendChild(meta);
   
@@ -508,7 +484,7 @@ function createPostTile(post) {
   tile.appendChild(link);
   
   // Add read-later button (will show as saved)
-  const button = createReadLaterButton(post.File?.UniqueID, true);
+  const button = createReadLaterButton(post.uniqueId, true);
   tile.appendChild(button);
   
   return tile;
