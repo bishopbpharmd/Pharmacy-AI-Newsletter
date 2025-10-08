@@ -197,6 +197,606 @@
   }
 }
 
+/* ============================================
+   CUSTOM SUBSCRIPTION MODAL STYLING
+   ============================================ */
+
+.custom-subscribe-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease;
+}
+
+.custom-subscribe-modal.closing {
+  animation: backdropFadeOut 0.3s ease-in forwards;
+}
+
+.custom-subscribe-modal.closing .modal-content {
+  animation: modalSlideOut 0.3s ease-in forwards;
+}
+
+.modal-content {
+  background: var(--theme);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-btn:hover {
+  background: var(--code-bg);
+  color: var(--primary);
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-description {
+  color: var(--secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+  text-align: center;
+}
+
+.subscribe-form {
+  width: 100%;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: var(--primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.form-input {
+  background: var(--theme);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--primary);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+/* Enhanced border contrast and text color for light mode only */
+@media (prefers-color-scheme: light) {
+  .form-input {
+    border-color: #d1d5db; /* Slightly darker gray for better visibility */
+    color: var(--primary) !important; /* Match other text in light theme */
+  }
+}
+
+/* Override for light theme when not using system preference */
+body:not([data-theme="dark"]) .form-input {
+  border-color: #d1d5db;
+  color: var(--primary) !important; /* Match other text in light theme */
+}
+
+/* Ensure dark theme uses original CSS variables */
+@media (prefers-color-scheme: dark) {
+  .form-input {
+    border-color: var(--border); /* Keep original dark theme border */
+  }
+}
+
+[data-theme="dark"] .form-input {
+  border-color: var(--border); /* Keep original dark theme border */
+}
+
+/* Ensure proper text color in dark mode */
+@media (prefers-color-scheme: dark) {
+  .form-input {
+    color: #e5e7eb !important;
+    background: var(--theme) !important;
+  }
+}
+
+[data-theme="dark"] .form-input {
+  color: #e5e7eb !important;
+  background: var(--theme) !important;
+}
+
+/* Fix browser autofill and specific input type styling */
+.form-input[type="email"],
+.form-input[type="text"] {
+  -webkit-text-fill-color: inherit !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--theme) inset !important;
+  box-shadow: 0 0 0 1000px var(--theme) inset !important;
+}
+
+/* Ensure light mode text color for specific input types */
+@media (prefers-color-scheme: light) {
+  .form-input[type="email"],
+  .form-input[type="text"] {
+    color: var(--primary) !important;
+    -webkit-text-fill-color: var(--primary) !important;
+  }
+}
+
+body:not([data-theme="dark"]) .form-input[type="email"],
+body:not([data-theme="dark"]) .form-input[type="text"] {
+  color: var(--primary) !important;
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-input[type="email"],
+  .form-input[type="text"] {
+    color: #e5e7eb !important;
+    -webkit-text-fill-color: #e5e7eb !important;
+  }
+}
+
+[data-theme="dark"] .form-input[type="email"],
+[data-theme="dark"] .form-input[type="text"] {
+  color: #e5e7eb !important;
+  -webkit-text-fill-color: #e5e7eb !important;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+/* Enhanced focus state for light mode only */
+@media (prefers-color-scheme: light) {
+  .form-input:focus {
+    border-color: #3b82f6; /* Professional blue for focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+body:not([data-theme="dark"]) .form-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Ensure dark theme uses original focus styling */
+@media (prefers-color-scheme: dark) {
+  .form-input:focus {
+    border-color: var(--primary); /* Keep original dark theme focus */
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+  }
+}
+
+[data-theme="dark"] .form-input:focus {
+  border-color: var(--primary); /* Keep original dark theme focus */
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+.form-input.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--tertiary);
+}
+
+.form-submit-btn {
+  /* Professional button with proper contrast for both themes */
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ensure proper contrast in dark mode */
+@media (prefers-color-scheme: dark) {
+  .form-submit-btn {
+    background: #2563eb; /* Professional blue with excellent contrast */
+    color: #ffffff;
+  }
+}
+
+/* PaperMod dark theme override */
+[data-theme="dark"] .form-submit-btn {
+  background: #2563eb; /* Professional blue with excellent contrast */
+  color: #ffffff;
+}
+
+.form-submit-btn:hover:not(:disabled) {
+  background: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Dark mode hover state */
+@media (prefers-color-scheme: dark) {
+  .form-submit-btn:hover:not(:disabled) {
+    background: #1d4ed8; /* Darker blue for hover */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  }
+}
+
+[data-theme="dark"] .form-submit-btn:hover:not(:disabled) {
+  background: #1d4ed8; /* Darker blue for hover */
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.form-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Professional loading state for button */
+.form-submit-btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.form-submit-btn.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: buttonSpinner 1s linear infinite;
+}
+
+@keyframes buttonSpinner {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Focus state for accessibility */
+.form-submit-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+[data-theme="dark"] .form-submit-btn:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+}
+
+/* Form validation errors (submit-only validation) */
+.form-input.error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+  background-color: rgba(231, 76, 60, 0.02);
+}
+
+.form-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.4;
+  animation: errorSlideIn 0.3s ease-out;
+}
+
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Professional error message styling - single block design */
+.form-error-general {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid #fecaca;
+  border-left: 4px solid #dc2626;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  animation: errorSlideIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-error-general .error-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.form-error-general .error-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.form-error-general .error-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.form-error-general .error-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.form-error-general .error-message {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #991b1b;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.form-error-general .error-help {
+  font-size: 0.875rem;
+  color: #7f1d1d;
+  line-height: 1.4;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+/* Dark mode error styling */
+@media (prefers-color-scheme: dark) {
+  .form-error-general {
+    background: linear-gradient(135deg, #431a1a 0%, #581c1c 100%);
+    border-color: #991b1b;
+    border-left-color: #f87171;
+  }
+  
+  .form-error-general .error-title {
+    color: #f87171;
+  }
+  
+  .form-error-general .error-message {
+    color: #fecaca;
+  }
+  
+  .form-error-general .error-help {
+    color: #fca5a5;
+  }
+}
+
+[data-theme="dark"] .form-error-general {
+  background: linear-gradient(135deg, #431a1a 0%, #581c1c 100%);
+  border-color: #991b1b;
+  border-left-color: #f87171;
+}
+
+[data-theme="dark"] .form-error-general .error-title {
+  color: #f87171;
+}
+
+[data-theme="dark"] .form-error-general .error-message {
+  color: #fecaca;
+}
+
+[data-theme="dark"] .form-error-general .error-help {
+  color: #fca5a5;
+}
+
+/* Success Toast */
+.subscribe-success-toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: var(--theme);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  max-width: 400px;
+}
+
+.subscribe-success-toast.show {
+  transform: translateX(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.toast-icon {
+  background: #10b981;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.toast-message {
+  flex: 1;
+}
+
+.toast-message strong {
+  color: var(--primary);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.toast-message p {
+  color: var(--secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 1rem;
+    max-height: 90vh;
+  }
+  
+  .modal-header {
+    padding: 1rem 1.5rem;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .subscribe-success-toast {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+}
+
+/* Hide any remaining EmailOctopus modals - we're using custom modal now */
+.modal-container[data-form="add30b9c-a238-11f0-98d5-6727ec6b3f72"],
+.modal-container[data-form="5691337a-a244-11f0-aa3f-791dbf3c50f2"],
+.emailoctopus-modal,
+.eo-modal,
+#emailoctopus-modal,
+#eo-modal {
+  display: none !important;
+  visibility: hidden !important;
+}
+
 .status-message {
   text-align: center;
   padding: 1.5rem;
@@ -519,6 +1119,7 @@
 /* Mobile auth links - inherit mobile-menu-item styling */
 .mobile-auth-link {
   /* Remove all custom styling - let mobile-menu-item handle it */
+  all: unset;
 }
 
 .mobile-auth-logout-container {
@@ -1107,6 +1708,153 @@
 
 
 /* ============================================
+   READ LATER BOOKMARK STYLING
+   ============================================ */
+
+.read-later-bookmark {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  color: var(--secondary);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.read-later-bookmark:hover {
+  color: var(--primary);
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+.read-later-bookmark:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.3);
+}
+
+.read-later-bookmark:active {
+  transform: scale(0.9);
+}
+
+/* Saved state styling */
+.read-later-bookmark.saved {
+  color: var(--primary);
+  opacity: 1;
+}
+
+.read-later-bookmark.saved:hover {
+  color: var(--secondary);
+  transform: scale(1.2);
+}
+
+.read-later-bookmark.saved:focus {
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Icon styling */
+.read-later-bookmark svg {
+  transition: transform 0.2s ease;
+}
+
+.read-later-bookmark:hover svg {
+  transform: scale(1.1);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .read-later-bookmark {
+    color: var(--content);
+  }
+  
+  .read-later-bookmark:hover {
+    color: var(--primary);
+  }
+  
+  .read-later-bookmark.saved {
+    color: var(--primary);
+  }
+  
+  .read-later-bookmark.saved:hover {
+    color: var(--secondary);
+  }
+}
+
+[data-theme="dark"] .read-later-bookmark {
+  color: var(--content);
+}
+
+[data-theme="dark"] .read-later-bookmark:hover {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .read-later-bookmark.saved {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .read-later-bookmark.saved:hover {
+  color: var(--secondary);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .read-later-bookmark {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 28px;
+    height: 28px;
+  }
+  
+  .read-later-bookmark svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ============================================
+   POST TILE LAYOUT
+   ============================================ */
+
+
+.post-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .post-title-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .post-actions {
+    margin-top: 0;
+    align-self: flex-start;
+  }
+}
+
+/* ============================================
    INDEX PAGE - POST TILES
    ============================================ */
 
@@ -1142,9 +1890,11 @@
   background: var(--theme);
   border: 1px solid var(--border);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-tile.post-tile-minor {
@@ -1170,7 +1920,7 @@
   display: block;
   text-decoration: none;
   color: inherit;
-  height: 100%;
+  flex: 1;
 }
 
 
@@ -1360,6 +2110,7 @@
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative; /* Enable absolute positioning for bookmark button */
 }
 
 /* Metadata card styling */

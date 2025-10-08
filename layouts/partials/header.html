@@ -365,7 +365,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const subscribeBtn = document.getElementById('subscribeBtn');
     const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
     
-    function showSubscribeForm() {
+    // Old EmailOctopus modal function removed - now using custom modal
+    function oldShowSubscribeForm() {
         console.log('[Subscribe] Attempting to show EmailOctopus form...');
         console.log('[Subscribe] Document ready state:', document.readyState);
         console.log('[Subscribe] All scripts on page:', document.querySelectorAll('script').length);
@@ -568,61 +569,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    if (subscribeBtn) {
-        subscribeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            showSubscribeForm();
-        });
-    }
+    // Old EmailOctopus modal event listeners removed - now using custom modal
     
-    if (mobileSubscribeBtn) {
-        mobileSubscribeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            showSubscribeForm();
-            closeMobileMenu(); // Close mobile menu after clicking subscribe
-        });
-    }
-    
-    // Listen for theme changes to update form selection
-    function setupThemeChangeListener() {
-        // Listen for theme toggle button clicks
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function() {
-                console.log('[Subscribe] Theme toggle clicked, forms will update on next subscribe click');
-            });
-        }
-        
-        // Listen for DOM mutations that might indicate theme changes
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && 
-                    (mutation.attributeName === 'class' || mutation.attributeName === 'data-theme')) {
-                    console.log('[Subscribe] Theme change detected via DOM mutation');
-                }
-            });
-        });
-        
-        // Observe the document and body for theme changes
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['class', 'data-theme']
-        });
-        
-        observer.observe(document.body, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
-    }
-    
-    // Initialize theme change listener
-    setupThemeChangeListener();
+    // Old EmailOctopus theme listener removed - custom modal handles theme automatically
     
     // Initialize navbar subscription button visibility
     updateNavbarSubscriptionButton();
     
     // Check if user is actually authenticated and clear localStorage if not
     checkAuthAndClearStorage();
+    
+    // Initialize subscription modal
+    initializeSubscriptionModal();
 });
 
 /**
@@ -722,4 +680,421 @@ window.addEventListener('storage', function(e) {
         updateNavbarSubscriptionButton();
     }
 });
+
+// Initialize subscription modal
+function initializeSubscriptionModal() {
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
+    
+    if (subscribeBtn) {
+        subscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showCustomSubscribeModal();
+        });
+    }
+    
+    if (mobileSubscribeBtn) {
+        mobileSubscribeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showCustomSubscribeModal();
+            // Close mobile menu if open
+            if (typeof closeMobileMenu === 'function') {
+                closeMobileMenu();
+            }
+        });
+    }
+    
+    // Real-time validation removed - only validate on submit
+}
+
+// Real-time validation functions removed - validation only happens on submit
+
+// Show custom subscription modal
+function showCustomSubscribeModal() {
+    const modal = document.getElementById('customSubscribeModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Focus on first input
+        const firstNameInput = modal.querySelector('#firstName');
+        if (firstNameInput) {
+            setTimeout(() => firstNameInput.focus(), 100);
+        }
+    }
+}
+
+// Close custom subscription modal
+function closeCustomSubscribeModal() {
+    const modal = document.getElementById('customSubscribeModal');
+    if (modal) {
+        // Add closing animation class
+        modal.classList.add('closing');
+        
+        // Wait for animation to complete, then hide modal
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('closing');
+            document.body.style.overflow = '';
+            
+            // Reset form
+            const form = modal.querySelector('#subscribeForm');
+            if (form) {
+                form.reset();
+                clearFormErrors();
+            }
+        }, 300); // Match animation duration
+    }
+}
+
+// Clear form validation errors
+function clearFormErrors() {
+    const errorElements = document.querySelectorAll('.form-error');
+    errorElements.forEach(el => el.remove());
+    
+    const inputs = document.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+        input.classList.remove('error');
+    });
+}
+
+// Show form validation error (submit-only validation)
+function showFormError(input, message) {
+    // Remove existing error
+    const existingError = input.parentNode.querySelector('.form-error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Add error class to input
+    input.classList.add('error');
+    
+    // Add error message with icon
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'form-error';
+    errorDiv.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: text-bottom;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+        ${message}
+    `;
+    input.parentNode.appendChild(errorDiv);
+}
+
+// Enhanced form validation with professional error messages
+function validateForm(formData) {
+    const errors = [];
+    
+    // First Name validation
+    if (!formData.firstName.trim()) {
+        errors.push({ field: 'firstName', message: 'First name is required' });
+    } else if (formData.firstName.trim().length < 2) {
+        errors.push({ field: 'firstName', message: 'First name must be at least 2 characters' });
+    } else if (formData.firstName.trim().length > 50) {
+        errors.push({ field: 'firstName', message: 'First name must be less than 50 characters' });
+    } else if (!/^[a-zA-Z\s\-']+$/.test(formData.firstName.trim())) {
+        errors.push({ field: 'firstName', message: 'First name can only contain letters, spaces, hyphens, and apostrophes' });
+    }
+    
+    // Last Name validation
+    if (!formData.lastName.trim()) {
+        errors.push({ field: 'lastName', message: 'Last name is required' });
+    } else if (formData.lastName.trim().length < 2) {
+        errors.push({ field: 'lastName', message: 'Last name must be at least 2 characters' });
+    } else if (formData.lastName.trim().length > 50) {
+        errors.push({ field: 'lastName', message: 'Last name must be less than 50 characters' });
+    } else if (!/^[a-zA-Z\s\-']+$/.test(formData.lastName.trim())) {
+        errors.push({ field: 'lastName', message: 'Last name can only contain letters, spaces, hyphens, and apostrophes' });
+    }
+    
+    // Email validation
+    if (!formData.email.trim()) {
+        errors.push({ field: 'email', message: 'Email address is required' });
+    } else {
+        const email = formData.email.trim().toLowerCase();
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        
+        if (!emailRegex.test(email)) {
+            errors.push({ field: 'email', message: 'Please enter a valid email address' });
+        } else if (email.length > 254) {
+            errors.push({ field: 'email', message: 'Email address is too long' });
+        } else if (email.includes('..') || email.startsWith('.') || email.endsWith('.')) {
+            errors.push({ field: 'email', message: 'Email address format is invalid' });
+        }
+    }
+    
+    // Company validation
+    if (!formData.company.trim()) {
+        errors.push({ field: 'company', message: 'Company/Organization is required' });
+    } else if (formData.company.trim().length < 2) {
+        errors.push({ field: 'company', message: 'Company name must be at least 2 characters' });
+    } else if (formData.company.trim().length > 100) {
+        errors.push({ field: 'company', message: 'Company name must be less than 100 characters' });
+    }
+    
+    return errors;
+}
+
+// Handle form submission
+async function handleSubscribeForm(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = {
+        firstName: form.firstName.value.trim(),
+        lastName: form.lastName.value.trim(),
+        email: form.email.value.trim(),
+        company: form.company.value.trim()
+    };
+    
+    // Clear previous errors
+    clearFormErrors();
+    
+    // Validate form
+    const errors = validateForm(formData);
+    if (errors.length > 0) {
+        errors.forEach(error => {
+            const input = form[error.field];
+            showFormError(input, error.message);
+        });
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = form.querySelector('.form-submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Subscribing...';
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+    
+    try {
+        const response = await fetch('/.netlify/functions/subscribe-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        // Handle non-JSON responses (like 404 or server errors)
+        let result;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            result = await response.json();
+        } else {
+            // If response is not JSON, create a proper error object
+            const text = await response.text();
+            throw new Error(`Server error (${response.status}): ${text || 'Unable to process subscription'}`);
+        }
+        
+        if (response.ok && result.success) {
+            // Success - show success message and close modal
+            showSubscriptionSuccess();
+            closeCustomSubscribeModal();
+            
+            // Update navbar to hide subscribe button
+            if (typeof updateNavbarSubscriptionButton === 'function') {
+                updateNavbarSubscriptionButton();
+            }
+        } else {
+            throw new Error(result.error || 'Subscription failed');
+        }
+        
+    } catch (error) {
+        console.error('Subscription error:', error);
+        
+        // Show professional error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'form-error form-error-general';
+        
+        // Handle specific error types with user-friendly messages
+        let errorMessage = 'Subscription failed';
+        let errorIcon = '⚠️';
+        let errorHelp = 'Please check your information and try again, or contact support if the problem persists.';
+        
+        if (error.message.includes('already subscribed')) {
+            errorMessage = 'This email address is already subscribed to our newsletter.';
+            errorIcon = '📧';
+            errorHelp = 'You can use a different email address or contact us if you need to update your subscription.';
+        } else if (error.message.includes('Network error') || error.message.includes('fetch')) {
+            errorMessage = 'Network connection issue. Please check your internet connection and try again.';
+            errorIcon = '🌐';
+            errorHelp = 'Make sure you have a stable internet connection and try submitting the form again.';
+        } else if (error.message.includes('Server error') || error.message.includes('404') || error.message.includes('500')) {
+            errorMessage = 'Service temporarily unavailable. Please try again in a few moments.';
+            errorIcon = '🔧';
+            errorHelp = 'Our subscription service is currently being updated. Please try again shortly.';
+        } else if (error.message.includes('JSON')) {
+            errorMessage = 'Unable to process your subscription request.';
+            errorIcon = '🔧';
+            errorHelp = 'There seems to be a technical issue. Please try again or contact support.';
+        } else if (error.message.includes('Missing required fields')) {
+            errorMessage = 'Please fill in all required fields.';
+            errorIcon = '📝';
+            errorHelp = 'Make sure all form fields are completed before submitting.';
+        } else if (error.message.includes('Invalid email format')) {
+            errorMessage = 'Please enter a valid email address.';
+            errorIcon = '📧';
+            errorHelp = 'Check that your email address is formatted correctly (e.g., name@example.com).';
+        } else if (error.message) {
+            // Clean up technical error messages for user display
+            errorMessage = error.message.replace(/^Server error \(\d+\): /, '').replace(/^Unexpected non-whitespace character.*/, 'Unable to process your subscription request.');
+            errorIcon = '❌';
+        }
+        
+        errorDiv.innerHTML = `
+            <div class="error-content">
+                <div class="error-icon">${errorIcon}</div>
+                <div class="error-text">
+                    <div class="error-title">Subscription Error</div>
+                    <div class="error-message">${errorMessage}</div>
+                    <div class="error-help">${errorHelp}</div>
+                </div>
+            </div>
+        `;
+        
+        const formContent = form.querySelector('.form-content');
+        const existingError = formContent.querySelector('.form-error-general');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        formContent.appendChild(errorDiv);
+        
+        // Scroll to error message
+        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+    } finally {
+        // Reset button
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+    }
+}
+
+// Show subscription success message
+function showSubscriptionSuccess() {
+    // Create success toast
+    const toast = document.createElement('div');
+    toast.className = 'subscribe-success-toast';
+    toast.innerHTML = `
+        <div class="toast-content">
+            <div class="toast-icon">✓</div>
+            <div class="toast-message">
+                <strong>Successfully subscribed!</strong>
+                <p>Thank you for subscribing to our newsletter.</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Show toast with smooth animation
+    setTimeout(() => toast.classList.add('show'), 100);
+    
+    // Remove toast after 5 seconds with smooth transition
+    setTimeout(() => {
+        toast.classList.remove('show');
+        // Wait for transition to complete before removing from DOM
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 300); // Match transition duration
+    }, 5000);
+}
+
+// Close modal when clicking backdrop
+function handleModalBackdropClick(event) {
+    if (event.target.id === 'customSubscribeModal') {
+        closeCustomSubscribeModal();
+    }
+}
+
+// Make functions globally available
+window.showCustomSubscribeModal = showCustomSubscribeModal;
+window.closeCustomSubscribeModal = closeCustomSubscribeModal;
+window.handleSubscribeForm = handleSubscribeForm;
+window.handleModalBackdropClick = handleModalBackdropClick;
 </script>
+
+<!-- Custom Subscription Modal -->
+<div id="customSubscribeModal" class="custom-subscribe-modal" onclick="handleModalBackdropClick(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Subscribe to Newsletter</h2>
+            <button class="modal-close-btn" onclick="closeCustomSubscribeModal()" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <p class="modal-description">
+                Stay updated with the latest Pharmacy AI research and insights delivered to your inbox.
+            </p>
+            
+            <form id="subscribeForm" class="subscribe-form" onsubmit="handleSubscribeForm(event)">
+                <div class="form-content">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input 
+                                type="text" 
+                                id="firstName" 
+                                name="firstName" 
+                                class="form-input" 
+                                required 
+                                autocomplete="given-name"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input 
+                                type="text" 
+                                id="lastName" 
+                                name="lastName" 
+                                class="form-input" 
+                                required 
+                                autocomplete="family-name"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            required 
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company/Organization</label>
+                        <input 
+                            type="text" 
+                            id="company" 
+                            name="company" 
+                            class="form-input" 
+                            required 
+                            autocomplete="organization"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="form-submit-btn">
+                        Subscribe to Newsletter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

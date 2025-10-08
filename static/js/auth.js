@@ -143,6 +143,7 @@ console.log("[auth] Script loaded and starting...");
 
   async function refreshState() {
     try {
+      const wasAuthenticated = _isAuthenticated;
       _isAuthenticated = await auth0Client.isAuthenticated();
       _user = _isAuthenticated ? await auth0Client.getUser() : null;
       console.log("[auth] State refreshed:", { isAuthenticated: _isAuthenticated, user: _user?.email });
@@ -158,6 +159,14 @@ console.log("[auth] Script loaded and starting...");
             updateNavbarSubscriptionButton();
           }
         }
+      }
+      
+      // Fire auth state change event if authentication status changed
+      if (wasAuthenticated !== _isAuthenticated) {
+        console.log("[auth] Authentication status changed, firing event");
+        document.dispatchEvent(new CustomEvent('auth:stateChanged', {
+          detail: { isAuthenticated: _isAuthenticated, user: _user }
+        }));
       }
     } catch (err) {
       console.warn("[auth] refreshState error:", err);

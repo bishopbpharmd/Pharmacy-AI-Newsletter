@@ -12,6 +12,7 @@
 
 <article class="post-single">
   <header class="post-header">
+    {{ partial "read-later-button.html" (dict "articleId" .File.UniqueID "initialSaved" false) }}
     <h1 class="post-title entry-hint-parent">
       {{ .Title }}
       {{- if .Draft }}

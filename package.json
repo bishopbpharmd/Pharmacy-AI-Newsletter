@@ -1,0 +1,14 @@
+{
+  "name": "newsletter-website",
+  "version": "1.0.0",
+  "description": "Pharmacy AI Newsletter Website",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "hugo --minify",
+    "dev": "hugo server"
+  }
+}

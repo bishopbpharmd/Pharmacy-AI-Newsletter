@@ -73,6 +73,7 @@
             </div>
           </div>
         </a>
+        {{ partial "read-later-button.html" (dict "articleId" .File.UniqueID "initialSaved" false) }}
       </div>
       {{ end }}
     </div>
@@ -103,6 +104,7 @@
             </div>
           </div>
         </a>
+        {{ partial "read-later-button.html" (dict "articleId" .File.UniqueID "initialSaved" false) }}
       </div>
       {{ end }}
     </div>

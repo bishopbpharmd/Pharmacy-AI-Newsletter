@@ -1,0 +1,38 @@
+{{/*
+  ReadLaterButton Component
+  
+  A minimalist bookmark button for saving articles to reading list.
+  Only shows for authenticated users.
+  
+  Props:
+    - articleId: string (required) - Unique identifier for the article
+    - initialSaved: boolean (default false) - Initial saved state
+    - onToggle: function (optional) - Callback when button is toggled
+  
+  Behavior:
+    - Toggles internal saved state on click
+    - Fires CustomEvent 'readlater:toggle' with { articleId, saved }
+    - Icon-only design positioned as floating bookmark
+    - Hidden by default, shown via JavaScript for authenticated users
+*/}}
+
+<button 
+  class="read-later-bookmark" 
+  data-article-id="{{ .articleId }}"
+  data-saved="{{ .initialSaved | default false }}"
+  aria-pressed="{{ .initialSaved | default false }}"
+  aria-label="{{ if .initialSaved }}Remove from reading list{{ else }}Save to reading list{{ end }}"
+  title="{{ if .initialSaved }}Remove from reading list{{ else }}Save to reading list{{ end }}"
+  style="display: none;"
+>
+  {{ if .initialSaved }}
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 3H5c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+    </svg>
+  {{ else }}
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+    </svg>
+  {{ end }}
+</button>
+
