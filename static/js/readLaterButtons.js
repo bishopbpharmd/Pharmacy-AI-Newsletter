@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 async function waitForAuthAndUpdateVisibility() {
   console.log('[Read Later] Waiting for auth system to be ready...');
+  console.log('[Read Later] Initial state - window.auth:', !!window.auth, 'window.auth0Client:', !!window.auth0Client);
   
   // Wait up to 5 seconds for auth system to initialize
   const maxWaitTime = 5000;
@@ -72,10 +73,15 @@ async function waitForAuthAndUpdateVisibility() {
   let elapsed = 0;
   
   while (elapsed < maxWaitTime) {
-    if (window.auth && typeof window.auth.isAuthenticated === 'function') {
-      console.log('[Read Later] Auth system is ready, updating visibility...');
+    if (window.auth && typeof window.auth.isAuthenticated === 'function' && window.auth0Client) {
+      console.log('[Read Later] Auth system is ready (including auth0Client), updating visibility...');
       updateButtonVisibility();
       return;
+    }
+    
+    // Debug: Log what we're waiting for
+    if (elapsed % 500 === 0) {
+      console.log(`[Read Later] Still waiting... (${elapsed}ms) - auth: ${!!window.auth}, auth0Client: ${!!window.auth0Client}`);
     }
     
     await new Promise(resolve => setTimeout(resolve, checkInterval));

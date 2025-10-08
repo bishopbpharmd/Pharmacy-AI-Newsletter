@@ -122,6 +122,10 @@ console.log("[auth] Script loaded and starting...");
       }
     });
       console.log("[auth] Auth0 client created successfully");
+      
+      // Expose auth0Client globally AFTER it's created
+      window.auth0Client = auth0Client;
+      console.log("[auth] Exposed window.auth0Client globally");
 
     // Note: Auth0 redirect handling is now done in /callback page
 
@@ -372,8 +376,7 @@ console.log("[auth] Script loaded and starting...");
   // Expose and boot
   window.auth = api;
   
-  // Expose auth0Client globally for token retrieval
-  window.auth0Client = auth0Client;
+  // Note: window.auth0Client is exposed inside init() after client is created
   
   // Also expose legacy functions for backward compatibility
   window.login = login;
