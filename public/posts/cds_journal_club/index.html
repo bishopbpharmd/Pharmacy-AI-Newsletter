@@ -10,7 +10,7 @@
 <meta name="description" content="A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/cds_journal_club/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.665330518ab4c548c32c86cf53571ffed76390f97bee706ad7c007f49945ff6c.css" integrity="sha256-ZlMwUYq0xUjDLIbPU1cf/tdjkPl77nBq18AH9JlF/2w=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.673985cac7e78b088762548403e96dafd2ac8d0484e1854bafa38c0400defd71.css" integrity="sha256-ZzmFysfniwiHYlSEA&#43;ltr9KsjQSE4YVLr6OMBADe/XE=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -121,7 +121,7 @@
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="http://localhost:1313/posts/" title="Archive">
+                <a href="http://localhost:1313/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
@@ -179,7 +179,7 @@
                     <a href="http://localhost:1313/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="http://localhost:1313/posts/" class="mobile-menu-item">
+                    <a href="http://localhost:1313/archives/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
                     <a href="#" id="mobileSubscribeBtn" class="mobile-menu-item">
@@ -563,30 +563,38 @@ function updateNavbarSubscriptionButton() {
     
     try {
         const userData = localStorage.getItem('user');
+        const showButton = !userData || (userData && JSON.parse(userData).subscribed !== true);
+        
         if (!userData) {
             console.log('[navbar] No user data in localStorage, showing subscribe button');
-            subscribeLi.style.display = 'inline-block';
-            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
-            return;
+        } else {
+            const user = JSON.parse(userData);
+            console.log('[navbar] User data found:', user);
+            
+            if (user.subscribed === true) {
+                console.log('[navbar] User is subscribed, hiding subscribe button');
+            } else {
+                console.log('[navbar] User is not subscribed, showing subscribe button');
+            }
         }
         
-        const user = JSON.parse(userData);
-        console.log('[navbar] User data found:', user);
         
-        if (user.subscribed === true) {
-            console.log('[navbar] User is subscribed, hiding subscribe button');
-            subscribeLi.style.display = 'none';
-            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'none';
+        
+        if (showButton) {
+            subscribeLi.classList.remove('hide-subscribe');
         } else {
-            console.log('[navbar] User is not subscribed, showing subscribe button');
-            subscribeLi.style.display = 'inline-block';
-            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
+            subscribeLi.classList.add('hide-subscribe');
+        }
+        
+        
+        if (mobileSubscribeBtn) {
+            mobileSubscribeBtn.style.display = showButton ? 'block' : 'none';
         }
         
     } catch (error) {
         console.error('[navbar] Error reading user data:', error);
         
-        subscribeLi.style.display = 'inline-block';
+        subscribeLi.classList.remove('hide-subscribe');
         if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
     }
 }
@@ -675,11 +683,55 @@ function initializeSubscriptionModal() {
 
 
 
-function showCustomSubscribeModal() {
+async function showCustomSubscribeModal() {
     const modal = document.getElementById('customSubscribeModal');
     if (modal) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        
+        
+        const emailInput = modal.querySelector('#email');
+        const isAuthenticated = window.auth0Client ? await window.auth0Client.isAuthenticated() : false;
+        
+        if (isAuthenticated && window.auth0Client) {
+            try {
+                const user = await window.auth0Client.getUser();
+                if (user && user.email) {
+                    emailInput.value = user.email;
+                    emailInput.readOnly = true;
+                    emailInput.classList.add('locked-email');
+                    
+                    console.log('[Subscribe Modal] Email locked to authenticated user:', user.email);
+                }
+            } catch (error) {
+                console.error('[Subscribe Modal] Error getting user email:', error);
+            }
+        } else {
+            
+            emailInput.readOnly = false;
+            emailInput.classList.remove('locked-email');
+        }
+        
+        
+        const tooltip = modal.querySelector('#lockedEmailTooltip');
+        if (emailInput && tooltip) {
+            const showTooltip = () => {
+                if (emailInput.readOnly && emailInput.classList.contains('locked-email')) {
+                    tooltip.style.display = 'flex';
+                    setTimeout(() => {
+                        tooltip.style.display = 'none';
+                    }, 4000); 
+                }
+            };
+            
+            
+            emailInput.removeEventListener('click', showTooltip);
+            emailInput.removeEventListener('focus', showTooltip);
+            
+            
+            emailInput.addEventListener('click', showTooltip);
+            emailInput.addEventListener('focus', showTooltip);
+        }
         
         
         const firstNameInput = modal.querySelector('#firstName');
@@ -707,6 +759,19 @@ function closeCustomSubscribeModal() {
             if (form) {
                 form.reset();
                 clearFormErrors();
+                
+                
+                const emailInput = modal.querySelector('#email');
+                if (emailInput) {
+                    emailInput.readOnly = false;
+                    emailInput.classList.remove('locked-email');
+                }
+                
+                
+                const tooltip = modal.querySelector('#lockedEmailTooltip');
+                if (tooltip) {
+                    tooltip.style.display = 'none';
+                }
             }
         }, 300); 
     }
@@ -858,6 +923,14 @@ async function handleSubscribeForm(event) {
             
             showSubscriptionSuccess();
             closeCustomSubscribeModal();
+            
+            
+            const email = formData.email;
+            localStorage.setItem('user', JSON.stringify({
+                subscribed: true,
+                email: email
+            }));
+            console.log('[Subscribe] Stored subscription status in localStorage for:', email);
             
             
             if (typeof updateNavbarSubscriptionButton === 'function') {
@@ -1033,14 +1106,22 @@ window.handleModalBackdropClick = handleModalBackdropClick;
                     
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input" 
-                            required 
-                            autocomplete="email"
-                        >
+                        <div class="email-input-wrapper">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                required 
+                                autocomplete="email"
+                            >
+                            <div class="locked-email-tooltip" id="lockedEmailTooltip" style="display: none;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                                </svg>
+                                <span>Email locked to your account. To change it, update your email on the account settings page.</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1066,14 +1147,57 @@ window.handleModalBackdropClick = handleModalBackdropClick;
 <main class="main">
 
 <nav class="post-navigation">
-  <a href="http://localhost:1313/" class="back-to-posts">
+  <a href="http://localhost:1313/" class="back-to-posts" id="backButton">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"></line>
       <polyline points="12 19 5 12 12 5"></polyline>
     </svg>
-    <span>Back to Posts</span>
+    <span id="backButtonText">Back to Posts</span>
   </a>
 </nav>
+
+<script>
+
+(function() {
+  const backButton = document.getElementById('backButton');
+  const backButtonText = document.getElementById('backButtonText');
+  const baseURL = 'http:\/\/localhost:1313\/';
+  
+  if (backButton) {
+    
+    const referrer = document.referrer;
+    
+    if (referrer && referrer.startsWith(baseURL)) {
+      
+      const referrerPath = referrer.replace(baseURL, '/');
+      
+      
+      if (referrerPath.includes('/archives')) {
+        backButton.href = baseURL + 'archives/';
+        backButtonText.textContent = 'Back to Archive';
+        console.log('[Back Button] Set to archive page');
+      }
+      
+      else if (referrerPath.includes('/saved')) {
+        backButton.href = baseURL + 'saved/';
+        backButtonText.textContent = 'Back to Saved';
+        console.log('[Back Button] Set to saved page');
+      }
+      
+      else {
+        backButton.href = baseURL;
+        backButtonText.textContent = 'Back to Posts';
+        console.log('[Back Button] Set to home page');
+      }
+    } else {
+      
+      backButton.href = baseURL;
+      backButtonText.textContent = 'Back to Posts';
+      console.log('[Back Button] No valid referrer, set to home page');
+    }
+  }
+})();
+</script>
 
 <article class="post-single">
   <header class="post-header">
@@ -1125,7 +1249,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
     <div class="post-description">
       A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.
     </div>
-    <div class="post-meta"><span title='2025-10-04 09:41:46 -0400 EDT'>October 4, 2025</span>
+    <div class="post-meta"><span title='2025-10-03 09:41:46 -0400 EDT'>October 3, 2025</span>
 
 </div>
   </header> 

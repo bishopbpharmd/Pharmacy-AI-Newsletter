@@ -1,5 +1,6 @@
 +++
-date = '2025-10-04T21:47:54-04:00'
+date = '2025-10-03T21:47:54-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false
 title = 'LLMs show partial utility for DDI checks'
 description = 'This review finds that LLMs can detect many common drug–drug interactions with clear explanations, but they miss uncommon ones, vary in severity ratings, and sometimes hallucinate contraindications.'

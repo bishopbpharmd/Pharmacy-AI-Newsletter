@@ -10,7 +10,7 @@
 <meta name="description" content="Posts - Pharmacy AI Newsletter">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.665330518ab4c548c32c86cf53571ffed76390f97bee706ad7c007f49945ff6c.css" integrity="sha256-ZlMwUYq0xUjDLIbPU1cf/tdjkPl77nBq18AH9JlF/2w=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.673985cac7e78b088762548403e96dafd2ac8d0484e1854bafa38c0400defd71.css" integrity="sha256-ZzmFysfniwiHYlSEA&#43;ltr9KsjQSE4YVLr6OMBADe/XE=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -122,7 +122,7 @@
                 </a>
             </li>
             <li class="navbar-archive">
-                <a href="http://localhost:1313/posts/" title="Archive">
+                <a href="http://localhost:1313/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
@@ -180,7 +180,7 @@
                     <a href="http://localhost:1313/" class="mobile-menu-item">
                         <span>Home</span>
                     </a>
-                    <a href="http://localhost:1313/posts/" class="mobile-menu-item">
+                    <a href="http://localhost:1313/archives/" class="mobile-menu-item">
                         <span>Archive</span>
                     </a>
                     <a href="#" id="mobileSubscribeBtn" class="mobile-menu-item">
@@ -564,30 +564,38 @@ function updateNavbarSubscriptionButton() {
     
     try {
         const userData = localStorage.getItem('user');
+        const showButton = !userData || (userData && JSON.parse(userData).subscribed !== true);
+        
         if (!userData) {
             console.log('[navbar] No user data in localStorage, showing subscribe button');
-            subscribeLi.style.display = 'inline-block';
-            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
-            return;
+        } else {
+            const user = JSON.parse(userData);
+            console.log('[navbar] User data found:', user);
+            
+            if (user.subscribed === true) {
+                console.log('[navbar] User is subscribed, hiding subscribe button');
+            } else {
+                console.log('[navbar] User is not subscribed, showing subscribe button');
+            }
         }
         
-        const user = JSON.parse(userData);
-        console.log('[navbar] User data found:', user);
         
-        if (user.subscribed === true) {
-            console.log('[navbar] User is subscribed, hiding subscribe button');
-            subscribeLi.style.display = 'none';
-            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'none';
+        
+        if (showButton) {
+            subscribeLi.classList.remove('hide-subscribe');
         } else {
-            console.log('[navbar] User is not subscribed, showing subscribe button');
-            subscribeLi.style.display = 'inline-block';
-            if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
+            subscribeLi.classList.add('hide-subscribe');
+        }
+        
+        
+        if (mobileSubscribeBtn) {
+            mobileSubscribeBtn.style.display = showButton ? 'block' : 'none';
         }
         
     } catch (error) {
         console.error('[navbar] Error reading user data:', error);
         
-        subscribeLi.style.display = 'inline-block';
+        subscribeLi.classList.remove('hide-subscribe');
         if (mobileSubscribeBtn) mobileSubscribeBtn.style.display = 'block';
     }
 }
@@ -676,11 +684,55 @@ function initializeSubscriptionModal() {
 
 
 
-function showCustomSubscribeModal() {
+async function showCustomSubscribeModal() {
     const modal = document.getElementById('customSubscribeModal');
     if (modal) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        
+        
+        const emailInput = modal.querySelector('#email');
+        const isAuthenticated = window.auth0Client ? await window.auth0Client.isAuthenticated() : false;
+        
+        if (isAuthenticated && window.auth0Client) {
+            try {
+                const user = await window.auth0Client.getUser();
+                if (user && user.email) {
+                    emailInput.value = user.email;
+                    emailInput.readOnly = true;
+                    emailInput.classList.add('locked-email');
+                    
+                    console.log('[Subscribe Modal] Email locked to authenticated user:', user.email);
+                }
+            } catch (error) {
+                console.error('[Subscribe Modal] Error getting user email:', error);
+            }
+        } else {
+            
+            emailInput.readOnly = false;
+            emailInput.classList.remove('locked-email');
+        }
+        
+        
+        const tooltip = modal.querySelector('#lockedEmailTooltip');
+        if (emailInput && tooltip) {
+            const showTooltip = () => {
+                if (emailInput.readOnly && emailInput.classList.contains('locked-email')) {
+                    tooltip.style.display = 'flex';
+                    setTimeout(() => {
+                        tooltip.style.display = 'none';
+                    }, 4000); 
+                }
+            };
+            
+            
+            emailInput.removeEventListener('click', showTooltip);
+            emailInput.removeEventListener('focus', showTooltip);
+            
+            
+            emailInput.addEventListener('click', showTooltip);
+            emailInput.addEventListener('focus', showTooltip);
+        }
         
         
         const firstNameInput = modal.querySelector('#firstName');
@@ -708,6 +760,19 @@ function closeCustomSubscribeModal() {
             if (form) {
                 form.reset();
                 clearFormErrors();
+                
+                
+                const emailInput = modal.querySelector('#email');
+                if (emailInput) {
+                    emailInput.readOnly = false;
+                    emailInput.classList.remove('locked-email');
+                }
+                
+                
+                const tooltip = modal.querySelector('#lockedEmailTooltip');
+                if (tooltip) {
+                    tooltip.style.display = 'none';
+                }
             }
         }, 300); 
     }
@@ -859,6 +924,14 @@ async function handleSubscribeForm(event) {
             
             showSubscriptionSuccess();
             closeCustomSubscribeModal();
+            
+            
+            const email = formData.email;
+            localStorage.setItem('user', JSON.stringify({
+                subscribed: true,
+                email: email
+            }));
+            console.log('[Subscribe] Stored subscription status in localStorage for:', email);
             
             
             if (typeof updateNavbarSubscriptionButton === 'function') {
@@ -1034,14 +1107,22 @@ window.handleModalBackdropClick = handleModalBackdropClick;
                     
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input" 
-                            required 
-                            autocomplete="email"
-                        >
+                        <div class="email-input-wrapper">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                required 
+                                autocomplete="email"
+                            >
+                            <div class="locked-email-tooltip" id="lockedEmailTooltip" style="display: none;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                                </svg>
+                                <span>Email locked to your account. To change it, update your email on the account settings page.</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1073,6 +1154,19 @@ window.handleModalBackdropClick = handleModalBackdropClick;
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Limits of Inter-Hospital Model Transfer in Delirium Detection
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Summary This collaborative effort implemented a natural language processing (NLP) model across seven sites to extract delirium-related features from unstructured clinical notes. While deployment was feasible, performance varied widely due to local documentation styles, screening tools, and note structures. To address these challenges, the group created a standardized ontology, introduced temporal logic for queries, and emphasized site-specific preprocessing, making the system more portable. For pharmacy, this approach enhances identification of delirium cases, especially where medication safety is impacted by high-risk drugs.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-10-03 21:48:00 -0400 EDT'>October 3, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Limits of Inter-Hospital Model Transfer in Delirium Detection" href="http://localhost:1313/posts/delerium_abstract/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">LLMs show partial utility for DDI checks
     </h2>
   </header>
@@ -1080,7 +1174,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
     <p>Summary This systematic mapping review assesses publicly available large language model (LLM) chatbots in drug–drug interaction (DDI) checking. The results show that LLMs can recognize many common DDIs and explain them clearly but fail on uncommon interactions, inconsistently rate severity, and occasionally hallucinate contraindications. Evidence does not support autonomous clinical use, but near-term utility could be in triage screening or patient counseling with appropriate prompts and guardrails. Broader evaluation datasets, human oversight, and system-level integration are required for safe and reliable deployment.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 21:47:54 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 21:47:54 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to LLMs show partial utility for DDI checks" href="http://localhost:1313/posts/ddi_abstract/"></a>
 </article>
 
@@ -1093,7 +1187,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
     <p>Summary This scoping review analyzed 28 studies published between 2007 and 2023 on the use of rule-based clinical decision support systems (CDSS) in medicine. Findings show that these systems effectively supported safer medication use, such as adverse drug event detection and insulin titration, while also reducing workload for complex lab interpretations. Technological implementations evolved from SQL and process rules to hybrid systems that combine natural language processing and machine learning, maintaining human-readable logic. Common challenges included interoperability, terminology mapping, and clinician adoption, but key pharmacy applications included medication safety surveillance, pharmacogenomic alerting, and dose adjustment.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 21:47:54 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 21:47:54 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to Rule-Based CDS: A Literature Review of Impact and Evolution" href="http://localhost:1313/posts/ai_cds_abstract/"></a>
 </article>
 
@@ -1106,7 +1200,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
     <p>Summary This study presents REACT, a causal deep learning model designed to predict cardiac surgery-associated acute kidney injury (CSA-AKI) up to 48 hours in advance using just six routine inputs. The model was trained on multicentre time-series datasets and validated externally, including U.S. cohorts, showing earlier detection (≈16 hours before guidelines) and superior performance compared to standard deep learning approaches. REACT’s reliance on only six causal factors—age, creatinine, BUN, uric acid, LDH, and CK—makes it feasible for bedside or EHR deployment, even in resource-limited settings. While promising, its evaluation remains largely retrospective, requiring prospective validation and careful local calibration.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 21:47:47 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 21:47:47 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to Six-lab causal AI for early AKI detection post cardiac surgery" href="http://localhost:1313/posts/cardiac_surg_aki_abstract/"></a>
 </article>
 
@@ -1119,7 +1213,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
     <p>Summary A three-stage evaluation of a prolonged opioid use (POU) prediction model showed that external population shifts reduced performance and changed where the model provided clinical benefit, with retraining improving accuracy but not eliminating subgroup disparities. Decision curve analysis using standardized net benefit (SNB) revealed that different patient groups benefited at different risk thresholds, indicating a single cutoff could produce unequal care. The model’s clinical utility varied meaningfully by subgroup—especially in opioid-exposed and high-comorbidity patients—so health systems should locally validate and recalibrate thresholds before EHR implementation. Fairness assessment should move beyond AUROC parity to include calibration and SNB analyses across demographics and risk groups.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 21:47:38 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 21:47:38 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to External Validation and Bias in Opioid Risk Prediction Models" href="http://localhost:1313/posts/opioid_abstract/"></a>
 </article>
 
@@ -1132,7 +1226,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
     <p>Summary In a retrospective study of immunocompromised infants under 24 months receiving oral voriconazole, researchers integrated population pharmacokinetic (PopPK) modeling with machine learning (ML) to predict steady-state trough concentrations. The XGBoost model, incorporating PopPK-derived clearance and volume alongside clinical variables, demonstrated strong predictive performance internally and in external validation. Clearance, weight, and select labs were the strongest drivers of model accuracy, suggesting the potential to guide initial dosing before therapeutic drug monitoring (TDM) results are available. Despite limitations such as single-center design and lack of CYP2C19 genotyping, findings support further prospective evaluation for clinical decision support.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 21:47:35 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 21:47:35 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to Machine learning to guide infant voriconazole dosing" href="http://localhost:1313/posts/voriconazole_abstract/"></a>
 </article>
 
@@ -1146,7 +1240,7 @@ window.handleModalBackdropClick = handleModalBackdropClick;
 Background &amp; Rationale TDM Challenge: Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 11:38:37 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 11:38:37 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to Deep Learning Model for the Prediction of Vancomycin Trough Concentration" href="http://localhost:1313/posts/vancomycin_ai_journal_club/"></a>
 </article>
 
@@ -1160,7 +1254,7 @@ Background &amp; Rationale TDM Challenge: Only ~34% of critically ill patients r
 Background &amp; Rationale Why it matters: AI-driven decision support in medication management and clinical care must be explainable to earn clinician trust and meet safety/regulatory requirements. Pharmacy informatics teams integrating AI (e.g., into Epic EHR alerts or dosing tools) face a critical need for transparent algorithms so pharmacists understand and validate AI recommendations before acting. Multiple eXplainable AI (XAI) methods (LIME, SHAP, Anchors, rule-based models, etc.) exist, but it’s unclear which is optimal for a given clinical task. High-stakes environments like EHR medication ordering and CDS demand rigorous evaluation of explainability – poor explanations can erode user confidence or hide biases, whereas robust explanations can improve acceptance and oversight of AI-driven alerts. This study addresses the gap by proposing a framework to quantitatively compare XAI methods on healthcare data, guiding informatics teams in choosing the right approach for safe, transparent AI deployment.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 11:34:58 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 11:34:58 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to Evaluation of Explainable AI Frameworks in Healthcare" href="http://localhost:1313/posts/explainability_journal_club/"></a>
 </article>
 
@@ -1174,21 +1268,8 @@ Background &amp; Rationale Why it matters: AI-driven decision support in medicat
 Background &amp; Rationale Medication errors are a major patient safety concern, often arising from complex regimens and cognitive overload. Traditional rule-based alerts (e.g., drug-interaction pop-ups in EHRs) have high false-alert rates and limited context awareness, leading to alert fatigue.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-04 09:41:46 -0400 EDT'>October 4, 2025</span></footer>
+  <footer class="entry-footer"><span title='2025-10-03 09:41:46 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to LLM-Based Clinical Decision Support for Medication Safety" href="http://localhost:1313/posts/cds_journal_club/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Limits of Inter-Hospital Model Transfer in Delirium Detection
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Summary This collaborative effort implemented a natural language processing (NLP) model across seven sites to extract delirium-related features from unstructured clinical notes. While deployment was feasible, performance varied widely due to local documentation styles, screening tools, and note structures. To address these challenges, the group created a standardized ontology, introduced temporal logic for queries, and emphasized site-specific preprocessing, making the system more portable. For pharmacy, this approach enhances identification of delirium cases, especially where medication safety is impacted by high-risk drugs.
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2025-10-02 21:48:00 -0400 EDT'>October 2, 2025</span></footer>
-  <a class="entry-link" aria-label="post link to Limits of Inter-Hospital Model Transfer in Delirium Detection" href="http://localhost:1313/posts/delerium_abstract/"></a>
 </article>
     </main>
     

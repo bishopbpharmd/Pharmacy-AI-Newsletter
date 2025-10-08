@@ -1,14 +1,57 @@
 {{- define "main" }}
 
 <nav class="post-navigation">
-  <a href="{{ .Site.BaseURL }}" class="back-to-posts">
+  <a href="{{ .Site.BaseURL }}" class="back-to-posts" id="backButton">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"></line>
       <polyline points="12 19 5 12 12 5"></polyline>
     </svg>
-    <span>Back to Posts</span>
+    <span id="backButtonText">Back to Posts</span>
   </a>
 </nav>
+
+<script>
+// Smart back button - returns to the page user came from
+(function() {
+  const backButton = document.getElementById('backButton');
+  const backButtonText = document.getElementById('backButtonText');
+  const baseURL = '{{ .Site.BaseURL }}';
+  
+  if (backButton) {
+    // Check if there's a referrer from the same site
+    const referrer = document.referrer;
+    
+    if (referrer && referrer.startsWith(baseURL)) {
+      // Extract path from referrer
+      const referrerPath = referrer.replace(baseURL, '/');
+      
+      // Check if user came from archives
+      if (referrerPath.includes('/archives')) {
+        backButton.href = baseURL + 'archives/';
+        backButtonText.textContent = 'Back to Archive';
+        console.log('[Back Button] Set to archive page');
+      }
+      // Check if user came from saved
+      else if (referrerPath.includes('/saved')) {
+        backButton.href = baseURL + 'saved/';
+        backButtonText.textContent = 'Back to Saved';
+        console.log('[Back Button] Set to saved page');
+      }
+      // Otherwise go back to home (default)
+      else {
+        backButton.href = baseURL;
+        backButtonText.textContent = 'Back to Posts';
+        console.log('[Back Button] Set to home page');
+      }
+    } else {
+      // No referrer or external referrer - default to home
+      backButton.href = baseURL;
+      backButtonText.textContent = 'Back to Posts';
+      console.log('[Back Button] No valid referrer, set to home page');
+    }
+  }
+})();
+</script>
 
 <article class="post-single">
   <header class="post-header">

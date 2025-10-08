@@ -1,5 +1,6 @@
 +++
-date = '2025-10-04T11:34:58-04:00'
+date = '2025-10-03T11:34:58-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false
 title = 'Evaluation of Explainable AI Frameworks in Healthcare'
 description = 'Evaluation of multiple explainable AI methods (local and global) in healthcare using the XAI-Eval framework to assess fidelity, stability, complexity, and trustworthiness of clinical predictions.'

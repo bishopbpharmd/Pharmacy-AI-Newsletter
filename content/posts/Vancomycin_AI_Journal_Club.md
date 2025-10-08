@@ -1,5 +1,6 @@
 +++
-date = '2025-10-04T11:38:37-04:00'
+date = '2025-10-03T11:38:37-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false
 title = 'Deep Learning Model for the Prediction of Vancomycin Trough Concentration'
 description = 'Evaluation of Nephrocast-V, a sequential deep learning model predicting vancomycin trough concentrations in ICU patients, benchmarked against pharmacist-driven Bayesian dosing.'

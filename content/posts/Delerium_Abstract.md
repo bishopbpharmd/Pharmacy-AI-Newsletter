@@ -1,5 +1,6 @@
 +++
-date = '2025-10-02T21:48:00-04:00'
+date = '2025-10-03T21:48:00-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false
 title = 'Limits of Inter-Hospital Model Transfer in Delirium Detection'
 description = 'A multi-institution study deployed an open-source NLP model to detect delirium features from EHR notes, achieving feasible but variable performance across seven health systems. The project established a shared ontology, temporal conventions, and site-specific preprocessing to improve portability and consistency.'

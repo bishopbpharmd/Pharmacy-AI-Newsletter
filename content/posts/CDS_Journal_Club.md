@@ -1,5 +1,6 @@
 +++
-date = '2025-10-04T09:41:46-04:00'
+date = '2025-10-03T09:41:46-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false
 title = 'LLM-Based Clinical Decision Support for Medication Safety'
 description = 'A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.'

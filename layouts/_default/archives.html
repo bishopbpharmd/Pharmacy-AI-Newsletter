@@ -1,0 +1,271 @@
+{{- define "main" }}
+
+{{/* Collect all unique newsletter editions and sort them (newest first) */}}
+{{ $editions := slice }}
+{{ range .Site.RegularPages }}
+  {{ if .Params.newsletter_edition }}
+    {{ $editions = $editions | append .Params.newsletter_edition }}
+  {{ end }}
+{{ end }}
+{{ $editions = $editions | uniq }}
+
+{{/* Archive Navigation Bar */}}
+<nav class="archive-navigation">
+  <a href="{{ .Site.BaseURL }}" class="back-to-posts">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>Back to Posts</span>
+  </a>
+  
+  {{ if gt (len $editions) 0 }}
+  <div class="edition-filter-wrapper">
+    <label for="editionSelect" class="sr-only">Filter by Newsletter Edition</label>
+    <select id="editionSelect" class="edition-select">
+      <option value="all">All Editions</option>
+      {{ range $editions }}
+      <option value="{{ . }}">{{ dateFormat "Jan 2, 2006" (time .) }}</option>
+      {{ end }}
+    </select>
+  </div>
+  {{ end }}
+</nav>
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description }}
+  </div>
+  {{- end }}
+</header>
+
+{{/* Get all regular pages (posts) */}}
+{{ $allPosts := where .Site.RegularPages "Section" "posts" }}
+
+{{/* Group by newsletter edition */}}
+<div class="archive-container" id="archiveContainer">
+  {{ range $edition := $editions }}
+    {{ $editionPosts := where $allPosts ".Params.newsletter_edition" $edition }}
+    {{ if $editionPosts }}
+    <div class="edition-group" data-edition="{{ $edition }}">
+      <div class="edition-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 15H5V5h2v3h10V5h2v13z"/>
+          </svg>
+          Newsletter Edition: {{ dateFormat "January 2, 2006" (time $edition) }}
+        </h2>
+        <span class="edition-count">{{ len $editionPosts }} articles</span>
+      </div>
+      
+      {{/* Display posts as tiles (major format) */}}
+      <div class="archive-posts-grid">
+        {{ range $editionPosts }}
+        <div class="post-tile">
+          <a href="{{ .RelPermalink }}">
+            <div class="tile-content">
+              <h2>{{ .Title }}</h2>
+              {{ if .Params.tags }}
+              <div class="tile-tags">
+                {{ range .Params.tags }}
+                <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+                {{ end }}
+              </div>
+              {{ end }}
+              {{ if .Params.journal }}
+              <div class="tile-journal">Journal: {{ .Params.journal }}</div>
+              {{ end }}
+              <p>{{ if .Params.description }}{{ .Params.description }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
+              <div class="tile-meta">
+                <time>{{ .Date.Format "January 2, 2006" }}</time>
+              </div>
+            </div>
+          </a>
+          <div class="tile-actions-wrapper">
+            {{ if eq .Params.type "major" }}
+            <span class="journal-club-badge" title="Full Journal Club Analysis">Journal Club</span>
+            {{ end }}
+            {{ partial "read-later-button.html" (dict "articleId" .File.UniqueID "initialSaved" false) }}
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+  {{ end }}
+</div>
+
+<style>
+/* Archive Navigation Bar */
+.archive-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+/* Screen reader only label */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Edition Filter Wrapper */
+.edition-filter-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Edition Select Dropdown */
+.edition-select {
+  padding: 0.5rem 0.8rem;
+  background: var(--theme);
+  color: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-width: 180px;
+}
+
+.edition-select:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.edition-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+/* Edition Group Styling */
+.edition-group {
+  margin-bottom: 3rem;
+  transition: opacity 0.3s ease;
+}
+
+.edition-group.hidden {
+  display: none;
+}
+
+.edition-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--theme);
+  border: 2px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.edition-header:hover {
+  border-left-width: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.edition-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--content);
+}
+
+.edition-header svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.edition-count {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--secondary);
+  background: var(--code-bg);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* Archive Posts Grid - uses same styling as index page major tiles */
+.archive-posts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .archive-navigation {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .edition-filter-wrapper {
+    width: 100%;
+  }
+  
+  .edition-select {
+    width: 100%;
+  }
+  
+  .edition-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+</style>
+
+<script>
+// Newsletter edition filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const editionSelect = document.getElementById('editionSelect');
+  const editionGroups = document.querySelectorAll('.edition-group');
+  
+  if (editionSelect && editionGroups.length > 0) {
+    editionSelect.addEventListener('change', function() {
+      const selectedEdition = this.value;
+      
+      editionGroups.forEach(group => {
+        if (selectedEdition === 'all') {
+          group.classList.remove('hidden');
+        } else {
+          const groupEdition = group.dataset.edition;
+          if (groupEdition === selectedEdition) {
+            group.classList.remove('hidden');
+          } else {
+            group.classList.add('hidden');
+          }
+        }
+      });
+      
+      console.log('[Archive] Filtered to edition:', selectedEdition);
+    });
+  }
+});
+</script>
+
+{{- end }}{{/* end main */}}
+

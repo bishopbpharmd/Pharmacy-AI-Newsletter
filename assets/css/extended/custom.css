@@ -1116,16 +1116,22 @@ body:not([data-theme="dark"]) .form-input:focus {
    MOBILE AUTH BUTTONS
    ============================================ */
 
-/* Mobile auth links - inherit mobile-menu-item styling */
-.mobile-auth-link {
-  /* Remove all custom styling - let mobile-menu-item handle it */
-  all: unset;
-}
-
+/* Mobile auth logout container */
 .mobile-auth-logout-container {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+/* Ensure auth links inherit full mobile-menu-item styling */
+.mobile-auth-logout-container .mobile-menu-item {
+  width: 100%;
+}
+
+/* Hide subscribe button class (works with media queries) */
+.hide-subscribe {
+  display: none !important;
 }
 
 /* ============================================
@@ -1923,9 +1929,55 @@ body:not([data-theme="dark"]) .form-input:focus {
   flex: 1;
 }
 
+/* Tile Actions Wrapper - contains journal club badge and save button */
+/* Positioned to align with .tile-meta date text */
+.tile-actions-wrapper {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 20;
+  transform: translateY(3px);
+}
+
+/* Journal Club Badge */
+.journal-club-badge {
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+  background: transparent;
+  border: none;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.post-tile:hover .journal-club-badge {
+  opacity: 1;
+}
+
+/* Override bookmark position when inside wrapper */
+.tile-actions-wrapper .read-later-bookmark {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  height: auto;
+  width: auto;
+  padding: 4px;
+  margin: -4px;
+}
 
 .tile-content {
   padding: 1.5rem;
+  padding-bottom: 0;
 }
 
 .tile-content h2 {
@@ -2013,10 +2065,23 @@ body:not([data-theme="dark"]) .form-input:focus {
   color: var(--tertiary);
   border-top: 1px solid var(--border);
   padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
 }
 
 .tile-meta time {
   font-style: italic;
+  flex-shrink: 0;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Dark mode adjustments */
@@ -2035,6 +2100,7 @@ body:not([data-theme="dark"]) .form-input:focus {
   flex: 1;
   min-height: 0;
   padding: 1rem;
+  padding-bottom: 0;
   height: 100%;
 }
 
@@ -2056,8 +2122,31 @@ body:not([data-theme="dark"]) .form-input:focus {
 
 .post-tile.post-tile-minor .tile-meta {
   font-size: 0.75rem;
-  padding-top: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.9rem;
   margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.post-tile-minor .tile-meta time {
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Minor tiles - bookmark button positioned to align with date */
+.post-tile-minor .read-later-bookmark {
+  position: absolute;
+  bottom: 0.55rem;
+  right: 1rem;
+  height: auto;
+  width: auto;
+  padding: 4px;
+  margin: 0;
+  transform: translateY(2px);
 }
 
 /* Responsive adjustments */
@@ -2084,10 +2173,33 @@ body:not([data-theme="dark"]) .form-input:focus {
   
   .tile-content {
     padding: 1rem;
+    padding-bottom: 0;
   }
   
   .tile-content h2 {
     font-size: 1.1rem;
+  }
+  
+  /* Larger hit box for bookmark buttons on mobile */
+  .read-later-bookmark {
+    padding: 8px !important;
+  }
+  
+  /* Major tiles - compensate for larger padding to maintain alignment */
+  .tile-actions-wrapper .read-later-bookmark {
+    margin: -8px;
+    padding: 8px !important;
+  }
+  
+  /* Major tiles maintain desktop positioning on mobile */
+  .tile-actions-wrapper {
+    /* Inherits desktop values: bottom: 0.75rem, transform: translateY(3px) */
+  }
+  
+  /* Minor tiles - adjust for the 0.9rem padding-bottom */
+  .post-tile-minor .read-later-bookmark {
+    bottom: 0.5rem !important;
+    transform: translateY(4px) !important;
   }
 }
 
@@ -2111,6 +2223,18 @@ body:not([data-theme="dark"]) .form-input:focus {
   margin-bottom: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative; /* Enable absolute positioning for bookmark button */
+}
+
+/* Single post page - bookmark button positioning (not affected by tile overrides) */
+.post-header .read-later-bookmark {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  height: 32px;
+  width: 32px;
+  padding: 4px;
+  margin: 0;
+  transform: none !important;
 }
 
 /* Metadata card styling */
@@ -2412,5 +2536,68 @@ body:not([data-theme="dark"]) .form-input:focus {
   
   .journal-club-content hr {
     border-top: 1px solid #000;
+  }
+}
+
+/* ============================================
+   LOCKED EMAIL FIELD STYLING (Subscribe Modal)
+   ============================================ */
+
+.email-input-wrapper {
+  position: relative;
+}
+
+.locked-email {
+  background: var(--code-bg) !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+}
+
+/* Light mode - slightly darker background */
+@media (prefers-color-scheme: light) {
+  .locked-email {
+    background: #f3f4f6 !important;
+  }
+}
+
+/* Dark mode - slightly lighter background */
+@media (prefers-color-scheme: dark) {
+  .locked-email {
+    background: #374151 !important;
+  }
+}
+
+.locked-email-tooltip {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.locked-email-tooltip svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.locked-email-tooltip span {
+  flex: 1;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

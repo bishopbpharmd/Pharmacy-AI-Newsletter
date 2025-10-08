@@ -36,8 +36,21 @@
 
   <!-- Posts Section -->
   <div class="posts-container">
+    {{/* Find the latest newsletter edition date across all posts */}}
+    {{ $latestEdition := "" }}
+    {{ range .Site.RegularPages }}
+      {{ if .Params.newsletter_edition }}
+        {{ if or (eq $latestEdition "") (gt .Params.newsletter_edition $latestEdition) }}
+          {{ $latestEdition = .Params.newsletter_edition }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    
+    {{/* Filter posts to only those from the latest newsletter edition */}}
+    {{ $latestPosts := where .Site.RegularPages ".Params.newsletter_edition" $latestEdition }}
+    
     <!-- Major Articles -->
-    {{ $majorPosts := where .Site.RegularPages ".Params.type" "major" }}
+    {{ $majorPosts := where $latestPosts ".Params.type" "major" }}
     {{ if $majorPosts }}
     <div class="major-posts">
       {{ range $majorPosts }}
@@ -61,14 +74,19 @@
             </div>
           </div>
         </a>
-        {{ partial "read-later-button.html" (dict "articleId" .File.UniqueID "initialSaved" false) }}
+        <div class="tile-actions-wrapper">
+          {{ if eq .Params.type "major" }}
+          <span class="journal-club-badge" title="Full Journal Club Analysis">Journal Club</span>
+          {{ end }}
+          {{ partial "read-later-button.html" (dict "articleId" .File.UniqueID "initialSaved" false) }}
+        </div>
       </div>
       {{ end }}
     </div>
     {{ end }}
 
     <!-- Minor Articles -->
-    {{ $minorPosts := where .Site.RegularPages ".Params.type" "minor" }}
+    {{ $minorPosts := where $latestPosts ".Params.type" "minor" }}
     {{ if $minorPosts }}
     <div class="minor-posts">
       {{ range $minorPosts }}

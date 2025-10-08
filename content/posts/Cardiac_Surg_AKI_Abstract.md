@@ -1,5 +1,6 @@
 +++
-date = '2025-10-04T21:47:47-04:00'
+date = '2025-10-03T21:47:47-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false
 title = 'Six-lab causal AI for early AKI detection post cardiac surgery'
 description = 'A causal AI model (REACT) predicts cardiac surgery-associated acute kidney injury up to 48 hours earlier than guidelines using six routine lab values.'

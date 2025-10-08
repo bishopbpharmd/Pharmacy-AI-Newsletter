@@ -1,5 +1,6 @@
 +++  
-date = '2025-10-04T21:47:54-04:00'  
+date = '2025-10-03T21:47:54-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false  
 title = 'Rule-Based CDS: A Literature Review of Impact and Evolution'  
 description = 'This scoping review of 28 studies (2007–2023) maps how rule-based CDSS are used across medicine, highlighting both measurable gains and persistent barriers.'  

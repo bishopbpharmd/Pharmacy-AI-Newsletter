@@ -1,5 +1,6 @@
 +++  
-date = '2025-10-04T21:47:38-04:00'  
+date = '2025-10-03T21:47:38-04:00'
+newsletter_edition = '2025-10-03T07:00:00-04:00'
 draft = false  
 title = 'External Validation and Bias in Opioid Risk Prediction Models'  
 description = 'A study evaluating an opioid risk prediction model found that external population shifts reduced performance and fairness, requiring local recalibration and subgroup-specific threshold tuning for equitable clinical use.'  
