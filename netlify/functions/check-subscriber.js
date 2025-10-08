@@ -35,33 +35,21 @@ export async function handler(event) {
       
       // Check if we found any contacts
       if (data.data && data.data.length > 0) {
-        const contact = data.data[0]; // Get the first (and likely only) contact
-        console.log('Netlify function - Found contact:', contact.email_address);
-        console.log('Netlify function - Contact status:', contact.status);
+        // Find the contact that matches the requested email (case-insensitive)
+        const contact = data.data.find(c => c.email_address.toLowerCase() === email.toLowerCase());
         
-        // Check for significant email mismatch (different domains/users)
-        const requestedDomain = email.split('@')[1]?.toLowerCase();
-        const returnedDomain = contact.email_address.split('@')[1]?.toLowerCase();
-        const requestedUser = email.split('@')[0]?.toLowerCase();
-        const returnedUser = contact.email_address.split('@')[0]?.toLowerCase();
-        
-        if (requestedDomain !== returnedDomain || requestedUser !== returnedUser) {
-          console.warn('Netlify function - SIGNIFICANT email mismatch detected!');
-          console.warn('  Requested:', email);
-          console.warn('  Returned:', contact.email_address);
-          console.warn('  Different user/domain - treating as not found');
-          
+        if (!contact) {
+          console.log('Netlify function - No matching contact found in results');
           return { 
             statusCode: 200, 
             body: JSON.stringify({ exists: false }) 
           };
-        } else if (contact.email_address.toLowerCase() !== email.toLowerCase()) {
-          console.warn('Netlify function - Minor email case difference detected:');
-          console.warn('  Requested:', email);
-          console.warn('  Returned:', contact.email_address);
-          console.warn('  Same user/domain - using returned email');
         }
         
+        console.log('Netlify function - Found matching contact:', contact.email_address);
+        console.log('Netlify function - Contact status:', contact.status);
+        
+        // Return the subscription data
         return {
           statusCode: 200,
           body: JSON.stringify({ 
