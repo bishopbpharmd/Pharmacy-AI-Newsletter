@@ -39,9 +39,8 @@ async function verifyAuth0Token(authHeader) {
 
 export async function handler(event) {
   const method = event.httpMethod;
-  const { articleId } = JSON.parse(event.body || '{}');
   
-  console.log(`[saved-articles] ${method} request for articleId: ${articleId}`);
+  console.log(`[saved-articles] ${method} request received`);
 
   // Verify user authentication
   const userId = await verifyAuth0Token(event.headers.authorization);
@@ -55,7 +54,38 @@ export async function handler(event) {
   console.log(`[saved-articles] Authenticated user: ${userId}`);
 
   try {
-    if (method === 'POST') {
+    if (method === 'GET') {
+      // Get all saved articles for the user
+      const { data, error } = await supabase
+        .from('saved_articles')
+        .select('article_id, saved_at')
+        .eq('user_id', userId)
+        .order('saved_at', { ascending: false });
+
+      if (error) {
+        console.error('[saved-articles] GET error:', error);
+        return {
+          statusCode: 500,
+          body: JSON.stringify({ error: 'Failed to fetch saved articles', details: error.message })
+        };
+      }
+
+      // Handle null or empty data
+      const savedArticles = data || [];
+      console.log(`[saved-articles] Found ${savedArticles.length} saved articles for user ${userId}`);
+      
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ 
+          success: true, 
+          articleIds: savedArticles.map(item => item.article_id),
+          articles: savedArticles
+        })
+      };
+
+    } else if (method === 'POST') {
+      const { articleId } = JSON.parse(event.body || '{}');
+      console.log(`[saved-articles] POST request for articleId: ${articleId}`);
       // Save article - insert or upsert
       const { data, error } = await supabase
         .from('saved_articles')
@@ -82,6 +112,9 @@ export async function handler(event) {
       };
 
     } else if (method === 'DELETE') {
+      const { articleId } = JSON.parse(event.body || '{}');
+      console.log(`[saved-articles] DELETE request for articleId: ${articleId}`);
+      
       // Unsave article - remove from table
       const { error } = await supabase
         .from('saved_articles')

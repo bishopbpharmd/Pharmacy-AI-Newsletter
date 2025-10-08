@@ -75,7 +75,10 @@ async function waitForAuthAndUpdateVisibility() {
   while (elapsed < maxWaitTime) {
     if (window.auth && typeof window.auth.isAuthenticated === 'function' && window.auth0Client) {
       console.log('[Read Later] Auth system is ready (including auth0Client), updating visibility...');
-      updateButtonVisibility();
+      await updateButtonVisibility();
+      
+      // Fetch saved articles and update button states
+      await loadSavedArticlesAndUpdateButtons();
       return;
     }
     
@@ -94,6 +97,62 @@ async function waitForAuthAndUpdateVisibility() {
   readLaterButtons.forEach(button => {
     button.style.display = 'none';
   });
+}
+
+/**
+ * Load saved articles from server and update all button states
+ */
+async function loadSavedArticlesAndUpdateButtons() {
+  console.log('[Read Later] Loading saved articles from server...');
+  
+  // Check if readLaterApi is available
+  if (!window.readLaterApi || !window.readLaterApi.getSavedArticles) {
+    console.warn('[Read Later] readLaterApi.getSavedArticles not available');
+    return;
+  }
+  
+  // Check if user is authenticated
+  const isAuthenticated = window.auth ? window.auth.isAuthenticated() : false;
+  if (!isAuthenticated) {
+    console.log('[Read Later] User not authenticated, skipping saved articles fetch');
+    return;
+  }
+  
+  try {
+    const savedArticleIds = await window.readLaterApi.getSavedArticles();
+    
+    if (savedArticleIds === null) {
+      console.log('[Read Later] No saved articles returned (API error or not authenticated)');
+      return;
+    }
+    
+    // Handle empty array (user has no saved articles)
+    if (savedArticleIds.length === 0) {
+      console.log('[Read Later] User has no saved articles');
+      return; // All buttons remain in unsaved state
+    }
+    
+    console.log(`[Read Later] Loaded ${savedArticleIds.length} saved articles:`, savedArticleIds);
+    
+    // Update all buttons on the page
+    const readLaterButtons = document.querySelectorAll('.read-later-bookmark');
+    let updatedCount = 0;
+    
+    readLaterButtons.forEach(button => {
+      const articleId = button.dataset.articleId;
+      const isSaved = savedArticleIds.includes(articleId);
+      
+      if (isSaved) {
+        updateButtonState(button, true);
+        updatedCount++;
+      }
+    });
+    
+    console.log(`[Read Later] Updated ${updatedCount} buttons to saved state`);
+    
+  } catch (error) {
+    console.error('[Read Later] Error loading saved articles:', error);
+  }
 }
 
 /**

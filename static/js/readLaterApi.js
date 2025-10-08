@@ -133,25 +133,38 @@ async function unsaveArticle(articleId) {
 }
 
 /**
- * Check if an article is saved by the current user
- * @param {string} articleId - The unique ID of the article
- * @returns {Promise<boolean>} - True if saved, false if not saved or error
+ * Get all saved articles for the current user
+ * @returns {Promise<string[]|null>} - Array of article IDs or null if failed
  */
-async function isArticleSaved(articleId) {
+async function getSavedArticles() {
   try {
     const token = await getAuthToken();
     if (!token) {
-      return false; // Not authenticated, so not saved
+      console.log('[readLaterApi] No token available for getSavedArticles');
+      return null;
     }
 
-    // This would require a separate GET endpoint in the Netlify function
-    // For now, we'll return false and let the UI handle initial state
-    console.log(`[readLaterApi] Checking if article ${articleId} is saved (not implemented yet)`);
-    return false;
+    console.log('[readLaterApi] Fetching all saved articles...');
+    
+    const response = await fetch('/.netlify/functions/saved-articles', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+      throw new Error(errorData.error || `HTTP ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log(`[readLaterApi] Fetched ${result.articleIds?.length || 0} saved articles`);
+    return result.articleIds || [];
 
   } catch (error) {
-    console.error(`[readLaterApi] Failed to check if article ${articleId} is saved:`, error);
-    return false;
+    console.error('[readLaterApi] Failed to fetch saved articles:', error);
+    return null;
   }
 }
 
@@ -159,7 +172,7 @@ async function isArticleSaved(articleId) {
 window.readLaterApi = {
   saveArticle,
   unsaveArticle,
-  isArticleSaved
+  getSavedArticles
 };
 
 console.log('[readLaterApi] API helper loaded');
