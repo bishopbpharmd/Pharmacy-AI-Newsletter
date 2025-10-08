@@ -1,0 +1,549 @@
+{{ define "main" }}
+<div class="saved-page-content">
+  <!-- Back to Posts Button -->
+  <a href="{{ .Site.BaseURL }}" class="back-to-posts-btn">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Posts
+  </a>
+
+  <!-- Page Header -->
+  <div class="saved-header">
+    <h1>{{ .Title }}</h1>
+    <p class="saved-subtitle">Articles you've bookmarked for later reading</p>
+  </div>
+
+  <!-- Loading State -->
+  <div id="loading" class="loading-state">
+    <p>Loading your saved articles...</p>
+  </div>
+
+  <!-- Empty State (hidden by default) -->
+  <div id="emptyState" class="empty-state" style="display: none;">
+    <div class="empty-state-icon">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+    </div>
+    <h2>No saved articles yet</h2>
+    <p>Start bookmarking articles to build your reading list.</p>
+    <a href="{{ .Site.BaseURL }}" class="back-to-home-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Articles
+    </a>
+  </div>
+
+  <!-- Error State (hidden by default) -->
+  <div id="errorState" class="error-state" style="display: none;">
+    <div class="error-state-icon">❌</div>
+    <h2>Error Loading Saved Articles</h2>
+    <p id="errorMessage">Something went wrong. Please try again.</p>
+    <a href="{{ .Site.BaseURL }}" class="back-to-home-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Articles
+    </a>
+  </div>
+
+  <!-- Saved Articles Container -->
+  <div id="savedArticlesContainer" class="saved-articles-container" style="display: none;">
+    <!-- Articles will be dynamically inserted here -->
+  </div>
+</div>
+
+<style>
+/* Saved Page Styles */
+.saved-page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Back to Posts Button - matching single.html style */
+.back-to-posts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.back-to-posts-btn:hover {
+  background: var(--secondary);
+}
+
+.back-to-posts-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.back-to-posts-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+.saved-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.saved-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--content);
+}
+
+.saved-subtitle {
+  font-size: 1.1rem;
+  color: var(--secondary);
+}
+
+.loading-state,
+.empty-state,
+.error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--secondary);
+}
+
+.empty-state-icon,
+.error-state-icon {
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.empty-state h2,
+.error-state h2 {
+  font-size: 1.5rem;
+  color: var(--content);
+  margin-bottom: 0.5rem;
+}
+
+.back-to-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.back-to-home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-home-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.back-to-home-btn:hover svg {
+  transform: translateX(-4px);
+}
+
+.saved-articles-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Reuse major post tile styles */
+.saved-articles-container .post-tile {
+  display: flex;
+  flex-direction: column;
+  background: var(--theme);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  overflow: visible;
+  position: relative;
+}
+
+.saved-articles-container .post-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.saved-articles-container .post-tile a {
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.saved-articles-container .tile-content h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: var(--content);
+}
+
+.saved-articles-container .tile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.saved-articles-container .tile-journal {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.saved-articles-container .tile-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+}
+
+.saved-articles-container .tile-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--secondary);
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  margin-top: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .saved-header h1 {
+    font-size: 2rem;
+  }
+  
+  .saved-page-content {
+    padding: 1rem;
+  }
+}
+</style>
+
+<script>
+// Wait for DOM and Auth0 to be ready
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('[Saved Page] Initializing...');
+  
+  const loading = document.getElementById('loading');
+  const emptyState = document.getElementById('emptyState');
+  const errorState = document.getElementById('errorState');
+  const errorMessage = document.getElementById('errorMessage');
+  const container = document.getElementById('savedArticlesContainer');
+  
+  // Wait for Auth0 to be ready
+  await waitForAuth0();
+  
+  // Check if user is authenticated
+  const isAuthenticated = window.auth0Client ? await window.auth0Client.isAuthenticated() : false;
+  
+  if (!isAuthenticated) {
+    console.log('[Saved Page] User not authenticated, redirecting to home');
+    loading.style.display = 'none';
+    errorState.style.display = 'block';
+    errorMessage.textContent = 'Please log in to view your saved articles.';
+    return;
+  }
+  
+  try {
+    // Fetch saved article IDs
+    if (!window.readLaterApi || !window.readLaterApi.getSavedArticles) {
+      throw new Error('Read Later API not available');
+    }
+    
+    const savedArticleIds = await window.readLaterApi.getSavedArticles();
+    console.log('[Saved Page] Fetched saved article IDs:', savedArticleIds);
+    
+    if (!savedArticleIds || savedArticleIds.length === 0) {
+      // Show empty state
+      loading.style.display = 'none';
+      emptyState.style.display = 'block';
+      return;
+    }
+    
+    // Fetch all posts data from Hugo
+    const allPosts = {{ .Site.RegularPages | jsonify }};
+    console.log('[Saved Page] Total posts available:', allPosts.length);
+    
+    // Filter posts that match saved article IDs
+    const savedPosts = allPosts.filter(post => {
+      const postId = post.File?.UniqueID;
+      return postId && savedArticleIds.includes(postId);
+    });
+    
+    console.log('[Saved Page] Matched saved posts:', savedPosts.length);
+    
+    if (savedPosts.length === 0) {
+      loading.style.display = 'none';
+      emptyState.style.display = 'block';
+      return;
+    }
+    
+    // Render saved posts
+    renderSavedPosts(savedPosts);
+    
+    loading.style.display = 'none';
+    container.style.display = 'grid';
+    
+    // Attach event listeners to dynamically created buttons
+    attachButtonEventListeners();
+    
+  } catch (error) {
+    console.error('[Saved Page] Error loading saved articles:', error);
+    loading.style.display = 'none';
+    errorState.style.display = 'block';
+    errorMessage.textContent = error.message || 'Failed to load saved articles';
+  }
+});
+
+/**
+ * Wait for Auth0 to be ready
+ */
+async function waitForAuth0() {
+  const maxWait = 5000;
+  const checkInterval = 100;
+  let elapsed = 0;
+  
+  while (elapsed < maxWait) {
+    if (window.auth0Client && window.readLaterApi) {
+      console.log('[Saved Page] Auth0 and API ready');
+      return;
+    }
+    await new Promise(resolve => setTimeout(resolve, checkInterval));
+    elapsed += checkInterval;
+  }
+  
+  console.warn('[Saved Page] Timeout waiting for Auth0');
+}
+
+/**
+ * Render saved posts as tiles
+ */
+function renderSavedPosts(posts) {
+  const container = document.getElementById('savedArticlesContainer');
+  
+  posts.forEach(post => {
+    const tile = createPostTile(post);
+    container.appendChild(tile);
+  });
+}
+
+/**
+ * Attach event listeners to save buttons
+ * Reuses the same logic from readLaterButtons.js
+ */
+function attachButtonEventListeners() {
+  const readLaterButtons = document.querySelectorAll('.read-later-bookmark');
+  console.log(`[Saved Page] Attaching listeners to ${readLaterButtons.length} buttons`);
+  
+  readLaterButtons.forEach((button) => {
+    button.addEventListener('click', async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const articleId = this.dataset.articleId;
+      const currentSaved = this.dataset.saved === 'true';
+      const newSaved = !currentSaved;
+      
+      console.log(`[Saved Page] Toggling ${articleId} from ${currentSaved} to ${newSaved}`);
+      
+      // Store original state for potential rollback
+      const originalState = {
+        saved: currentSaved,
+        innerHTML: this.innerHTML,
+        classList: this.classList.toString()
+      };
+      
+      // Optimistic update - immediately update UI
+      updateButtonState(this, newSaved);
+      
+      // Call API
+      try {
+        if (!window.readLaterApi) {
+          throw new Error('Read Later API not available');
+        }
+        
+        let success;
+        if (newSaved) {
+          success = await window.readLaterApi.saveArticle(articleId);
+        } else {
+          success = await window.readLaterApi.unsaveArticle(articleId);
+          
+          // If unsaving on the saved page, remove the tile
+          if (success) {
+            const tile = this.closest('.post-tile');
+            if (tile) {
+              tile.style.opacity = '0';
+              tile.style.transform = 'scale(0.9)';
+              setTimeout(() => {
+                tile.remove();
+                
+                // Check if no more saved articles
+                const remaining = document.querySelectorAll('.post-tile').length;
+                if (remaining === 0) {
+                  document.getElementById('savedArticlesContainer').style.display = 'none';
+                  document.getElementById('emptyState').style.display = 'block';
+                }
+              }, 300);
+            }
+          }
+        }
+        
+        if (!success) {
+          throw new Error('API call failed');
+        }
+        
+      } catch (error) {
+        console.error(`[Saved Page] Failed to update article:`, error);
+        // Rollback
+        this.dataset.saved = originalState.saved.toString();
+        this.setAttribute('aria-pressed', originalState.saved.toString());
+        this.innerHTML = originalState.innerHTML;
+        this.className = originalState.classList;
+      }
+    });
+  });
+}
+
+/**
+ * Update button visual state
+ */
+function updateButtonState(button, isSaved) {
+  button.dataset.saved = isSaved.toString();
+  button.setAttribute('aria-pressed', isSaved.toString());
+  button.setAttribute('aria-label', isSaved ? 'Remove from reading list' : 'Save to reading list');
+  button.setAttribute('title', isSaved ? 'Remove from reading list' : 'Save to reading list');
+  
+  if (isSaved) {
+    button.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+      </svg>
+    `;
+    button.classList.add('saved');
+  } else {
+    button.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+    `;
+    button.classList.remove('saved');
+  }
+}
+
+/**
+ * Create a post tile element
+ */
+function createPostTile(post) {
+  const tile = document.createElement('div');
+  tile.className = 'post-tile';
+  
+  const link = document.createElement('a');
+  link.href = post.RelPermalink || post.Permalink;
+  
+  const content = document.createElement('div');
+  content.className = 'tile-content';
+  
+  // Title
+  const title = document.createElement('h2');
+  title.textContent = post.Title;
+  content.appendChild(title);
+  
+  // Tags
+  if (post.Params?.tags && post.Params.tags.length > 0) {
+    const tagsDiv = document.createElement('div');
+    tagsDiv.className = 'tile-tags';
+    post.Params.tags.forEach(tag => {
+      const tagSpan = document.createElement('span');
+      // Use urlize transformation (lowercase, replace spaces/special chars with hyphens)
+      const urlizedTag = tag.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/&/g, '')
+        .replace(/[^a-z0-9-]/g, '');
+      tagSpan.className = `tag-pill tag-${urlizedTag}`;
+      tagSpan.textContent = tag;
+      tagsDiv.appendChild(tagSpan);
+    });
+    content.appendChild(tagsDiv);
+  }
+  
+  // Journal
+  if (post.Params?.journal) {
+    const journal = document.createElement('div');
+    journal.className = 'tile-journal';
+    journal.textContent = `Journal: ${post.Params.journal}`;
+    content.appendChild(journal);
+  }
+  
+  // Description
+  const description = document.createElement('p');
+  description.textContent = post.Params?.description || post.Summary || '';
+  content.appendChild(description);
+  
+  // Meta (date)
+  const meta = document.createElement('div');
+  meta.className = 'tile-meta';
+  const time = document.createElement('time');
+  const date = new Date(post.Date);
+  time.textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  meta.appendChild(time);
+  content.appendChild(meta);
+  
+  link.appendChild(content);
+  tile.appendChild(link);
+  
+  // Add read-later button (will show as saved)
+  const button = createReadLaterButton(post.File?.UniqueID, true);
+  tile.appendChild(button);
+  
+  return tile;
+}
+
+/**
+ * Create read-later button
+ */
+function createReadLaterButton(articleId, initialSaved) {
+  const button = document.createElement('button');
+  button.className = 'read-later-bookmark' + (initialSaved ? ' saved' : '');
+  button.dataset.articleId = articleId;
+  button.dataset.saved = initialSaved.toString();
+  button.setAttribute('aria-pressed', initialSaved.toString());
+  button.setAttribute('aria-label', initialSaved ? 'Remove from reading list' : 'Save to reading list');
+  button.setAttribute('title', initialSaved ? 'Remove from reading list' : 'Save to reading list');
+  
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '18');
+  svg.setAttribute('height', '18');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', initialSaved ? 'currentColor' : 'none');
+  svg.setAttribute('stroke', initialSaved ? 'none' : 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  if (initialSaved) {
+    path.setAttribute('d', 'M19 3H5c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z');
+  } else {
+    path.setAttribute('d', 'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z');
+  }
+  
+  svg.appendChild(path);
+  button.appendChild(svg);
+  
+  return button;
+}
+</script>
+{{ end }}
+

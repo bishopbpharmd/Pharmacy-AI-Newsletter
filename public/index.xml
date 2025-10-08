@@ -6,8 +6,15 @@
     <description>Recent content on Pharmacy AI Newsletter</description>
     <generator>Hugo -- 0.151.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Oct 2025 21:47:54 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 08 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Saved Articles</title>
+      <link>http://localhost:1313/saved/</link>
+      <pubDate>Wed, 08 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/saved/</guid>
+      <description>&lt;p&gt;Your saved articles will appear here.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>LLMs show partial utility for DDI checks</title>
       <link>http://localhost:1313/posts/ddi_abstract/</link>
