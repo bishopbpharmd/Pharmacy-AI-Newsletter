@@ -7,28 +7,51 @@
 
 /**
  * Get the current user's Auth0 access token
- * @returns {Promise<string|null>} - Access token or null if not authenticated
+ * Uses Auth0 SPA SDK getTokenSilently for reliable token retrieval
+ * @returns {Promise<string|null>} - JWT token or null if not authenticated
  */
 async function getAuthToken() {
   try {
-    // Check if auth system is available
-    if (!window.auth || !window.auth0Client) {
-      console.warn('[readLaterApi] Auth system not available');
+    console.log('[readLaterApi] Attempting to get Auth0 token...');
+    
+    // Check if Auth0 client is available
+    if (!window.auth0Client) {
+      console.warn('[readLaterApi] Auth0 client not available');
       return null;
     }
 
-    // Check if user is authenticated using our auth system
-    const isAuthenticated = window.auth.isAuthenticated();
+    // Check if user is authenticated using Auth0 client directly
+    const isAuthenticated = await window.auth0Client.isAuthenticated();
     if (!isAuthenticated) {
-      console.warn('[readLaterApi] User not authenticated');
+      console.log('[readLaterApi] User not authenticated - no token available');
       return null;
     }
 
-    // Get the access token from Auth0 client
+    console.log('[readLaterApi] User authenticated, fetching token...');
+    
+    // Get the access token using Auth0 SPA SDK
     const token = await window.auth0Client.getTokenSilently();
+    
+    if (!token) {
+      console.warn('[readLaterApi] No token returned from Auth0');
+      return null;
+    }
+    
+    console.log('[readLaterApi] Successfully obtained Auth0 token');
     return token;
+    
   } catch (error) {
     console.error('[readLaterApi] Failed to get auth token:', error);
+    
+    // Log specific error types for debugging
+    if (error.error === 'login_required') {
+      console.log('[readLaterApi] Login required - user needs to authenticate');
+    } else if (error.error === 'consent_required') {
+      console.log('[readLaterApi] Consent required - user needs to grant permissions');
+    } else if (error.error === 'interaction_required') {
+      console.log('[readLaterApi] Interaction required - user needs to complete authentication');
+    }
+    
     return null;
   }
 }

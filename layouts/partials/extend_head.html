@@ -6,7 +6,8 @@
 <script>
   window.__AUTH0 = {
     domain: "{{ .Site.Params.auth0.domain }}",
-    clientId: "{{ .Site.Params.auth0.clientId }}"
+    clientId: "{{ .Site.Params.auth0.clientId }}",
+    audience: "{{ .Site.Params.auth0.audience }}"
   };
   
   // Debug: Log the configuration

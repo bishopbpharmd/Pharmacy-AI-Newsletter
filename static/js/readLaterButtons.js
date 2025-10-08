@@ -20,31 +20,38 @@ document.addEventListener('DOMContentLoaded', function() {
   readLaterButtons.forEach((button, index) => {
     console.log(`[Read Later] Setting up button ${index + 1}:`, button.dataset.articleId);
     
-    button.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      console.log('[Read Later] Button clicked:', this.dataset.articleId);
-      
-      const articleId = this.dataset.articleId;
-      const currentSaved = this.dataset.saved === 'true';
-      const newSaved = !currentSaved;
-      
-      console.log(`[Read Later] Toggling ${articleId} from ${currentSaved} to ${newSaved}`);
-      
-      // Store original state for potential rollback
-      const originalState = {
-        saved: currentSaved,
-        innerHTML: this.innerHTML,
-        classList: this.classList.toString()
-      };
-      
-      // Optimistic update - immediately update UI
-      updateButtonState(this, newSaved);
-      
-      // Call API and handle rollback on failure
-      handleApiCall(this, articleId, newSaved, originalState);
-    });
+                button.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  
+                  console.log('[Read Later] Button clicked:', this.dataset.articleId);
+                  
+                  const articleId = this.dataset.articleId;
+                  const currentSaved = this.dataset.saved === 'true';
+                  const newSaved = !currentSaved;
+                  
+                  console.log(`[Read Later] Toggling ${articleId} from ${currentSaved} to ${newSaved}`);
+                  
+                  // Check authentication before proceeding
+                  if (!window.auth || !window.auth.isAuthenticated()) {
+                    console.log('[Read Later] User not authenticated, showing message');
+                    showAuthenticationMessage();
+                    return;
+                  }
+                  
+                  // Store original state for potential rollback
+                  const originalState = {
+                    saved: currentSaved,
+                    innerHTML: this.innerHTML,
+                    classList: this.classList.toString()
+                  };
+                  
+                  // Optimistic update - immediately update UI
+                  updateButtonState(this, newSaved);
+                  
+                  // Call API and handle rollback on failure
+                  handleApiCall(this, articleId, newSaved, originalState);
+                });
   });
   
   console.log('[Read Later] Initialization complete');
@@ -81,6 +88,50 @@ async function waitForAuthAndUpdateVisibility() {
   readLaterButtons.forEach(button => {
     button.style.display = 'none';
   });
+}
+
+/**
+ * Show user-friendly message when not authenticated
+ */
+function showAuthenticationMessage() {
+  // Create a temporary notification
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-size: 14px;
+    max-width: 300px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+  `;
+  
+  notification.textContent = 'Please log in to save articles to your reading list';
+  document.body.appendChild(notification);
+  
+  // Animate in
+  setTimeout(() => {
+    notification.style.opacity = '1';
+    notification.style.transform = 'translateY(0)';
+  }, 10);
+  
+  // Remove after 4 seconds
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateY(-20px)';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 4000);
 }
 
 /**

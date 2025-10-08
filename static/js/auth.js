@@ -25,6 +25,7 @@ console.log("[auth] Script loaded and starting...");
     return {
       domain: src.domain || "",
       clientId: src.clientId || "",
+      audience: src.audience || "",
       cacheLocation: "localstorage",
       refreshIntervalSec: 60 * 10, // try refresh every 10 minutes
     };
@@ -116,7 +117,8 @@ console.log("[auth] Script loaded and starting...");
       clientId: CFG.clientId,
       cacheLocation: CFG.cacheLocation,
       authorizationParams: {
-        redirect_uri: callbackUri
+        redirect_uri: callbackUri,
+        audience: CFG.audience
       }
     });
       console.log("[auth] Auth0 client created successfully");
@@ -369,6 +371,9 @@ console.log("[auth] Script loaded and starting...");
 
   // Expose and boot
   window.auth = api;
+  
+  // Expose auth0Client globally for token retrieval
+  window.auth0Client = auth0Client;
   
   // Also expose legacy functions for backward compatibility
   window.login = login;
