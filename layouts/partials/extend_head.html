@@ -3,6 +3,40 @@
 <!-- Theme color for browser UI (matches site theme) -->
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1d1e20">
+<meta name="theme-color" id="theme-color-override" content="">
+
+<script>
+  // Update theme-color when theme is manually toggled
+  function updateThemeColor() {
+    const isDark = document.body.classList.contains('dark');
+    const themeColorMeta = document.getElementById('theme-color-override');
+    
+    if (themeColorMeta) {
+      // Set override color based on current theme
+      themeColorMeta.content = isDark ? '#1d1e20' : '#ffffff';
+      console.log('[Theme Color] Updated to:', themeColorMeta.content);
+    }
+  }
+  
+  // Run on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateThemeColor);
+  } else {
+    updateThemeColor();
+  }
+  
+  // Listen for theme changes via MutationObserver
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        updateThemeColor();
+      }
+    });
+  });
+  
+  // Start observing body class changes
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+</script>
 
 <!-- Auth0 SPA SDK -->
 <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>

@@ -6,6 +6,13 @@ theme = "PaperMod"
 [params]
 ShowBreadCrumbs = true
 
+[params.assets]
+theme_color = ""
+favicon = "favicon.ico"
+favicon16x16 = "favicon-32x32.png"
+favicon32x32 = "favicon-32x32.png"
+apple_touch_icon = "favicon-32x32.png"
+
 [params.auth0]
 domain = "dev-hgy0ilmv64t2vwb6.us.auth0.com"
 clientId = "gdc8rjiQufmjTKQIF3XNASS1xAdIeNaz"
