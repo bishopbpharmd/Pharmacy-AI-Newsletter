@@ -1,6 +1,16 @@
 export async function handler(event) {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method not allowed" };
+    return { 
+      statusCode: 405, 
+      headers,
+      body: JSON.stringify({ error: "Method not allowed" }) 
+    };
   }
 
   try {
@@ -8,7 +18,13 @@ export async function handler(event) {
     console.log('Netlify function - Received email:', email);
     console.log('Netlify function - Request body:', event.body);
     
-    if (!email) return { statusCode: 400, body: "Missing email" };
+    if (!email) {
+      return { 
+        statusCode: 400, 
+        headers,
+        body: JSON.stringify({ error: "Missing email" }) 
+      };
+    }
 
     // EmailOctopus v2 API - Search for contact by email address
     // Note: The email_address parameter should do exact matching, but let's verify
@@ -52,6 +68,7 @@ export async function handler(event) {
         // Return the subscription data
         return {
           statusCode: 200,
+          headers,
           body: JSON.stringify({ 
             exists: true, 
             status: contact.status, 
@@ -64,14 +81,16 @@ export async function handler(event) {
       } else {
         // No contacts found
         return { 
-          statusCode: 200, 
+          statusCode: 200,
+          headers,
           body: JSON.stringify({ exists: false }) 
         };
       }
     } else if (res.status === 404) {
       // List not found or no contacts found
       return { 
-        statusCode: 200, 
+        statusCode: 200,
+        headers,
         body: JSON.stringify({ exists: false }) 
       };
     } else {
@@ -79,12 +98,17 @@ export async function handler(event) {
       const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
       console.error('EmailOctopus API error:', res.status, errorData);
       return { 
-        statusCode: 500, 
+        statusCode: 500,
+        headers,
         body: JSON.stringify({ error: `API error: ${res.status}` }) 
       };
     }
   } catch (err) {
     console.error('Netlify function error:', err);
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+    return { 
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: err.message }) 
+    };
   }
 }

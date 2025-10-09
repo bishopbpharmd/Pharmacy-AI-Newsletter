@@ -51,7 +51,7 @@ console.log("[auth] Script loaded and starting...");
     const mobileLoginBtn = document.getElementById("mobileLoginBtn");
     const profileLi = document.getElementById("profileLi");
     const logoutLi = document.getElementById("logoutLi");
-    const mobileLogoutBtn = document.getElementById("mobileLogoutBtn");
+    const mobileAuthContainer = document.getElementById("mobileAuthContainer");
     const authLi = loginBtn ? loginBtn.closest('li') : null;
 
     // Check if we're on mobile (screen width <= 768px)
@@ -71,7 +71,7 @@ console.log("[auth] Script loaded and starting...");
     
     // Update mobile buttons (always in hamburger menu)
     if (mobileLoginBtn) mobileLoginBtn.style.display = _isAuthenticated ? "none" : "block";
-    if (mobileLogoutBtn) mobileLogoutBtn.style.display = _isAuthenticated ? "block" : "none";
+    if (mobileAuthContainer) mobileAuthContainer.style.display = _isAuthenticated ? "block" : "none";
   }
 
   // --- Core auth actions ----------------------------------------------------
@@ -275,7 +275,7 @@ console.log("[auth] Script loaded and starting...");
                 const loginBtn = document.getElementById("loginBtn");
                 const mobileLoginBtn = document.getElementById("mobileLoginBtn");
                 const profileBtn = document.getElementById("profileBtn");
-                const mobileProfileBtn = document.getElementById("mobileProfileBtn");
+                const mobileSavedBtn = document.getElementById("mobileSavedBtn");
                 const logoutBtn = document.getElementById("logoutBtn");
                 const mobileLogoutBtn = document.getElementById("mobileLogoutBtn");
                 
@@ -283,7 +283,7 @@ console.log("[auth] Script loaded and starting...");
                   loginBtn: loginBtn,
                   mobileLoginBtn: mobileLoginBtn,
                   profileBtn: profileBtn,
-                  mobileProfileBtn: mobileProfileBtn,
+                  mobileSavedBtn: mobileSavedBtn,
                   logoutBtn: logoutBtn,
                   mobileLogoutBtn: mobileLogoutBtn
                 });
@@ -319,9 +319,9 @@ console.log("[auth] Script loaded and starting...");
                   });
                 }
                 
-                if (mobileProfileBtn) {
-                  mobileProfileBtn.addEventListener("click", (e) => {
-                    console.log("[auth] Mobile profile clicked - navigating to check-subscriber page");
+                if (mobileSavedBtn) {
+                  mobileSavedBtn.addEventListener("click", (e) => {
+                    console.log("[auth] Mobile saved clicked - navigating to saved page");
                     // Close mobile menu first, then let navigation happen
                     if (typeof closeMobileMenu === 'function') {
                       closeMobileMenu();

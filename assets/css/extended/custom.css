@@ -363,6 +363,8 @@
   color: var(--primary);
   transition: all 0.2s ease;
   font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Enhanced border contrast and text color for light mode only */
@@ -2543,8 +2545,32 @@ body:not([data-theme="dark"]) .form-input:focus {
    LOCKED EMAIL FIELD STYLING (Subscribe Modal)
    ============================================ */
 
+/* Form row for side-by-side inputs (First/Last Name) */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Email form-group - ensure full width */
+.form-group:has(.email-input-wrapper) {
+  width: 100%;
+}
+
+/* Email input wrapper - full width */
 .email-input-wrapper {
   position: relative;
+  width: 100%;
+}
+
+.email-input-wrapper .form-input {
+  width: 100%;
 }
 
 .locked-email {
@@ -2568,36 +2594,63 @@ body:not([data-theme="dark"]) .form-input:focus {
 }
 
 .locked-email-tooltip {
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: var(--primary);
-  color: white;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
   border-radius: 6px;
   font-size: 0.85rem;
-  line-height: 1.4;
-  animation: slideIn 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  line-height: 1.5;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
+  color: inherit;
+}
+
+.locked-email-tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1rem;
+}
+
+.locked-email-tooltip.hide {
+  opacity: 0;
+  transform: translateY(-8px);
+  max-height: 0;
+  margin-top: 0;
+  padding: 0;
 }
 
 .locked-email-tooltip svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 0.15rem;
+  width: 16px;
+  height: 16px;
 }
 
 .locked-email-tooltip span {
   flex: 1;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+/* Light mode - blue gradient background */
+@media (prefers-color-scheme: light) {
+  .locked-email-tooltip {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+/* Dark mode - dark gray background */
+@media (prefers-color-scheme: dark) {
+  .locked-email-tooltip {
+    background: #2d3748;
+    border-color: #4a5568;
   }
 }

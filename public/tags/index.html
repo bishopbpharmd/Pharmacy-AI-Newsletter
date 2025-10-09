@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/tags/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.673985cac7e78b088762548403e96dafd2ac8d0484e1854bafa38c0400defd71.css" integrity="sha256-ZzmFysfniwiHYlSEA&#43;ltr9KsjQSE4YVLr6OMBADe/XE=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8b0b50de310ca0a9fdf2b144cedb3ca00cd02505a46828cfa6c79de9db9136a5.css" integrity="sha256-iwtQ3jEMoKn98rFEzts8oAzQJQWkaCjPpsed6duRNqU=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -191,10 +191,10 @@
                     <a id="mobileLoginBtn" class="mobile-menu-item mobile-auth-link" href="#">
                         <span>Login</span>
                     </a>
-                        <div id="mobileLogoutBtn" class="mobile-auth-logout-container" style="display: none;">
-                            <a id="mobileProfileBtn" class="mobile-menu-item mobile-auth-link" href="http://localhost:1313/saved/">
-                                <span>Saved</span>
-                            </a>
+                    <div id="mobileAuthContainer" class="mobile-auth-logout-container" style="display: none;">
+                        <a id="mobileSavedBtn" class="mobile-menu-item mobile-auth-link" href="http://localhost:1313/saved/">
+                            <span>Saved</span>
+                        </a>
                         <a id="mobileLogoutBtn" class="mobile-menu-item mobile-auth-link" href="#">
                             <span>Logout</span>
                         </a>
@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-function updateNavbarSubscriptionButton() {
+async function updateNavbarSubscriptionButton() {
     const subscribeLi = document.getElementById('navbarSubscribe');
     const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
     
@@ -564,19 +564,32 @@ function updateNavbarSubscriptionButton() {
     
     try {
         const userData = localStorage.getItem('user');
-        const showButton = !userData || (userData && JSON.parse(userData).subscribed !== true);
         
-        if (!userData) {
-            console.log('[navbar] No user data in localStorage, showing subscribe button');
-        } else {
+        
+        let isAuthenticated = false;
+        if (window.auth0Client) {
+            isAuthenticated = await window.auth0Client.isAuthenticated();
+        }
+        
+        
+        let showButton = true; 
+        
+        if (userData) {
             const user = JSON.parse(userData);
-            console.log('[navbar] User data found:', user);
+            console.log('[navbar] User data found:', user, 'Authenticated:', isAuthenticated);
             
-            if (user.subscribed === true) {
-                console.log('[navbar] User is subscribed, hiding subscribe button');
+            if (user.subscribed === true && isAuthenticated) {
+                console.log('[navbar] User is subscribed AND authenticated, hiding subscribe button');
+                showButton = false;
+            } else if (user.subscribed === true && !isAuthenticated) {
+                console.log('[navbar] User is subscribed but NOT authenticated, showing subscribe button');
+                showButton = true;
             } else {
                 console.log('[navbar] User is not subscribed, showing subscribe button');
+                showButton = true;
             }
+        } else {
+            console.log('[navbar] No user data in localStorage, showing subscribe button');
         }
         
         
@@ -716,12 +729,29 @@ async function showCustomSubscribeModal() {
         
         const tooltip = modal.querySelector('#lockedEmailTooltip');
         if (emailInput && tooltip) {
+            let hideTimeout;
+            
             const showTooltip = () => {
                 if (emailInput.readOnly && emailInput.classList.contains('locked-email')) {
+                    
+                    if (hideTimeout) clearTimeout(hideTimeout);
+                    
+                    
                     tooltip.style.display = 'flex';
-                    setTimeout(() => {
-                        tooltip.style.display = 'none';
-                    }, 4000); 
+                    
+                    tooltip.offsetHeight;
+                    tooltip.classList.add('show');
+                    tooltip.classList.remove('hide');
+                    
+                    
+                    hideTimeout = setTimeout(() => {
+                        tooltip.classList.remove('show');
+                        tooltip.classList.add('hide');
+                        
+                        setTimeout(() => {
+                            tooltip.style.display = 'none';
+                        }, 300); 
+                    }, 4000);
                 }
             };
             
@@ -896,11 +926,34 @@ async function handleSubscribeForm(event) {
     
     const submitBtn = form.querySelector('.form-submit-btn');
     const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Subscribing...';
+    submitBtn.textContent = 'Checking...';
     submitBtn.disabled = true;
     submitBtn.classList.add('loading');
     
     try {
+        
+        console.log('[Subscribe] Checking if email already exists:', formData.email);
+        const checkResponse = await fetch('/.netlify/functions/check-subscriber', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: formData.email })
+        });
+        
+        const checkResult = await checkResponse.json();
+        console.log('[Subscribe] Check result:', checkResult);
+        
+        
+        if (checkResult.exists && checkResult.status === 'subscribed') {
+            console.log('[Subscribe] Email already subscribed, showing error');
+            throw new Error('already subscribed');
+        }
+        
+        
+        console.log('[Subscribe] Email not subscribed, proceeding with signup');
+        submitBtn.textContent = 'Subscribing...';
+        
         const response = await fetch('/.netlify/functions/subscribe-user', {
             method: 'POST',
             headers: {
