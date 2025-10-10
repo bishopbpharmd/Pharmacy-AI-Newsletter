@@ -6,35 +6,21 @@
     <description>Recent content in Posts on Pharmacy AI Newsletter</description>
     <generator>Hugo -- 0.151.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Oct 2025 23:07:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Predicting Delayed Clearance in Pediatric High-Dose Methotrexate</title>
-      <link>http://localhost:1313/posts/methotrexate_short/</link>
-      <pubDate>Thu, 09 Oct 2025 23:07:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/methotrexate_short/</guid>
-      <description>In 1,485 pediatric high-dose methotrexate cycles, a machine learning model predicted delayed excretion with strong discrimination; XGBoost performed best (AUROC 0.842) and high specificity. An eight-variable model—driven most by serum creatinine and total dose—was released as a web tool for pre-cycle risk stratification to guide supportive care intensity.</description>
+      <title>Streamlining Structured Notes with NLP Integration</title>
+      <link>http://localhost:1313/posts/nlp_long/</link>
+      <pubDate>Tue, 07 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/nlp_long/</guid>
+      <description>This study evaluates MiADE, an open-source NLP system integrated into Epic to convert clinical notes into structured data, aiming to improve documentation completeness and reduce clinician burden.</description>
     </item>
     <item>
-      <title>Practical Framework for Deploying Radiology AI Tools</title>
+      <title>Practical Framework for Deploying AI Tools</title>
       <link>http://localhost:1313/posts/ai_framework_short/</link>
-      <pubDate>Thu, 09 Oct 2025 22:33:11 +0000</pubDate>
+      <pubDate>Mon, 06 Oct 2025 22:33:11 +0000</pubDate>
       <guid>http://localhost:1313/posts/ai_framework_short/</guid>
       <description>A governance-focused playbook outlines four phases—local validation, stepwise deployment, value measurement, and ongoing surveillance—to move radiology AI from promising models to sustained clinical services. It prioritizes workflow fit, return on investment beyond accuracy metrics, and continuous drift monitoring to decide if tools work, help, and stay.</description>
-    </item>
-    <item>
-      <title>Protocol: AI EHR Nudge to Prevent Hospital-Acquired Venous Thromboembolism</title>
-      <link>http://localhost:1313/posts/dvt_protocol_short/</link>
-      <pubDate>Thu, 09 Oct 2025 22:32:56 +0000</pubDate>
-      <guid>http://localhost:1313/posts/dvt_protocol_short/</guid>
-      <description>This pragmatic randomized trial will test an artificial intelligence–driven electronic health record nudge that prompts VTE prophylaxis for hospitalized adults at high predicted risk without an active order or documented contraindications. Conducted across urban and rural hospitals, it will compare the AI CDS to standard workflows on hospital-acquired VTE incidence, safety (bleeding), and process outcomes.</description>
-    </item>
-    <item>
-      <title>Minimal transcriptomic panels predict Pseudomonas antibiotic resistance</title>
-      <link>http://localhost:1313/posts/drug_resistance_short/</link>
-      <pubDate>Thu, 09 Oct 2025 22:32:54 +0000</pubDate>
-      <guid>http://localhost:1313/posts/drug_resistance_short/</guid>
-      <description>From RNA-seq of 414 Pseudomonas aeruginosa isolates, 35–40-gene expression panels predicted resistance to meropenem, ciprofloxacin, tobramycin, and ceftazidime with 96–99% test accuracy (F1 0.93–0.99). The compact, largely non-overlapping signatures relied mostly on genes outside current resistance databases, pointing to viable diagnostic panels but needing external validation before clinical use.</description>
     </item>
     <item>
       <title>Limits of Inter-Hospital Model Transfer in Delirium Detection</title>
@@ -100,25 +86,39 @@
       <description>A comprehensive analysis of how large language models can enhance medication safety through clinical decision support systems across 16 medical specialties.</description>
     </item>
     <item>
-      <title>MiADE: NLP at the Point of Care</title>
-      <link>http://localhost:1313/posts/nlp_long/</link>
-      <pubDate>Mon, 15 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/nlp_long/</guid>
-      <description>This study evaluates MiADE, an open-source NLP system integrated into Epic to convert clinical notes into structured data, aiming to improve documentation completeness and reduce clinician burden.</description>
-    </item>
-    <item>
-      <title>Cancer Diagnosis Categorization with LLMs and BioBERT</title>
+      <title>Unlocking Clinical Notes: Structured Data Extraction for CDS and Research</title>
       <link>http://localhost:1313/posts/unstructured_data_extraction_long/</link>
-      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/unstructured_data_extraction_long/</guid>
       <description>This JMIR Cancer 2025 study evaluated GPT-3.5, GPT-4o, Llama 3.2, Gemini 1.5, and BioBERT for categorizing oncology diagnoses from structured ICD-10 codes and free-text EHR notes into 14 categories, highlighting both potential and risks of LLM-based structuring of clinical data.</description>
     </item>
     <item>
-      <title>Journal Club Summary: AI-Guided Dosing Decisions (Sumner et al., 2025)</title>
+      <title>AI EHR Nudge to Prevent Hospital-Acquired Venous Thromboembolism (Protocol)</title>
+      <link>http://localhost:1313/posts/dvt_protocol_short/</link>
+      <pubDate>Wed, 01 Oct 2025 22:32:56 +0000</pubDate>
+      <guid>http://localhost:1313/posts/dvt_protocol_short/</guid>
+      <description>This pragmatic randomized trial will test an artificial intelligence–driven electronic health record nudge that prompts VTE prophylaxis for hospitalized adults at high predicted risk without an active order or documented contraindications. Conducted across urban and rural hospitals, it will compare the AI CDS to standard workflows on hospital-acquired VTE incidence, safety (bleeding), and process outcomes.</description>
+    </item>
+    <item>
+      <title>Provider Trust and Workflow Challenges in AI Dosing</title>
       <link>http://localhost:1313/posts/perspective_of_ai_dosing_long/</link>
-      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 30 Sep 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/perspective_of_ai_dosing_long/</guid>
       <description>Healthcare providers’ perspectives on AI-guided dosing, including perceived benefits, barriers, and implications for pharmacy informatics.</description>
+    </item>
+    <item>
+      <title>Predicting Delayed Clearance in Pediatric High-Dose Methotrexate</title>
+      <link>http://localhost:1313/posts/methotrexate_short/</link>
+      <pubDate>Wed, 17 Sep 2025 23:07:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/methotrexate_short/</guid>
+      <description>In 1,485 pediatric high-dose methotrexate cycles, a machine learning model predicted delayed excretion with strong discrimination; XGBoost performed best (AUROC 0.842) and high specificity. An eight-variable model—driven most by serum creatinine and total dose—was released as a web tool for pre-cycle risk stratification to guide supportive care intensity.</description>
+    </item>
+    <item>
+      <title>Rapid RNA Gene Panel Methodology to Aid Antimicrobial Stewardship</title>
+      <link>http://localhost:1313/posts/drug_resistance_short/</link>
+      <pubDate>Sat, 03 May 2025 22:32:54 +0000</pubDate>
+      <guid>http://localhost:1313/posts/drug_resistance_short/</guid>
+      <description>From RNA-seq of 414 Pseudomonas aeruginosa isolates, 35–40-gene expression panels predicted resistance to meropenem, ciprofloxacin, tobramycin, and ceftazidime with 96–99% test accuracy (F1 0.93–0.99). The compact, largely non-overlapping signatures relied mostly on genes outside current resistance databases, pointing to viable diagnostic panels but needing external validation before clinical use.</description>
     </item>
   </channel>
 </rss>

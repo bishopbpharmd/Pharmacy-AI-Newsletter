@@ -10,7 +10,7 @@
 <meta name="description" content="Posts - Pharmacy AI Newsletter">
 <meta name="author" content="">
 <link rel="canonical" href="http://localhost:1313/posts/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.00f97704f99ef999ee834151c8d3b3d59cee1a33914b21123618277fdb4036a0.css" integrity="sha256-APl3BPme&#43;Znug0FRyNOz1ZzuGjORSyESNhgnf9tANqA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8db85003635056f2e0dfc52e0c8fdd37a72cad8f95f55458fa122ae585d793b9.css" integrity="sha256-jbhQA2NQVvLg38UuDI/dN6csrY&#43;V9VRY&#43;hIq5YXXk7k=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -1238,54 +1238,29 @@ window.handleModalBackdropClick = handleModalBackdropClick;
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">Predicting Delayed Clearance in Pediatric High-Dose Methotrexate
+    <h2 class="entry-hint-parent">Streamlining Structured Notes with NLP Integration
     </h2>
   </header>
   <div class="entry-content">
-    <p>Summary This single-center retrospective study modeled each chemotherapy cycle as an independent unit and defined delayed excretion as methotrexate &gt;1 μmol/L at 48 h or ≥0.2 μmol/L at 72 h (26.1% of cycles). From demographic, dosing, and routine labs, eight features emerged (serum creatinine, total dose, alkaline phosphatase, creatine kinase, urea, gamma-glutamyl transferase, hemoglobin, height). Among four algorithms, XGBoost achieved the best internal performance via 1,000-bootstrapped validation: AUROC 0.842 (95% CI 0.815–0.873), accuracy 0.780, sensitivity 0.577, specificity 0.907, F1 0.669, Brier 0.136; decision curve analysis suggested net benefit across ~10%–80% thresholds (best to ~75%). SHAP interpretation highlighted serum creatinine as the dominant contributor, with higher creatinine and dose, and lower alkaline phosphatase increasing risk. A sensitivity analysis using only the first cycle per patient showed similar performance.
+    <p>Clinical/Operational Question In a hospital EHR setting, does integrating a real-time NLP tool (MiADE) that extracts key data from clinical notes improve the completeness of structured records (problem lists, medication/allergy lists) and reduce documentation time compared to standard manual entry?
+Background &amp; Rationale Importance of Structured Data: Structured EHR data is critical for safety alerts, CDS, and research, yet much remains buried in free-text notes (~62% of inpatient diagnoses appeared on the coded problem list).
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-09 23:07:00.657521 +0000 UTC'>October 9, 2025</span></footer>
-  <a class="entry-link" aria-label="post link to Predicting Delayed Clearance in Pediatric High-Dose Methotrexate" href="http://localhost:1313/posts/methotrexate_short/"></a>
+  <footer class="entry-footer"><span title='2025-10-07 00:00:00 +0000 UTC'>October 7, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Streamlining Structured Notes with NLP Integration" href="http://localhost:1313/posts/nlp_long/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">Practical Framework for Deploying Radiology AI Tools
+    <h2 class="entry-hint-parent">Practical Framework for Deploying AI Tools
     </h2>
   </header>
   <div class="entry-content">
     <p>Summary For implementation, the paper emphasizes rigorous local validation on retrospective institutional data using cohorts that reflect real practice (consecutive) and probe edge cases (enriched), and warns against overreliance on area under the receiver operating characteristic curve or Dice scores when positive predictive value and error patterns drive workload and safety (only 15% of FDA-cleared AI-CDS publicly report test cohorts &gt;1,000). Prospective limited trials should vet the human–AI interface (e.g., triage, overlays, confidence), integration into PACS/EHR/reporting, algorithm turnaround and status visibility, and user feedback before scaling; full deployment requires site harmonization, compute/network scaling, metric trending, and explicit downtime plans as AI-enabled workflows become part of critical communication pathways. Value assessment spans financial and nonfinancial returns: direct reimbursement is rare and often temporary (e.g., NTAP up to 3 years), efficiency gains may be real but context-dependent (MRI sequence time reductions &gt;60% do not always shorten room time), vendor ROI claims are often overstated, and costs beyond licensing (IT/integration/legal/clinical time) are substantial; non-monetary benefits include accuracy, timeliness, and provider satisfaction (e.g., 82% of clinicians reported improved job satisfaction with ambient AI scribes). Post-deployment surveillance should log inputs/outputs and track subgrouped performance, input/output distributions, and calibration; detect drift with predefined thresholds and structured governance oversight, recognizing label collection challenges and the need to combine quantitative monitoring with clinician feedback (illustrated by control-chart QC with ±2 SD triggers in MRI reconstruction).
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-09 22:33:11.44244 +0000 UTC'>October 9, 2025</span></footer>
-  <a class="entry-link" aria-label="post link to Practical Framework for Deploying Radiology AI Tools" href="http://localhost:1313/posts/ai_framework_short/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Protocol: AI EHR Nudge to Prevent Hospital-Acquired Venous Thromboembolism
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Summary Using a previously validated predictive model (C statistic 0.891; 95% CI, 0.882-0.900), the trial randomizes encounters with VTE-AI risk ≥3.6% to receive an orders-context OurPractice Advisory starting hospital day 2 versus standard care. The nudge supports ordering pharmacologic prophylaxis (e.g., enoxaparin; unfractionated heparin when neuraxial anesthesia; fondaparinux for heparin-induced thrombocytopenia) or documenting permanent/temporary contraindications, with daily prompts until an action is taken. Primary outcome is in-hospital HA-VTE; secondary outcomes include bleeding events, 30-day readmissions, and length of stay, with Poisson regression planned. Powering assumes a reduction in HA-VTE from 4.3% to 2.2% (n=2236 encounters total). The study incorporates “algorithmovigilance” by checking calibration and discrimination across subgroups (age, race/ethnicity, insurance) in the comparator arm and shares protocol/code publicly. For pharmacy informatics, this is a real-world evaluation of targeted anticoagulant nudges embedded in admission and daily order workflows—key for minimizing alert fatigue while closing prophylaxis gaps. Build elements (risk thresholding, daily cadence, contraindication logic, and bleed surveillance) align with anticoagulation stewardship, formulary preferences, and safety monitoring; operational differences across urban/rural sites will inform how to standardize prophylaxis panels and documentation flows in enterprise EHRs.
-</p>
-  </div>
-  <footer class="entry-footer"><span title='2025-10-09 22:32:56.183096 +0000 UTC'>October 9, 2025</span></footer>
-  <a class="entry-link" aria-label="post link to Protocol: AI EHR Nudge to Prevent Hospital-Acquired Venous Thromboembolism" href="http://localhost:1313/posts/dvt_protocol_short/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Minimal transcriptomic panels predict Pseudomonas antibiotic resistance
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Summary Using a genetic algorithm for feature selection plus automated machine learning, the authors distilled the full transcriptome (~6,000 genes) down to antibiotic-specific panels of ~35–40 genes, after which performance plateaued. On held-out test sets, accuracy was ~99% for meropenem and ciprofloxacin and ~96% for tobramycin and ceftazidime, improving on full-transcriptome baselines (accuracy up to 0.90; F1 up to 0.88). Only 2–10% of selected genes overlapped the Comprehensive Antibiotic Resistance Database; panels included canonical markers (e.g., ampC, mexAB-oprM) alongside novel biomarkers (e.g., gbuA, fpvA), and mapped to regulatory modules linked to efflux, DNA repair, oxidative stress, ribosomal function, and metabolic adaptation (79–88% coverage in PA14 iModulons). For pharmacy operations, the key translational insight is that a targeted expression assay covering ~40 genes per antibiotic could be more practical than whole-transcriptome profiling and, if paired with rapid RNA workflows, might shorten time to susceptibility guidance to support earlier optimization/de-escalation. Caveats for informatics and stewardship leaders: this is an internal validation on a public dataset (no external or prospective testing), it’s a preprint, there is no turnaround-time or cost analysis, and biomarkers may reflect correlated physiology rather than causal resistance—so implementation would require external validation, analytical/clinical verification, and careful integration with antimicrobial stewardship decision support.
-</p>
-  </div>
-  <footer class="entry-footer"><span title='2025-10-09 22:32:54.751607 +0000 UTC'>October 9, 2025</span></footer>
-  <a class="entry-link" aria-label="post link to Minimal transcriptomic panels predict Pseudomonas antibiotic resistance" href="http://localhost:1313/posts/drug_resistance_short/"></a>
+  <footer class="entry-footer"><span title='2025-10-06 22:33:11.44244 +0000 UTC'>October 6, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Practical Framework for Deploying AI Tools" href="http://localhost:1313/posts/ai_framework_short/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -1364,6 +1339,34 @@ window.handleModalBackdropClick = handleModalBackdropClick;
   </div>
   <footer class="entry-footer"><span title='2025-10-03 21:47:35 -0400 EDT'>October 3, 2025</span></footer>
   <a class="entry-link" aria-label="post link to Machine learning to guide infant voriconazole dosing" href="http://localhost:1313/posts/1_voriconazole_abstract/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Deep Learning Model for the Prediction of Vancomycin Trough Concentration
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Clinical/Operational Question Can a sequential deep learning model (“Nephrocast-V”) accurately forecast vancomycin trough levels ~48 hours ahead in ICU patients and recommend dose adjustments to attain therapeutic levels, compared to standard pharmacist-driven Bayesian dosing?
+Background &amp; Rationale TDM Challenge: Only ~34% of critically ill patients reach therapeutic vancomycin levels in the first 48h of therapy (under 40% by day 3). Traditional Bayesian dosing models use limited covariates and assume stable renal function—assumptions often violated in ICU (e.g., rapid AKI changes).
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-10-03 11:38:37 -0400 EDT'>October 3, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Deep Learning Model for the Prediction of Vancomycin Trough Concentration" href="http://localhost:1313/posts/1_vancomycin_ai_journal_club/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Evaluation of Explainable AI Frameworks in Healthcare
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Clinical/Operational Question Question: In healthcare machine learning, how do widely used explanation techniques (local and global) compare in their ability to provide trustworthy, useful explanations for clinical predictions, and how can we systematically evaluate these methods in real-world settings?
+Background &amp; Rationale Why it matters: AI-driven decision support in medication management and clinical care must be explainable to earn clinician trust and meet safety/regulatory requirements. Pharmacy informatics teams integrating AI (e.g., into Epic EHR alerts or dosing tools) face a critical need for transparent algorithms so pharmacists understand and validate AI recommendations before acting. Multiple eXplainable AI (XAI) methods (LIME, SHAP, Anchors, rule-based models, etc.) exist, but it’s unclear which is optimal for a given clinical task. High-stakes environments like EHR medication ordering and CDS demand rigorous evaluation of explainability – poor explanations can erode user confidence or hide biases, whereas robust explanations can improve acceptance and oversight of AI-driven alerts. This study addresses the gap by proposing a framework to quantitatively compare XAI methods on healthcare data, guiding informatics teams in choosing the right approach for safe, transparent AI deployment.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-10-03 11:34:58 -0400 EDT'>October 3, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Evaluation of Explainable AI Frameworks in Healthcare" href="http://localhost:1313/posts/1_explainability_journal_club/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
