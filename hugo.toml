@@ -1,7 +1,8 @@
-baseURL = "https://dev--researchbriefs.netlify.app/"
+baseURL = "https://researchbriefs.netlify.app/"
 languageCode = 'en-us'
 title = 'Pharmacy AI Newsletter'
 theme = "PaperMod"
+
 
 [params]
 ShowBreadCrumbs = true
