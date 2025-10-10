@@ -9,7 +9,7 @@
       
       <!-- Action Buttons -->
       <div class="header-buttons">
-        <a href="https://open.spotify.com/episode/3KPeO9Km2NyEwxJU4DUUr9?si=EKdhn6YIS9ChAFK8DaAxwA" class="header-button podcast-button" target="_blank" rel="noopener">
+        <a href="https://open.spotify.com/episode/5js82Ginc3GJtocFyhLeq1?si=L_2TvkaJQUe5-txjA0rKug" class="header-button podcast-button" target="_blank" rel="noopener">
           <div class="button-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
@@ -21,7 +21,7 @@
           </div>
         </a>
         
-        <a href="https://notebooklm.google.com/notebook/b0dd3ab6-82d3-47df-b9e6-f52e6c6eaccf" class="header-button notebooklm-button" target="_blank" rel="noopener">
+        <a href="https://notebooklm.google.com/notebook/e65c8465-055b-47a9-a299-d37d2c8e3fc4" class="header-button notebooklm-button" target="_blank" rel="noopener">
           <div class="button-icon">
             <img src="{{ .Site.BaseURL }}notebooklm.png" alt="NotebookLM" width="20" height="20">
           </div>
@@ -61,7 +61,13 @@
             {{ if .Params.tags }}
             <div class="tile-tags">
               {{ range .Params.tags }}
-              <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+              {{ $tagText := . }}
+              {{ $cssClass := . }}
+              {{ if or (hasPrefix . "Predictive ") (hasPrefix . "Generative ") }}
+                {{ $parts := split . " " }}
+                {{ $cssClass = delimit (after 1 $parts) " " }}
+              {{ end }}
+              <span class="tag-pill tag-{{ $cssClass | urlize }}">{{ $tagText }}</span>
               {{ end }}
             </div>
             {{ end }}
@@ -97,7 +103,13 @@
             {{ if .Params.tags }}
             <div class="tile-tags">
               {{ range .Params.tags }}
-              <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+              {{ $tagText := . }}
+              {{ $cssClass := . }}
+              {{ if or (hasPrefix . "Predictive ") (hasPrefix . "Generative ") }}
+                {{ $parts := split . " " }}
+                {{ $cssClass = delimit (after 1 $parts) " " }}
+              {{ end }}
+              <span class="tag-pill tag-{{ $cssClass | urlize }}">{{ $tagText }}</span>
               {{ end }}
             </div>
             {{ end }}

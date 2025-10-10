@@ -3,7 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-10-08T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-09T23:07:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2025-10-09T23:07:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/methotrexate_short/</loc>
+    <lastmod>2025-10-09T23:07:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/predictive-model-development/</loc>
+    <lastmod>2025-10-09T23:07:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-10-09T23:07:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/ai_framework_short/</loc>
+    <lastmod>2025-10-09T22:33:11+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/predictive-guidelines--standards/</loc>
+    <lastmod>2025-10-09T22:33:11+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/predictive-real-world-deployment/</loc>
+    <lastmod>2025-10-09T22:32:56+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/dvt_protocol_short/</loc>
+    <lastmod>2025-10-09T22:32:56+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/drug_resistance_short/</loc>
+    <lastmod>2025-10-09T22:32:54+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/saved/</loc>
     <lastmod>2025-10-08T00:00:00+00:00</lastmod>
@@ -11,56 +38,62 @@
     <loc>http://localhost:1313/tags/external-validation/</loc>
     <lastmod>2025-10-03T21:48:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/delerium_abstract/</loc>
+    <loc>http://localhost:1313/posts/1_delerium_abstract/</loc>
     <lastmod>2025-10-03T21:48:00-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-10-03T21:48:00-04:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-10-03T21:48:00-04:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/ddi_abstract/</loc>
+    <loc>http://localhost:1313/posts/1_ddi_abstract/</loc>
     <lastmod>2025-10-03T21:47:54-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/reviews--perspectives/</loc>
     <lastmod>2025-10-03T21:47:54-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/ai_cds_abstract/</loc>
+    <loc>http://localhost:1313/posts/1_ai_cds_abstract/</loc>
     <lastmod>2025-10-03T21:47:54-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/model-development/</loc>
     <lastmod>2025-10-03T21:47:47-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/cardiac_surg_aki_abstract/</loc>
+    <loc>http://localhost:1313/posts/1_cardiac_surg_aki_abstract/</loc>
     <lastmod>2025-10-03T21:47:47-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/opioid_abstract/</loc>
+    <loc>http://localhost:1313/posts/1_opioid_abstract/</loc>
     <lastmod>2025-10-03T21:47:38-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/voriconazole_abstract/</loc>
+    <loc>http://localhost:1313/posts/1_voriconazole_abstract/</loc>
     <lastmod>2025-10-03T21:47:35-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/vancomycin_ai_journal_club/</loc>
+    <loc>http://localhost:1313/posts/1_vancomycin_ai_journal_club/</loc>
     <lastmod>2025-10-03T11:38:37-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/explainability_journal_club/</loc>
+    <loc>http://localhost:1313/posts/1_explainability_journal_club/</loc>
     <lastmod>2025-10-03T11:34:58-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/guidelines--standards/</loc>
     <lastmod>2025-10-03T11:34:58-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/cds_journal_club/</loc>
+    <loc>http://localhost:1313/posts/1_cds_journal_club/</loc>
     <lastmod>2025-10-03T09:41:46-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/process-outcomes/</loc>
     <lastmod>2025-10-03T09:41:46-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/nlp_long/</loc>
+    <lastmod>2025-09-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/check-subscriber/</loc>
     <lastmod>2025-01-27T10:00:00-05:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/callback/</loc>
     <lastmod>2025-01-27T10:00:00-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/unstructured_data_extraction_long/</loc>
+    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/perspective_of_ai_dosing_long/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/predictive-process-outcomes/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>

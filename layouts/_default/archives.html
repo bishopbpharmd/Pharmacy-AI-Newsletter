@@ -70,7 +70,13 @@
               {{ if .Params.tags }}
               <div class="tile-tags">
                 {{ range .Params.tags }}
-                <span class="tag-pill tag-{{ . | urlize }}">{{ . }}</span>
+                {{ $tagText := . }}
+                {{ $cssClass := . }}
+                {{ if or (hasPrefix . "Predictive ") (hasPrefix . "Generative ") }}
+                  {{ $parts := split . " " }}
+                  {{ $cssClass = delimit (after 1 $parts) " " }}
+                {{ end }}
+                <span class="tag-pill tag-{{ $cssClass | urlize }}">{{ $tagText }}</span>
                 {{ end }}
               </div>
               {{ end }}

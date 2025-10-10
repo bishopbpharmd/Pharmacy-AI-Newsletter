@@ -444,13 +444,21 @@ function createPostTile(post) {
     tagsDiv.className = 'tile-tags';
     post.tags.forEach(tag => {
       const tagSpan = document.createElement('span');
+      
+      // Strip "Predictive " or "Generative " prefix for CSS class only
+      let cssTag = tag;
+      if (tag.startsWith('Predictive ') || tag.startsWith('Generative ')) {
+        // Remove first word and space
+        cssTag = tag.split(' ').slice(1).join(' ');
+      }
+      
       // Use urlize transformation (lowercase, replace spaces/special chars with hyphens)
-      const urlizedTag = tag.toLowerCase()
+      const urlizedTag = cssTag.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/&/g, '')
         .replace(/[^a-z0-9-]/g, '');
       tagSpan.className = `tag-pill tag-${urlizedTag}`;
-      tagSpan.textContent = tag;
+      tagSpan.textContent = tag; // Display full tag text including prefix
       tagsDiv.appendChild(tagSpan);
     });
     content.appendChild(tagsDiv);
