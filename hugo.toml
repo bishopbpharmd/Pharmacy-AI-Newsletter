@@ -3,8 +3,10 @@ languageCode = 'en-us'
 title = 'Pharmacy AI Newsletter'
 theme = "PaperMod"
 
+
 [params]
 ShowBreadCrumbs = true
+newsletter_date = "October 10, 2025"
 
 [params.assets]
 theme_color = ""

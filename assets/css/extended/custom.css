@@ -2047,6 +2047,12 @@ body:not([data-theme="dark"]) .form-input:focus {
   border: 1px solid #f8bbd9;
 }
 
+.tag-real-world-deployment {
+  background: #fce4ec;
+  color: #d81b60;
+  border: 1px solid #f48fb1;
+}
+
 .tile-journal {
   font-size: 0.8rem;
   color: var(--secondary);
